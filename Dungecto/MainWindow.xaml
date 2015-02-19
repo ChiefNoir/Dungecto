@@ -3,11 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:UI="clr-namespace:Dungecto.UI" x:Class="Dungecto.MainWindow"
     xmlns:res="clr-namespace:Dungecto.Properties"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="749.422">
     <Grid>
-        <ScrollViewer Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
             <Border BorderBrush="Black" BorderThickness="1">
-                <UI:MapCanvas x:Name="MapCanvas" Background="White">
+                <UI:MapCanvas x:Name="MapCanvas" AllowDrop="True" DragEnter="MapCanvas_DragEnter" Drop="MapCanvas_Drop">
                     <UI:MapCanvas.ContextMenu>
                         <ContextMenu>
                             <MenuItem x:Name="MenuAdd" Header="{x:Static res:Resources.MenuAdd}" />
@@ -18,6 +22,9 @@
             </Border>
 
         </ScrollViewer>
+        <Expander Header="Expander" VerticalAlignment="Top" IsExpanded="True" Height="Auto"  >
+            <ListView x:Name="itms" PreviewMouseDown="Expander_PreviewMouseDown" />
+        </Expander>
 
     </Grid>
 </Window>

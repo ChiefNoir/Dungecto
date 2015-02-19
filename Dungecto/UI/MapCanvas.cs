@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Dungecto.UI
 {
@@ -17,6 +19,11 @@ namespace Dungecto.UI
             );
 
         public Point LastMousePosition { get; set; }
+
+        public MapCanvas():base()
+        {
+            Resize(10, 10, 50);
+        }
 
         /// <summary> Get selected map tile </summary>
         public MapTile SelectedTile
@@ -87,6 +94,36 @@ namespace Dungecto.UI
             {
                 SelectedTile.IsSelected = true;
             }
+        }
+
+
+        public void Resize(int columns, int rows, int blockSize)
+        {
+
+            Width = columns * blockSize;
+            Height = rows * blockSize;
+
+            var brush = new VisualBrush
+            {
+                Viewport = new Rect(0, 0, blockSize, blockSize),
+                Viewbox = new Rect(0, 0, blockSize, blockSize),
+                ViewboxUnits = BrushMappingMode.Absolute,
+                ViewportUnits = BrushMappingMode.Absolute,
+                TileMode = TileMode.Tile,
+                Visual =
+                    new Rectangle
+                    {
+                        Stroke = new SolidColorBrush(Colors.Gray),
+                        Height = blockSize,
+                        Width = blockSize,
+                        StrokeThickness = .5
+                    }
+            };
+
+            Background = brush;
+
+
+            SelectedTile = null;
         }
     }
 }
