@@ -1,8 +1,23 @@
-﻿<Window x:Class="Dungecto.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:UI="clr-namespace:Dungecto.UI" x:Class="Dungecto.MainWindow"
+    xmlns:res="clr-namespace:Dungecto.Properties"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <ScrollViewer Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0" >
+            <Border BorderBrush="Black" BorderThickness="1">
+                <UI:MapCanvas x:Name="MapCanvas" Background="White">
+                    <UI:MapCanvas.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="MenuAdd" Header="{x:Static res:Resources.MenuAdd}" />
+                            <MenuItem Header="{x:Static res:Resources.MenuRemove}" />
+                        </ContextMenu>
+                    </UI:MapCanvas.ContextMenu>
+                </UI:MapCanvas>
+            </Border>
+
+        </ScrollViewer>
+
     </Grid>
 </Window>

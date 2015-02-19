@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using Dungecto.Model;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Dungecto.UI
 {
@@ -20,6 +22,31 @@ namespace Dungecto.UI
         {
             get { return (bool)GetValue(IsSelectedProperty); }
             set { SetValue(IsSelectedProperty, value); }
+        }
+
+        public MapTile(){ }
+
+        public MapTile(TileDescription description, Point position, ControlTemplate template)
+        {
+            var geom = new System.Windows.Shapes.Path
+            {
+                Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(description.HexColor)),
+                Stroke = new SolidColorBrush(Colors.Black),
+                Stretch = Stretch.Fill,
+                IsHitTestVisible = false,
+                Data = Geometry.Parse(description.GeometryPath)
+            };
+            geom.Fill.Freeze();
+            geom.Stroke.Freeze();
+            geom.Data.Freeze();
+
+            Height = description.Height;
+            Width = description.Width;
+            Template = template;
+            Content = geom;
+
+            Canvas.SetLeft(this, position.X);
+            Canvas.SetTop(this, position.Y);
         }
     }
 }

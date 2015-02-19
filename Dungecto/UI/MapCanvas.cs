@@ -16,6 +16,8 @@ namespace Dungecto.UI
                 new FrameworkPropertyMetadata(null)
             );
 
+        public Point LastMousePosition { get; set; }
+
         /// <summary> Get selected map tile </summary>
         public MapTile SelectedTile
         {
@@ -60,6 +62,12 @@ namespace Dungecto.UI
                 SelectedTile.IsSelected = false;
                 SelectedTile = null;
             }
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            LastMousePosition = e.GetPosition(this);
         }
 
         /// <summary> Event left click on map tile, changing <see cref="SelectedTile"/> to event sender</summary>

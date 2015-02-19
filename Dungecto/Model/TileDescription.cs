@@ -17,7 +17,7 @@ namespace Dungecto.Model
         public double Height { get; set; }
 
         /// <summary> Color </summary>
-        [XmlAttribute("Height")]
+        [XmlAttribute("HexColor")]
         public string HexColor { get; set; }
 
         [XmlAttribute("Name")]
