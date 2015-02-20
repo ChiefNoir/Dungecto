@@ -6,15 +6,14 @@
         Title="MainWindow" Height="350" Width="749.422">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="85"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <ScrollViewer Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
-            <Border BorderBrush="Black" BorderThickness="1">
+            <Border>
                 <UI:MapCanvas x:Name="MapCanvas" AllowDrop="True" DragEnter="MapCanvas_DragEnter" Drop="MapCanvas_Drop">
                     <UI:MapCanvas.ContextMenu>
                         <ContextMenu>
-                            <MenuItem x:Name="MenuAdd" Header="{x:Static res:Resources.MenuAdd}" />
                             <MenuItem Header="{x:Static res:Resources.MenuRemove}" />
                         </ContextMenu>
                     </UI:MapCanvas.ContextMenu>
@@ -22,8 +21,16 @@
             </Border>
 
         </ScrollViewer>
-        <Expander Header="Expander" VerticalAlignment="Top" IsExpanded="True" Height="Auto"  >
-            <ListView x:Name="itms" PreviewMouseDown="Expander_PreviewMouseDown" />
+        <Expander Header="{x:Static res:Resources.Tiles}" VerticalAlignment="Top" IsExpanded="True" Height="Auto" >
+            <ListView PreviewMouseDown="Expander_PreviewMouseDown" ItemsSource="{Binding Tiles}" SelectedItem="{Binding SelectedTileDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentControl Width="50" Height="50">
+                            <Path Data="{Binding GeometryPath}" Fill="{Binding HexColor}" Stretch="Fill" />
+                        </ContentControl>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Expander>
 
     </Grid>

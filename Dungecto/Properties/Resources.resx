@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MenuAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
   <data name="MenuRemove" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="Tiles" xml:space="preserve">
+    <value>Tiles</value>
   </data>
 </root>

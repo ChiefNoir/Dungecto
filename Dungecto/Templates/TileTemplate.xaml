@@ -4,7 +4,7 @@
 
     <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
-    <!-- MoveThumb Template -->
+    <!-- MoveDecorator Template -->
     <ControlTemplate x:Key="MoveThumbTemplate" TargetType="{x:Type ui:TileMover}">
         <Rectangle Fill="Transparent"/>
     </ControlTemplate>
@@ -24,8 +24,8 @@
         </Grid>
     </ControlTemplate>
 
-    <!-- Designer Item Template-->
-    <ControlTemplate x:Key="DesignerItemTemplate" TargetType="{x:Type ui:MapTile}">
+
+    <ControlTemplate x:Key="TileTemplate" TargetType="{x:Type ui:MapTile}">
         <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
             <ui:TileMover Template="{StaticResource MoveThumbTemplate}" Cursor="SizeAll"/>
             <Control Template="{StaticResource ResizeDecoratorTemplate}" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}"/>
