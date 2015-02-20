@@ -20,12 +20,8 @@ namespace Dungecto.Model
         [XmlAttribute("HexColor")]
         public string HexColor { get; set; }
 
-        [XmlAttribute("Name")]
-        public string Name { get; set; }
-
         /// <summary> Tile width (OX-size) </summary>
         [XmlAttribute("Width")]
         public double Width { get; set; }
-
     }
 }

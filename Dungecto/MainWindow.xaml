@@ -1,14 +1,14 @@
-﻿<Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:UI="clr-namespace:Dungecto.UI" x:Class="Dungecto.MainWindow"
-    xmlns:res="clr-namespace:Dungecto.Properties"
+        xmlns:res="clr-namespace:Dungecto.Properties"
         Title="MainWindow" Height="350" Width="749.422">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="85"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
         <ScrollViewer Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
             <Border>
                 <UI:MapCanvas x:Name="MapCanvas" AllowDrop="True" DragEnter="MapCanvas_DragEnter" Drop="MapCanvas_Drop">
@@ -19,10 +19,10 @@
                     </UI:MapCanvas.ContextMenu>
                 </UI:MapCanvas>
             </Border>
-
         </ScrollViewer>
+        
         <Expander Header="{x:Static res:Resources.Tiles}" VerticalAlignment="Top" IsExpanded="True" Height="Auto" >
-            <ListView PreviewMouseDown="Expander_PreviewMouseDown" ItemsSource="{Binding Tiles}" SelectedItem="{Binding SelectedTileDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ListView PreviewMouseDown="TileContainer_PreviewMouseDown" ItemsSource="{Binding Tiles}" SelectedItem="{Binding SelectedTileDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ContentControl Width="50" Height="50">
