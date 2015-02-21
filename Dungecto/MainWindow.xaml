@@ -40,8 +40,9 @@
                                       IsEnabled="False" 
                                       />
                             <Separator Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}"/>
-                            <MenuItem Header="{x:Static res:Resources.MapProperties}" 
-                                      IsEnabled="False" />
+                            <MenuItem Header="{x:Static res:Resources.MapProperties}"
+                                      Click="ShowMapProperties"
+                                      />
                         </ContextMenu>
                     </UI:MapCanvas.ContextMenu>
                 </UI:MapCanvas>

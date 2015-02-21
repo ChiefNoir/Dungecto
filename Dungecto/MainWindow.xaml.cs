@@ -45,5 +45,13 @@ namespace Dungecto
             var dragObj = new DataObject("{MapTile}", desc);
             DragDrop.DoDragDrop(this, dragObj, DragDropEffects.Copy);
         }
+
+        /// <summary> Show map properties </summary>
+        /// <param name="sender">~</param>
+        /// <param name="e">~</param>
+        private void ShowMapProperties(object sender, RoutedEventArgs e)
+        {
+            new MapPropertiesWindow().ShowDialog(MapCanvas);
+        }
     }
 }

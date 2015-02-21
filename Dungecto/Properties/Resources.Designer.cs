@@ -61,11 +61,29 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Info.
         /// </summary>
         public static string Info {
             get {
                 return ResourceManager.GetString("Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map height, in sectors:.
+        /// </summary>
+        public static string MapHeight {
+            get {
+                return ResourceManager.GetString("MapHeight", resourceCulture);
             }
         }
         
@@ -79,11 +97,56 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Map size:.
+        /// </summary>
+        public static string MapSize {
+            get {
+                return ResourceManager.GetString("MapSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map width, in sectors:.
+        /// </summary>
+        public static string MapWidth {
+            get {
+                return ResourceManager.GetString("MapWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resize.
+        /// </summary>
+        public static string Resize {
+            get {
+                return ResourceManager.GetString("Resize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sector height:.
+        /// </summary>
+        public static string SectorHeight {
+            get {
+                return ResourceManager.GetString("SectorHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sector width:.
+        /// </summary>
+        public static string SectorWidth {
+            get {
+                return ResourceManager.GetString("SectorWidth", resourceCulture);
             }
         }
         

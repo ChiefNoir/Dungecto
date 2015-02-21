@@ -39,6 +39,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -58,6 +59,9 @@
     </ApplicationDefinition>
     <Compile Include="Common\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Common\Exporter.cs" />
+    <Compile Include="MapPropertiesWindow.xaml.cs">
+      <DependentUpon>MapPropertiesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\BasicCommand.cs" />
     <Compile Include="UI\MapCanvas.cs" />
     <Compile Include="UI\MapTile.cs" />
@@ -76,6 +80,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MapPropertiesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Templates\TileTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

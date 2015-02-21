@@ -117,14 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="Info" xml:space="preserve">
     <value>Info</value>
+  </data>
+  <data name="MapHeight" xml:space="preserve">
+    <value>Map height, in sectors:</value>
   </data>
   <data name="MapProperties" xml:space="preserve">
     <value>Map Properties</value>
   </data>
+  <data name="MapSize" xml:space="preserve">
+    <value>Map size:</value>
+  </data>
+  <data name="MapWidth" xml:space="preserve">
+    <value>Map width, in sectors:</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="Resize" xml:space="preserve">
+    <value>Resize</value>
+  </data>
+  <data name="SectorHeight" xml:space="preserve">
+    <value>Sector height:</value>
+  </data>
+  <data name="SectorWidth" xml:space="preserve">
+    <value>Sector width:</value>
   </data>
   <data name="Tiles" xml:space="preserve">
     <value>Tiles</value>

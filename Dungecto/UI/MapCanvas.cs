@@ -1,4 +1,5 @@
 ﻿using Dungecto.Model;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,7 +9,7 @@ using System.Windows.Shapes;
 namespace Dungecto.UI
 {
     /// <summary> Map canvas </summary>
-    public class MapCanvas : Canvas
+    public class MapCanvas : Canvas, INotifyPropertyChanged
     {
         /// <summary> <see cref="SelectedItem"/> DependencyProperty </summary>
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register
@@ -19,17 +20,110 @@ namespace Dungecto.UI
                 new FrameworkPropertyMetadata(null)
             );
 
+        /// <summary> Columns in map </summary>
+        private int _columns = 10;
+
+        /// <summary> Last columns value after resize</summary>
+        private int _columnsLastValue;
+
+        /// <summary> Number of rows </summary>
+        private int _rows = 10;
+
+        /// <summary> Last rows value after resize </summary>
+        private int _rowsLastValue;
+
+        /// <summary> Sector height </summary>
+        private int _sectorHeight = 50;
+
+        /// <summary> Last sector height after resize </summary>
+        private int _sectorHeightLastValue;
+
+        /// <summary> Sector width </summary>
+        private int _sectorWidth = 50;
+
+        /// <summary> Last sector width after resize </summary>
+        private int _sectorWidthLastValue;
+
         //TODO: as binding
         /// <summary> Tile template </summary>
         private ControlTemplate _tileTemplate = Application.Current.FindResource("TileTemplate") as ControlTemplate;
 
+        /// <summary> Resize map </summary>
+        private ICommand _undoResizeMapPreparationsCommand;
+
         /// <summary> Remove selected item command </summary>
         private ICommand _removeSelectedItemCommand;
+
+        /// <summary> Resize map </summary>
+        private ICommand _resizeMapCommand;
 
         /// <summary> Create map canvas </summary>
         public MapCanvas()
         {
-            Resize(10, 10, 50);
+            Resize();
+        }
+
+        /// <summary> PropertyChanged event </summary>
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+        /// <summary> Get/set numbers of columns </summary>
+        public int Columns
+        {
+            get { return _columns; }
+            set
+            {
+                _columns = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Columns"));
+            }
+        }
+
+        /// <summary> Get/set numbers of rows </summary>
+        public int Rows
+        {
+            get { return _rows; }
+            set
+            {
+                _rows = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Rows"));
+            }
+        }
+
+        /// <summary> Get/set sector height </summary>
+        public int SectorHeight
+        {
+            get { return _sectorHeight; }
+            set
+            {
+                _sectorHeight = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("SectorHeight"));
+            }
+        }
+
+        /// <summary> Get/set sector width </summary>
+        public int SectorWidth
+        {
+            get { return _sectorWidth; }
+            set
+            {
+                _sectorWidth = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("SectorWidth"));
+            }
+        }
+
+        /// <summary> Get selected map tile </summary>
+        public MapTile SelectedItem
+        {
+            get { return (MapTile)GetValue(SelectedItemProperty); }
+            private set { SetValue(SelectedItemProperty, value); }
+        }
+
+        /// <summary> Undo resize map preparations </summary>
+        public ICommand UndoResizeMapPreparationsCommand
+        {
+            get
+            {
+                return _undoResizeMapPreparationsCommand ?? (_undoResizeMapPreparationsCommand = new BasicCommand(() => UndoResizeMapPreparations()));
+            }
         }
 
         /// <summary> Remove selected item command </summary>
@@ -40,12 +134,14 @@ namespace Dungecto.UI
                 return _removeSelectedItemCommand ?? (_removeSelectedItemCommand = new BasicCommand(() => Remove(SelectedItem)));
             }
         }
-        
-        /// <summary> Get selected map tile </summary>
-        public MapTile SelectedItem
+
+        /// <summary> Resize command </summary>
+        public ICommand ResizeMapCommand
         {
-            get { return (MapTile)GetValue(SelectedItemProperty); }
-            private set { SetValue(SelectedItemProperty, value); }
+            get
+            {
+                return _resizeMapCommand ?? (_resizeMapCommand = new BasicCommand(() => Resize()));
+            }
         }
 
         /// <summary> Add tile to map </summary>
@@ -70,46 +166,13 @@ namespace Dungecto.UI
             tile.PreviewMouseLeftButtonDown -= TilePreviewMouseDown;
         }
 
-        //TODO: here
-        public void Resize(int columns, int rows, int blockSize)
-        {
-            Width = columns * blockSize;
-            Height = rows * blockSize;
-
-            var brush = new VisualBrush
-            {
-                Viewport = new Rect(0, 0, blockSize, blockSize),
-                Viewbox = new Rect(0, 0, blockSize, blockSize),
-                ViewboxUnits = BrushMappingMode.Absolute,
-                ViewportUnits = BrushMappingMode.Absolute,
-                TileMode = TileMode.Tile,                
-                Visual =
-                    new Rectangle
-                    {
-                        Stroke = new SolidColorBrush(Colors.Gray),
-                        Height = blockSize,
-                        Width = blockSize,
-                        Fill = new SolidColorBrush(Colors.White),
-                        StrokeThickness = .5
-                    }
-            };
-
-            Background = brush;
-
-            SelectedItem = null;
-        }
-
-        /// <summary>Left click on map. Remove selection from <see cref="SelectedItem"/> </summary>
+        /// <summary> Drag enters the map </summary>
         /// <param name="e">~</param>
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnDragEnter(DragEventArgs e)
         {
-            base.OnMouseLeftButtonDown(e);
+            base.OnDragEnter(e);
 
-            if (SelectedItem != null)
-            {
-                SelectedItem.IsSelected = false;
-                SelectedItem = null;
-            }
+            e.Effects = DragDropEffects.Copy;
         }
 
         /// <summary>If drop data is <see cref="Dungecto.Model.TileDescription"/> in {MapTile} format - add new tile to map </summary>
@@ -129,13 +192,50 @@ namespace Dungecto.UI
             Add(new MapTile(dropTile, e.GetPosition(this), _tileTemplate));
         }
 
-        /// <summary> Drag enters the map </summary>
+        /// <summary>Left click on map. Remove selection from <see cref="SelectedItem"/> </summary>
         /// <param name="e">~</param>
-        protected override void OnDragEnter(DragEventArgs e)
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            base.OnDragEnter(e);
+            base.OnMouseLeftButtonDown(e);
 
-            e.Effects = DragDropEffects.Copy;
+            if (SelectedItem != null)
+            {
+                SelectedItem.IsSelected = false;
+                SelectedItem = null;
+            }
+        }
+
+        /// <summary> Resize map </summary>
+        private void Resize()
+        {
+            _sectorWidthLastValue = SectorWidth;
+            _sectorHeightLastValue = SectorHeight;
+            _rowsLastValue = Rows;
+            _columnsLastValue = Columns;
+
+            Width = Columns * SectorWidth;
+            Height = Rows * SectorHeight;
+
+            var brush = new VisualBrush
+            {
+                Viewport = new Rect(0, 0, SectorWidth, SectorHeight),
+                Viewbox = new Rect(0, 0, SectorWidth, SectorHeight),
+                ViewboxUnits = BrushMappingMode.Absolute,
+                ViewportUnits = BrushMappingMode.Absolute,
+                TileMode = TileMode.Tile,
+                Visual = new Rectangle
+                        {
+                            Stroke = new SolidColorBrush(Colors.Gray),
+                            Height = SectorHeight,
+                            Width = SectorWidth,
+                            Fill = new SolidColorBrush(Colors.White),
+                            StrokeThickness = .5
+                        }
+            };
+
+            Background = brush;
+
+            SelectedItem = null;
         }
 
         /// <summary> Event left click on map tile, changing <see cref="SelectedItem"/> to event sender</summary>
@@ -157,5 +257,13 @@ namespace Dungecto.UI
             }
         }
 
+        /// <summary> Undo changes in <see cref="SectorWidth"/>, <see cref="SectorHeight"/>, <see cref="Rows"/>, <see cref="Columns"/> </summary>
+        private void UndoResizeMapPreparations()
+        {
+            SectorWidth = _sectorWidthLastValue;
+            SectorHeight = _sectorHeightLastValue;
+            Rows = _rowsLastValue;
+            Columns = _columnsLastValue;
+        }
     }
 }
