@@ -82,13 +82,14 @@ namespace Dungecto.UI
                 Viewbox = new Rect(0, 0, blockSize, blockSize),
                 ViewboxUnits = BrushMappingMode.Absolute,
                 ViewportUnits = BrushMappingMode.Absolute,
-                TileMode = TileMode.Tile,
+                TileMode = TileMode.Tile,                
                 Visual =
                     new Rectangle
                     {
                         Stroke = new SolidColorBrush(Colors.Gray),
                         Height = blockSize,
                         Width = blockSize,
+                        Fill = new SolidColorBrush(Colors.White),
                         StrokeThickness = .5
                     }
             };

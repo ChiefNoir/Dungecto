@@ -21,6 +21,13 @@
         
         <ScrollViewer Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
             <Border>
+                <Border.Background>
+                    <ImageBrush ImageSource="Assets/Background.png"
+                                Viewport="0,0,16,16"                                
+                                ViewportUnits="Absolute"
+                                TileMode="Tile"
+                                Stretch="None"/>
+                </Border.Background>
                 <UI:MapCanvas x:Name="MapCanvas" AllowDrop="True" >
                     <UI:MapCanvas.ContextMenu>
                         <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}" >
@@ -46,7 +53,7 @@
                       ItemsSource="{Binding Tiles}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ContentControl Width="50" Height="50">
+                        <ContentControl Width="50" Height="50" HorizontalContentAlignment="Center" >
                             <Path Data="{Binding GeometryPath}" Fill="{Binding HexColor}" Stretch="Fill" />
                         </ContentControl>
                     </DataTemplate>
