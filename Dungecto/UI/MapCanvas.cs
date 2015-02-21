@@ -105,7 +105,7 @@ namespace Dungecto.UI
                 SelectedItem = null;
             }
         }
-        
+
         /// <summary> Event left click on map tile, changing <see cref="SelectedItem"/> to event sender</summary>
         /// <param name="sender"><seealso cref="MapTile"/></param>
         /// <param name="e">~</param>

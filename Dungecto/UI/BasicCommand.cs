@@ -16,6 +16,9 @@ namespace Dungecto.UI
             _action = action;
         }
 
+        /// <summary> Event can execute changed </summary>
+        public event EventHandler CanExecuteChanged = delegate { };
+
         /// <summary>Can execute?</summary>
         /// <param name="parameter">~</param>
         /// <returns> <code>True</code> if command can be executed</returns>
