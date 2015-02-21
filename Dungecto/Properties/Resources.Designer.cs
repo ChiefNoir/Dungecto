@@ -61,11 +61,29 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string Info {
+            get {
+                return ResourceManager.GetString("Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map Properties.
+        /// </summary>
+        public static string MapProperties {
+            get {
+                return ResourceManager.GetString("MapProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
-        public static string MenuRemove {
+        public static string Remove {
             get {
-                return ResourceManager.GetString("MenuRemove", resourceCulture);
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         

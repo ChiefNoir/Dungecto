@@ -9,27 +9,38 @@ namespace Dungecto.UI
     /// <summary> Map canvas </summary>
     public class MapCanvas : Canvas
     {
-        /// <summary> <see cref="SelectedTile"/> DependencyProperty </summary>
-        public static readonly DependencyProperty SelectedTileProperty = DependencyProperty.Register
+        /// <summary> <see cref="SelectedItem"/> DependencyProperty </summary>
+        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register
             (
-                "SelectedTile",
+                "SelectedItem",
                 typeof(MapTile),
                 typeof(MapCanvas),
                 new FrameworkPropertyMetadata(null)
             );
 
-        public Point LastMousePosition { get; set; }
+        /// <summary> Remove selected item command </summary>
+        private ICommand _removeSelectedItemCommand;
 
-        public MapCanvas():base()
+        /// <summary> Create map canvas </summary>
+        public MapCanvas()
         {
             Resize(10, 10, 50);
         }
 
-        /// <summary> Get selected map tile </summary>
-        public MapTile SelectedTile
+        /// <summary> Remove selected item command </summary>
+        public ICommand RemoveSelectedItemCommand
         {
-            get { return (MapTile)GetValue(SelectedTileProperty); }
-            private set { SetValue(SelectedTileProperty, value); }
+            get
+            {
+                return _removeSelectedItemCommand ?? (_removeSelectedItemCommand = new BasicCommand(() => Remove(SelectedItem)));
+            }
+        }
+        
+        /// <summary> Get selected map tile </summary>
+        public MapTile SelectedItem
+        {
+            get { return (MapTile)GetValue(SelectedItemProperty); }
+            private set { SetValue(SelectedItemProperty, value); }
         }
 
         /// <summary> Add tile to map </summary>
@@ -37,69 +48,26 @@ namespace Dungecto.UI
         public void Add(MapTile tile)
         {
             if (tile == null) { return; }
-            if (Children.Contains(tile) ) { return; }
+            if (Children.Contains(tile)) { return; }
 
             Children.Add(tile);
 
-            tile.PreviewMouseLeftButtonDown += TilePreviewMouseLeftButtonDown;
+            tile.PreviewMouseDown += TilePreviewMouseDown;
         }
 
         /// <summary> Remove tile from map </summary>
         /// <param name="tile"> Tile to remove </param>
         public void Remove(MapTile tile)
         {
+            if (tile == null) { return; }
+
             Children.Remove(tile);
-            tile.PreviewMouseLeftButtonDown -= TilePreviewMouseLeftButtonDown;
+            tile.PreviewMouseLeftButtonDown -= TilePreviewMouseDown;
         }
 
-        /// <summary> Remove selected tile </summary>
-        public void RemoveSelected()
-        {
-            Remove(SelectedTile);
-        }
-
-        /// <summary>Left click on map. Remove selection from <see cref="SelectedTile"/> </summary>
-        /// <param name="e">~</param>
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonDown(e);
-
-            if (SelectedTile != null)
-            {
-                SelectedTile.IsSelected = false;
-                SelectedTile = null;
-            }
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            LastMousePosition = e.GetPosition(this);
-        }
-
-        /// <summary> Event left click on map tile, changing <see cref="SelectedTile"/> to event sender</summary>
-        /// <param name="sender"><seealso cref="MapTile"/></param>
-        /// <param name="e">~</param>
-        private void TilePreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (SelectedTile != null)
-            {
-                SelectedTile.IsSelected = false;
-                SelectedTile = null;
-            }
-
-            SelectedTile = sender as MapTile;
-
-            if (SelectedTile != null)
-            {
-                SelectedTile.IsSelected = true;
-            }
-        }
-
-
+        //TODO: here
         public void Resize(int columns, int rows, int blockSize)
         {
-
             Width = columns * blockSize;
             Height = rows * blockSize;
 
@@ -122,8 +90,39 @@ namespace Dungecto.UI
 
             Background = brush;
 
+            SelectedItem = null;
+        }
 
-            SelectedTile = null;
+        /// <summary>Left click on map. Remove selection from <see cref="SelectedItem"/> </summary>
+        /// <param name="e">~</param>
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            if (SelectedItem != null)
+            {
+                SelectedItem.IsSelected = false;
+                SelectedItem = null;
+            }
+        }
+        
+        /// <summary> Event left click on map tile, changing <see cref="SelectedItem"/> to event sender</summary>
+        /// <param name="sender"><seealso cref="MapTile"/></param>
+        /// <param name="e">~</param>
+        private void TilePreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (SelectedItem != null)
+            {
+                SelectedItem.IsSelected = false;
+                SelectedItem = null;
+            }
+
+            SelectedItem = sender as MapTile;
+
+            if (SelectedItem != null)
+            {
+                SelectedItem.IsSelected = true;
+            }
         }
     }
 }

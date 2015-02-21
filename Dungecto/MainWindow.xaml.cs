@@ -31,7 +31,6 @@ namespace Dungecto
             Tiles = Serializer.FromXml<ObservableCollection<TileDescription>>("Config/Tiles.conf");
         }
 
-
         /// <summary> Mouse move over the window </summary>
         /// <param name="e">~</param>
         protected override void OnMouseMove(MouseEventArgs e)
@@ -84,6 +83,14 @@ namespace Dungecto
             }
 
             _dragStartPoint = null;
+        }
+
+        /// <summary> Click on "Remove" menu. Removes selected tile from map </summary>
+        /// <param name="sender">~</param>
+        /// <param name="e">~</param>
+        private void MenuRemove_Click(object sender, RoutedEventArgs e)
+        {
+            MapCanvas.Remove(MapCanvas.SelectedItem);
         }
     }
 }

@@ -117,7 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MenuRemove" xml:space="preserve">
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="MapProperties" xml:space="preserve">
+    <value>Map Properties</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
   <data name="Tiles" xml:space="preserve">

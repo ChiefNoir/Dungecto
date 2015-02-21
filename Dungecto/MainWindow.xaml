@@ -2,7 +2,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:UI="clr-namespace:Dungecto.UI" x:Class="Dungecto.MainWindow"
         xmlns:res="clr-namespace:Dungecto.Properties"
+        xmlns:common="clr-namespace:Dungecto.Common.Converters"
         Title="MainWindow" Height="350" Width="749.422">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <common:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="85"/>
@@ -13,8 +23,18 @@
             <Border>
                 <UI:MapCanvas x:Name="MapCanvas" AllowDrop="True" DragEnter="MapCanvas_DragEnter" Drop="MapCanvas_Drop">
                     <UI:MapCanvas.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="{x:Static res:Resources.MenuRemove}" />
+                        <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}" >
+                            <MenuItem Header="{x:Static res:Resources.Remove}" 
+                                      Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}"
+                                      Command="{Binding RemoveSelectedItemCommand}"
+                                      />
+                            <MenuItem Header="{x:Static res:Resources.Info}" 
+                                      Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}"
+                                      IsEnabled="False" 
+                                      />
+                            <Separator Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}"/>
+                            <MenuItem Header="{x:Static res:Resources.MapProperties}" 
+                                      IsEnabled="False" />
                         </ContextMenu>
                     </UI:MapCanvas.ContextMenu>
                 </UI:MapCanvas>
