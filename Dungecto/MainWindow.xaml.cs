@@ -31,20 +31,19 @@ namespace Dungecto
             MapCanvas.Remove(MapCanvas.SelectedItem);
         }
 
-        /// <summary> Selection changed in list of tiles descriptions. Begin drag&drop</summary>
-        /// <param name="sender">ListView</param>
+        /// <summary>Click on item in <see cref="Tiles"/> List on UI</summary>
+        /// <param name="sender">~</param>
         /// <param name="e">~</param>
-        private void TileDescriptionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var listview = (sender as ListView);
-            if (listview == null) { return; }
+            var contex = (sender as ContentControl).DataContext;
+            if (contex == null) { return; }
 
-            var desc = listview.SelectedItem as TileDescription;
+            var desc = contex as TileDescription;
             if (desc == null) { return; }
 
             var dragObj = new DataObject("{MapTile}", desc);
             DragDrop.DoDragDrop(this, dragObj, DragDropEffects.Copy);
         }
-
     }
 }

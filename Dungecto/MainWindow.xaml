@@ -49,8 +49,12 @@
         </ScrollViewer>
         
         <Expander Header="{x:Static res:Resources.Tiles}" VerticalAlignment="Top" IsExpanded="True" Height="Auto" >
-            <ListView SelectionChanged="TileDescriptionsList_SelectionChanged"
-                      ItemsSource="{Binding Tiles}">
+            <ListView ItemsSource="{Binding Tiles}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ContentControl Width="50" Height="50" HorizontalContentAlignment="Center" >
