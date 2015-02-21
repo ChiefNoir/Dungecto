@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Dungecto.Model;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -17,6 +18,10 @@ namespace Dungecto.UI
                 typeof(MapCanvas),
                 new FrameworkPropertyMetadata(null)
             );
+
+        //TODO: as binding
+        /// <summary> Tile template </summary>
+        private ControlTemplate _tileTemplate = Application.Current.FindResource("TileTemplate") as ControlTemplate;
 
         /// <summary> Remove selected item command </summary>
         private ICommand _removeSelectedItemCommand;
@@ -106,6 +111,32 @@ namespace Dungecto.UI
             }
         }
 
+        /// <summary>If drop data is <see cref="Dungecto.Model.TileDescription"/> in {MapTile} format - add new tile to map </summary>
+        /// <param name="e">~</param>
+        protected override void OnDrop(DragEventArgs e)
+        {
+            base.OnDrop(e);
+
+            if (e.Data == null) { return; }
+
+            var dropData = e.Data.GetData("{MapTile}");
+            if (dropData == null) { return; }
+
+            var dropTile = dropData as TileDescription;
+            if (dropTile == null) { return; }
+
+            Add(new MapTile(dropTile, e.GetPosition(this), _tileTemplate));
+        }
+
+        /// <summary> Drag enters the map </summary>
+        /// <param name="e">~</param>
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            base.OnDragEnter(e);
+
+            e.Effects = DragDropEffects.Copy;
+        }
+
         /// <summary> Event left click on map tile, changing <see cref="SelectedItem"/> to event sender</summary>
         /// <param name="sender"><seealso cref="MapTile"/></param>
         /// <param name="e">~</param>
@@ -124,5 +155,6 @@ namespace Dungecto.UI
                 SelectedItem.IsSelected = true;
             }
         }
+
     }
 }

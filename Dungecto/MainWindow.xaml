@@ -21,7 +21,7 @@
         
         <ScrollViewer Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
             <Border>
-                <UI:MapCanvas x:Name="MapCanvas" AllowDrop="True" DragEnter="MapCanvas_DragEnter" Drop="MapCanvas_Drop">
+                <UI:MapCanvas x:Name="MapCanvas" AllowDrop="True" >
                     <UI:MapCanvas.ContextMenu>
                         <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}" >
                             <MenuItem Header="{x:Static res:Resources.Remove}" 
@@ -42,7 +42,8 @@
         </ScrollViewer>
         
         <Expander Header="{x:Static res:Resources.Tiles}" VerticalAlignment="Top" IsExpanded="True" Height="Auto" >
-            <ListView PreviewMouseDown="TileContainer_PreviewMouseDown" ItemsSource="{Binding Tiles}" SelectedItem="{Binding SelectedTileDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ListView SelectionChanged="TileDescriptionsList_SelectionChanged"
+                      ItemsSource="{Binding Tiles}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ContentControl Width="50" Height="50">
