@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace Dungecto.Model
 {
     /// <summary> Map tile description </summary>
     [Serializable]
-    public class TileDescription
+    public class Tile
     {
         /// <summary> Path markup </summary>
         /// <remarks>https://msdn.microsoft.com/en-us/library/ms752293%28v=vs.110%29.aspx</remarks>
@@ -23,5 +24,10 @@ namespace Dungecto.Model
         /// <summary> Tile width (OX-size) </summary>
         [XmlAttribute("Width")]
         public double Width { get; set; }
+
+        /// <summary> Tile position </summary>
+        /// <remarks> Used in import </remarks>
+        [XmlElement("Position")]
+        public Point? Position { get; set; }
     }
 }

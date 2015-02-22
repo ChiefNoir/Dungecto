@@ -4,67 +4,79 @@
         xmlns:res="clr-namespace:Dungecto.Properties"
         xmlns:common="clr-namespace:Dungecto.Common.Converters"
         Title="MainWindow" Height="350" Width="749.422">
-    
+
     <Window.Resources>
         <ResourceDictionary>
             <common:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
             <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         </ResourceDictionary>
     </Window.Resources>
-    
-    
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="85"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        
-        <ScrollViewer Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
-            <Border>
-                <Border.Background>
-                    <ImageBrush ImageSource="Assets/Background.png"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Height="Auto" VerticalAlignment="Top" >
+            <MenuItem Header="File">
+                <MenuItem Header="Save" Click="MenuSave_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="85"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ScrollViewer Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
+                <Border>
+                    <Border.Background>
+                        <ImageBrush ImageSource="Assets/Background.png"
                                 Viewport="0,0,16,16"                                
                                 ViewportUnits="Absolute"
                                 TileMode="Tile"
                                 Stretch="None"/>
-                </Border.Background>
-                <UI:MapCanvas x:Name="MapCanvas" AllowDrop="True" >
-                    <UI:MapCanvas.ContextMenu>
-                        <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}" >
-                            <MenuItem Header="{x:Static res:Resources.Remove}" 
+                    </Border.Background>
+                    <UI:MapCanvas x:Name="MapCanvas" AllowDrop="True" >
+                        <UI:MapCanvas.ContextMenu>
+                            <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}" >
+                                <MenuItem Header="{x:Static res:Resources.Remove}" 
                                       Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}"
                                       Command="{Binding RemoveSelectedItemCommand}"
                                       />
-                            <MenuItem Header="{x:Static res:Resources.Info}" 
+                                <MenuItem Header="{x:Static res:Resources.Info}" 
                                       Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}"
                                       IsEnabled="False" 
                                       />
-                            <Separator Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}"/>
-                            <MenuItem Header="{x:Static res:Resources.MapProperties}"
+                                <Separator Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                <MenuItem Header="{x:Static res:Resources.MapProperties}"
                                       Click="ShowMapProperties"
                                       />
-                        </ContextMenu>
-                    </UI:MapCanvas.ContextMenu>
-                </UI:MapCanvas>
-            </Border>
-        </ScrollViewer>
-        
-        <Expander Header="{x:Static res:Resources.Tiles}" VerticalAlignment="Top" IsExpanded="True" Height="Auto" >
-            <ListView ItemsSource="{Binding Tiles}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ContentControl Width="50" Height="50" HorizontalContentAlignment="Center" >
-                            <Path Data="{Binding GeometryPath}" Fill="{Binding HexColor}" Stretch="Fill" />
-                        </ContentControl>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Expander>
+                            </ContextMenu>
+                        </UI:MapCanvas.ContextMenu>
+                    </UI:MapCanvas>
+                </Border>
+            </ScrollViewer>
+
+            <Expander Header="{x:Static res:Resources.Tiles}" VerticalAlignment="Top" IsExpanded="True" Height="Auto" >
+                <ListView ItemsSource="{Binding Tiles}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ContentControl Width="50" Height="50" HorizontalContentAlignment="Center" >
+                                <Path Data="{Binding GeometryPath}" Fill="{Binding HexColor}" Stretch="Fill" />
+                            </ContentControl>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Expander>
+
+        </Grid>
 
     </Grid>
 </Window>

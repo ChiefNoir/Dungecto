@@ -12,7 +12,7 @@ namespace Dungecto
     public partial class MainWindow : Window
     {
         /// <summary> Preset tiles </summary>
-        public ObservableCollection<TileDescription> Tiles { get; set; }
+        public ObservableCollection<Tile> Tiles { get; set; }
 
         /// <summary> Create main editor window </summary>
         public MainWindow()
@@ -20,7 +20,7 @@ namespace Dungecto
             InitializeComponent();
             DataContext = this;
 
-            Tiles = Serializer.FromXml<ObservableCollection<TileDescription>>("Config/Tiles.conf");
+            Tiles = Serializer.FromXml<ObservableCollection<Tile>>("Config/Tiles.xml");
         }
 
         /// <summary> Click on "Remove" menu. Removes selected tile from map </summary>
@@ -39,7 +39,7 @@ namespace Dungecto
             var contex = (sender as ContentControl).DataContext;
             if (contex == null) { return; }
 
-            var desc = contex as TileDescription;
+            var desc = contex as Tile;
             if (desc == null) { return; }
 
             var dragObj = new DataObject("{MapTile}", desc);
@@ -52,6 +52,19 @@ namespace Dungecto
         private void ShowMapProperties(object sender, RoutedEventArgs e)
         {
             new MapPropertiesWindow().ShowDialog(MapCanvas);
+        }
+
+        /// <summary> Click on save menu item</summary>
+        /// <param name="sender">~</param>
+        /// <param name="e">~</param>
+        private void MenuSave_Click(object sender, RoutedEventArgs e)
+        {
+            var path = Dialogs.ShowSaveXml(Properties.Resources.Save);
+
+            if (path != null)
+            {
+                Serializer.ToXml<Map>(MapCanvas.GetDescription(), path);
+            }
         }
     }
 }

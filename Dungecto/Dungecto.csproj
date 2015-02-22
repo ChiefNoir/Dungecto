@@ -57,11 +57,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Converters\ColorConverter.cs" />
     <Compile Include="Common\Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Common\Dialogs.cs" />
     <Compile Include="Common\Exporter.cs" />
     <Compile Include="MapPropertiesWindow.xaml.cs">
       <DependentUpon>MapPropertiesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Map.cs" />
     <Compile Include="UI\BasicCommand.cs" />
     <Compile Include="UI\MapCanvas.cs" />
     <Compile Include="UI\MapTile.cs" />
@@ -90,7 +93,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\TileDescription.cs" />
+    <Compile Include="Model\Tile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -108,9 +111,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Config\Tiles.conf">
+    <Content Include="Config\Tiles.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

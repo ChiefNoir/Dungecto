@@ -1,4 +1,5 @@
 ﻿using Dungecto.Model;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -175,7 +176,7 @@ namespace Dungecto.UI
             e.Effects = DragDropEffects.Copy;
         }
 
-        /// <summary>If drop data is <see cref="Dungecto.Model.TileDescription"/> in {MapTile} format - add new tile to map </summary>
+        /// <summary>If drop data is <see cref="Dungecto.Model.Tile"/> in {MapTile} format - add new tile to map </summary>
         /// <param name="e">~</param>
         protected override void OnDrop(DragEventArgs e)
         {
@@ -186,7 +187,7 @@ namespace Dungecto.UI
             var dropData = e.Data.GetData("{MapTile}");
             if (dropData == null) { return; }
 
-            var dropTile = dropData as TileDescription;
+            var dropTile = dropData as Tile;
             if (dropTile == null) { return; }
 
             Add(new MapTile(dropTile, e.GetPosition(this), _tileTemplate));
@@ -264,6 +265,41 @@ namespace Dungecto.UI
             SectorHeight = _sectorHeightLastValue;
             Rows = _rowsLastValue;
             Columns = _columnsLastValue;
+        }
+
+        /// <summary> Get map descrition </summary>
+        /// <returns>Map description</returns>
+        public Map GetDescription()
+        {
+            var map = new Map
+            {
+                Columns = Columns,
+                Rows = Rows,
+                SectorHeight = SectorHeight,
+                SectorWidth = SectorWidth
+            };
+
+            foreach (MapTile item in Children)
+            {
+                var path = item.Content as System.Windows.Shapes.Path;
+
+                var bgBrush = path.Fill as SolidColorBrush;
+
+                map.Tiles.Add(new Tile()
+                {
+                    GeometryPath = path.Data.ToString(),
+                    Height = item.Height,
+                    HexColor = bgBrush == null ? "#bf7e00": bgBrush.Color.ToString(),
+                    Position = new Point
+                        (
+                           Convert.ToInt32(Canvas.GetLeft(item)), 
+                           Convert.ToInt32(Canvas.GetTop(item))
+                        ),
+                    Width = item.Width
+                });
+            }
+
+            return map;
         }
     }
 }

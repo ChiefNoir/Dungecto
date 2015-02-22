@@ -26,7 +26,7 @@ namespace Dungecto.UI
 
         public MapTile(){ }
 
-        public MapTile(TileDescription description, Point position, ControlTemplate template)
+        public MapTile(Tile description, Point position, ControlTemplate template)
         {
             var geom = new System.Windows.Shapes.Path
             {
