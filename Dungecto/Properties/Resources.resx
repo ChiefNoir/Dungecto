@@ -130,7 +130,7 @@
     <value>Map Properties</value>
   </data>
   <data name="MapSize" xml:space="preserve">
-    <value>Map size:</value>
+    <value>Map size</value>
   </data>
   <data name="MapWidth" xml:space="preserve">
     <value>Map width, in sectors:</value>

@@ -97,7 +97,7 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Map size:.
+        ///   Looks up a localized string similar to Map size.
         /// </summary>
         public static string MapSize {
             get {

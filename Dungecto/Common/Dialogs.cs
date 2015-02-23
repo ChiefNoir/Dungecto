@@ -5,7 +5,7 @@ namespace Dungecto.Common
     /// <summary> Static dialogs </summary>
     public static class Dialogs
     {
-        /// <summary> Show  save xml dialog</summary>
+        /// <summary> Show save xml dialog</summary>
         /// <param name="title">Window title</param>
         /// <returns>path to save point or null</returns>
         public static string ShowSaveXml(string title)
