@@ -1,6 +1,7 @@
 ﻿using Dungecto.Common;
 using Dungecto.Model;
 using Dungecto.UI;
+using MahApps.Metro.Controls;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,10 +10,10 @@ using System.Windows.Input;
 namespace Dungecto
 {
     /// <summary> Main editor window </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         /// <summary> Preset tiles </summary>
-        public ObservableCollection<Tile> Tiles { get; set; }
+        public ObservableCollection<Dungecto.Model.Tile> Tiles { get; set; }
 
         /// <summary> Create main editor window </summary>
         public MainWindow()
@@ -20,7 +21,7 @@ namespace Dungecto
             InitializeComponent();
             DataContext = this;
 
-            Tiles = Serializer.FromXml<ObservableCollection<Tile>>("Config/Tiles.xml");
+            Tiles = Serializer.FromXml<ObservableCollection<Dungecto.Model.Tile>>("Config/Tiles.xml");
         }
 
         /// <summary> Click on "Remove" menu. Removes selected tile from map </summary>
@@ -39,7 +40,7 @@ namespace Dungecto
             var contex = (sender as ContentControl).DataContext;
             if (contex == null) { return; }
 
-            var desc = contex as Tile;
+            var desc = contex as Dungecto.Model.Tile;
             if (desc == null) { return; }
 
             var dragObj = new DataObject("{MapTile}", desc);

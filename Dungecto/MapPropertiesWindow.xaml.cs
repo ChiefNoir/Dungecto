@@ -1,11 +1,12 @@
 ﻿using Dungecto.UI;
+using MahApps.Metro.Controls;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Dungecto
 {
     /// <summary> Window with map properties </summary>
-    public partial class MapPropertiesWindow : Window
+    public partial class MapPropertiesWindow : MetroWindow
     {
         /// <summary> Create with map properties </summary>
         public MapPropertiesWindow()

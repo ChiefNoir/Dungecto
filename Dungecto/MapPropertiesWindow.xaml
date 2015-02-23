@@ -1,26 +1,27 @@
-﻿<Window x:Class="Dungecto.MapPropertiesWindow"
+﻿<Controls:MetroWindow x:Class="Dungecto.MapPropertiesWindow"
+                      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:res="clr-namespace:Dungecto.Properties"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        Title="{x:Static res:Resources.MapProperties}" Height="280" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="{x:Static res:Resources.MapProperties}" Height="344.8" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction Command="{Binding UndoResizeMapPreparationsCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <GroupBox Header="{x:Static res:Resources.MapSize}" Margin="10,10,10,0" VerticalAlignment="Top" Height="156">
+        <GroupBox Header="{x:Static res:Resources.MapSize}" Margin="10,10,9.6,0" VerticalAlignment="Top" Height="198">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Margin="5,11,5,0" Text="{x:Static res:Resources.SectorWidth}" VerticalAlignment="Top"/>
+                <TextBlock Grid.Column="0" Margin="5,15,4.2,0" Text="{x:Static res:Resources.SectorWidth}" VerticalAlignment="Top"/>
                 <TextBox Grid.Column="1" TabIndex="1" Height="23" Margin="5,10,5,0" TextWrapping="Wrap" Text="{Binding Path=SectorWidth, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
 
 
-                <TextBlock Grid.Column="0" Margin="5,39,5,0" Text="{x:Static res:Resources.SectorHeight}" VerticalAlignment="Top"/>
+                <TextBlock Grid.Column="0" Margin="5,44,4.2,0" Text="{x:Static res:Resources.SectorHeight}" VerticalAlignment="Top"/>
                 <TextBox Grid.Column="1" TabIndex="2" Height="23" Margin="5,38,5,0" TextWrapping="Wrap" Text="{Binding Path=SectorHeight, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"/>
 
 
@@ -40,4 +41,4 @@
                 Command="{Binding ResizeMapCommand}" 
                 IsDefault="True" Margin="0,0,90,9" HorizontalAlignment="Right" Width="75" Height="19" VerticalAlignment="Bottom"/>
     </Grid>
-</Window>
+</Controls:MetroWindow>
