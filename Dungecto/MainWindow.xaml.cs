@@ -55,10 +55,20 @@ namespace Dungecto
             new MapPropertiesWindow().ShowDialog(MapCanvas);
         }
 
-        /// <summary> Click on save menu item</summary>
-        /// <param name="sender">~</param>
-        /// <param name="e">~</param>
-        private void MenuSave_Click(object sender, RoutedEventArgs e)
+
+        private void ShowHideMainMenu(object sender, RoutedEventArgs e)
+        {
+            MainMenu.IsOpen = !MainMenu.IsOpen;
+        }
+
+
+
+        private void CreateNewMap(object sender, RoutedEventArgs e)
+        {
+            MapCanvas.Clear();
+        }
+
+        private void SaveMap(object sender, RoutedEventArgs e)
         {
             var path = Dialogs.ShowSaveXml(Properties.Resources.Save);
 
@@ -67,5 +77,29 @@ namespace Dungecto
                 Serializer.ToXml<Map>(MapCanvas.GetDescription(), path);
             }
         }
+
+        private void ExportMap(object sender, RoutedEventArgs e)
+        {
+            var path = Dialogs.ShowSavePng(Properties.Resources.Export);
+
+            if (path != null)
+            {
+                MapCanvas.SelectedItem = null;
+                Exporter.ToPng(MapCanvas, path);
+            }
+        }
+
+        private void OpenMap(object sender, RoutedEventArgs e)
+        {
+            var path = Dialogs.ShowOpenXml(Properties.Resources.Open);
+
+            if (path != null)
+            {
+                var map = Serializer.FromXml<Map>(path);
+
+                MapCanvas.Load(map);
+            }
+        }
+
     }
 }

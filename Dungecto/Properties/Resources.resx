@@ -120,8 +120,17 @@
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Dungecto" xml:space="preserve">
+    <value>Dungecto</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export to png</value>
+  </data>
   <data name="Info" xml:space="preserve">
     <value>Info</value>
+  </data>
+  <data name="MainMenu" xml:space="preserve">
+    <value>Main Menu</value>
   </data>
   <data name="MapHeight" xml:space="preserve">
     <value>Map height, in sectors:</value>
@@ -134,6 +143,15 @@
   </data>
   <data name="MapWidth" xml:space="preserve">
     <value>Map width, in sectors:</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>

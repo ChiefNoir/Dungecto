@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Linq;
+using System.Windows.Markup;
 
 namespace Dungecto.UI
 {
@@ -115,7 +117,7 @@ namespace Dungecto.UI
         public MapTile SelectedItem
         {
             get { return (MapTile)GetValue(SelectedItemProperty); }
-            private set { SetValue(SelectedItemProperty, value); }
+            set { SetValue(SelectedItemProperty, value); }
         }
 
         /// <summary> Undo resize map preparations </summary>
@@ -281,13 +283,15 @@ namespace Dungecto.UI
 
             foreach (MapTile item in Children)
             {
-                var path = item.Content as System.Windows.Shapes.Path;
+                var geom = item.Content as System.Windows.Shapes.Path;
 
-                var bgBrush = path.Fill as SolidColorBrush;
+                var bgBrush = geom.Fill as SolidColorBrush;
+
+                var ss = XamlWriter.Save(geom.Data);
 
                 map.Tiles.Add(new Tile()
                 {
-                    GeometryPath = path.Data.ToString(),
+                    GeometryPath = ss,
                     Height = item.Height,
                     HexColor = bgBrush == null ? "#bf7e00": bgBrush.Color.ToString(),
                     Position = new Point
@@ -300,6 +304,43 @@ namespace Dungecto.UI
             }
 
             return map;
+        }
+
+
+
+        public void Clear()
+        {
+            SelectedItem = null;
+
+            foreach (MapTile tile in Children)
+            {
+                tile.PreviewMouseLeftButtonDown -= TilePreviewMouseDown;
+            }
+
+            Children.Clear();
+
+
+            Columns = 10;
+            Rows = 10;
+            SectorHeight = 50;
+            SectorWidth = 50;
+            Resize();
+        }
+
+        public void Load(Map map)
+        {
+            Clear();
+
+            Columns = map.Columns;
+            Rows = map.Rows;
+            SectorHeight = map.SectorHeight;
+            SectorWidth = map.SectorWidth;
+
+            Resize();
+            foreach (var tile in map.Tiles.Where(x=>x.Position.HasValue))
+            {
+                Add(new MapTile(tile, tile.Position.Value, _tileTemplate));
+            }
         }
     }
 }
