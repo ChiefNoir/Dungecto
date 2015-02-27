@@ -1,58 +1,40 @@
 ﻿using Microsoft.Win32;
+using System;
+using System.Globalization;
 
 namespace Dungecto.Common
 {
     /// <summary> Static dialogs </summary>
     public static class Dialogs
     {
-        /// <summary> Show save xml dialog</summary>
-        /// <param name="title">Window title</param>
-        /// <returns>path to save point or null</returns>
-        public static string ShowSaveXml(string title)
+        /// <summary>Show open file win32 dialog</summary>
+        /// <param name="title">Title of the window</param>
+        /// <param name="extension">File extension. Example: ".xml" </param>
+        /// <returns>Filepath or <c>null</c> if nothing was selected</returns>
+        public static string ShowOpenDialog(string title, string extension)
         {
-            var dialog = new SaveFileDialog();
-
-            dialog.Title = title;
-            dialog.DefaultExt = ".xml";
-            dialog.Filter = "XML files (*.xml)|*.xml";
-            dialog.AddExtension = true;
-
-            if(dialog.ShowDialog() == true)
-            {
-                return dialog.FileName;
-            }
-
-            return null;
+            return ShowFileDialog(new OpenFileDialog(), title, extension);
         }
 
-        /// <summary> Show save xml dialog</summary>
-        /// <param name="title">Window title</param>
-        /// <returns>path to save point or null</returns>
-        public static string ShowOpenXml(string title)
+        /// <summary>Show save file win32 dialog</summary>
+        /// <param name="title">Title of the window</param>
+        /// <param name="extension">File extension. Example: ".xml" </param>
+        /// <returns>Filepath or <c>null</c> if nothing was selected</returns>
+        public static string ShowSaveDialog(string title, string extension)
         {
-            var dialog = new OpenFileDialog();
-
-            dialog.Title = title;
-            dialog.DefaultExt = ".xml";
-            dialog.Filter = "XML files (*.xml)|*.xml";
-            dialog.AddExtension = true;
-
-            if (dialog.ShowDialog() == true)
-            {
-                return dialog.FileName;
-            }
-
-            return null;
+            return ShowFileDialog(new SaveFileDialog(), title, extension);
         }
 
-
-        internal static string ShowSavePng(string title)
+        /// <summary> Show win32 file dialog window </summary>
+        /// <param name="dialog">Dialog window</param>
+        /// <param name="title">Title of the window</param>
+        /// <param name="extension">File extension. Example: ".xml" </param>
+        /// <returns>Filepath or <c>null</c> if nothing was selected</returns>
+        private static string ShowFileDialog(FileDialog dialog, string title, string extension)
         {
-            var dialog = new SaveFileDialog();
-
             dialog.Title = title;
-            dialog.DefaultExt = ".png";
-            dialog.Filter = "png files (*.png)|*.png";
+            dialog.DefaultExt = extension;
+            dialog.Filter = String.Format(CultureInfo.InvariantCulture, "{0}-files (*{0})|*{0}", extension);
             dialog.AddExtension = true;
 
             if (dialog.ShowDialog() == true)

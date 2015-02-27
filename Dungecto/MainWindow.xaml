@@ -5,7 +5,7 @@
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls" 
     xmlns:UI="clr-namespace:Dungecto.UI" 
     xmlns:res="clr-namespace:Dungecto.Properties"
-    xmlns:common="clr-namespace:Dungecto.Common.Converters"
+    xmlns:common="clr-namespace:Dungecto.Common.ValueConverter"
     EnableDWMDropShadow="True"
     WindowButtonCommandsOverlayBehavior="Always"
     BorderBrush="{DynamicResource AccentColorBrush}"

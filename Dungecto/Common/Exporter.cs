@@ -6,7 +6,7 @@ using System.Windows.Media.Imaging;
 
 namespace Dungecto.Common
 {
-    /// <summary> <see cref="Canvas"/> exporter </summary>
+    /// <summary> <see cref="System.Windows.Controls.Canvas"/> exporter </summary>
     public static class Exporter
     {
         /// <summary>DPI</summary>
@@ -15,7 +15,8 @@ namespace Dungecto.Common
         /// <summary>Export canvas content to png file</summary>
         /// <param name="canvas">Canvas to export</param>
         /// <param name="filepath">File path</param>
-        public static void ToPng(this Canvas canvas, string filepath)
+        public static void ToPng(this Visual canvas, string filepath)
+        //public static void ToPng(this Canvas canvas, string filepath)
         {
             var bounds = VisualTreeHelper.GetDescendantBounds(canvas);
 
@@ -36,7 +37,6 @@ namespace Dungecto.Common
             using (var ms = new MemoryStream())
             {
                 encoder.Save(ms);
-                ms.Close();
 
                 File.WriteAllBytes(filepath, ms.ToArray());
             }

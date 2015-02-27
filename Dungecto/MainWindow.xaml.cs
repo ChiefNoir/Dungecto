@@ -13,7 +13,7 @@ namespace Dungecto
     public partial class MainWindow : MetroWindow
     {
         /// <summary> Preset tiles </summary>
-        public ObservableCollection<Dungecto.Model.Tile> Tiles { get; set; }
+        public ObservableCollection<Dungecto.Model.Tile> Tiles { get; private set; }
 
         /// <summary> Create main editor window </summary>
         public MainWindow()
@@ -22,14 +22,6 @@ namespace Dungecto
             DataContext = this;
 
             Tiles = Serializer.FromXml<ObservableCollection<Dungecto.Model.Tile>>("Config/Tiles.xml");
-        }
-
-        /// <summary> Click on "Remove" menu. Removes selected tile from map </summary>
-        /// <param name="sender">~</param>
-        /// <param name="e">~</param>
-        private void MenuRemove_Click(object sender, RoutedEventArgs e)
-        {
-            MapCanvas.Remove(MapCanvas.SelectedItem);
         }
 
         /// <summary>Click on item in <see cref="Tiles"/> List on UI</summary>
@@ -70,7 +62,7 @@ namespace Dungecto
 
         private void SaveMap(object sender, RoutedEventArgs e)
         {
-            var path = Dialogs.ShowSaveXml(Properties.Resources.Save);
+            var path = Dialogs.ShowSaveDialog(Properties.Resources.Save, ".xml");
 
             if (path != null)
             {
@@ -80,7 +72,7 @@ namespace Dungecto
 
         private void ExportMap(object sender, RoutedEventArgs e)
         {
-            var path = Dialogs.ShowSavePng(Properties.Resources.Export);
+            var path = Dialogs.ShowSaveDialog(Properties.Resources.Export, ".png");
 
             if (path != null)
             {
@@ -91,7 +83,7 @@ namespace Dungecto
 
         private void OpenMap(object sender, RoutedEventArgs e)
         {
-            var path = Dialogs.ShowOpenXml(Properties.Resources.Open);
+            var path = Dialogs.ShowOpenDialog(Properties.Resources.Open, ".xml");
 
             if (path != null)
             {

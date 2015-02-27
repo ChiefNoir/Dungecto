@@ -167,6 +167,7 @@ namespace Dungecto.UI
 
             Children.Remove(tile);
             tile.PreviewMouseLeftButtonDown -= TilePreviewMouseDown;
+            SelectedItem = null;
         }
 
         /// <summary> Drag enters the map </summary>
@@ -175,7 +176,10 @@ namespace Dungecto.UI
         {
             base.OnDragEnter(e);
 
-            e.Effects = DragDropEffects.Copy;
+            if (e != null)
+            {
+                e.Effects = DragDropEffects.Copy;
+            }
         }
 
         /// <summary>If drop data is <see cref="Dungecto.Model.Tile"/> in {MapTile} format - add new tile to map </summary>
@@ -184,7 +188,7 @@ namespace Dungecto.UI
         {
             base.OnDrop(e);
 
-            if (e.Data == null) { return; }
+            if (e == null || e.Data == null) { return; }
 
             var dropData = e.Data.GetData("{MapTile}");
             if (dropData == null) { return; }
@@ -329,6 +333,7 @@ namespace Dungecto.UI
 
         public void Load(Map map)
         {
+            if (map == null) { return; }
             Clear();
 
             Columns = map.Columns;

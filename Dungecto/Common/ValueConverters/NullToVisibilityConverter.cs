@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Dungecto.Common.Converters
+namespace Dungecto.Common.ValueConverter
 {
     /// <summary> <code>null</code> to  <code>Visibility</code> converter </summary>
     /// <remarks> If value is not null returns Visibile </remarks>

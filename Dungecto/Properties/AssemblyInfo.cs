@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Resources;
 
 [assembly: AssemblyTitle("Dungecto")]
 [assembly: AssemblyDescription("")]
@@ -25,4 +27,7 @@ using System.Windows;
 
 
 //Major - Minor -  Build - Revision
-[assembly: AssemblyVersion("0.0.0.0")]
+[assembly: AssemblyVersion("0.0.0.1")]
+[assembly: CLSCompliant(false)]
+[assembly: AssemblyFileVersionAttribute("0.0.0.1")]
+[assembly: NeutralResourcesLanguageAttribute("en")]

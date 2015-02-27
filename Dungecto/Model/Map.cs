@@ -24,7 +24,7 @@ namespace Dungecto.Model
 
         /// <summary> Get/set map tiles </summary>
         [XmlElement("Tiles")]
-        public List<Tile> Tiles { get; set; }
+        public List<Tile> Tiles { get; private set; }
 
         /// <summary>Create map description</summary>
         public Map()

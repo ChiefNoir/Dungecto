@@ -38,7 +38,7 @@ namespace Dungecto
         {
             base.OnKeyDown(e);
 
-            if (e.Key == Key.Escape)
+            if (e != null && e.Key == Key.Escape)
             {
                 Close();
             }
