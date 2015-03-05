@@ -86,5 +86,9 @@ namespace Dungecto
             }
         }
 
+        private void Grid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
     }
 }
