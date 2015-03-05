@@ -14,6 +14,7 @@ namespace Dungecto.Common
         public static void ToXml<T>(T item, string filename)
         {
             if (item == null) { return; }
+            if (string.IsNullOrWhiteSpace(filename)) { return; }
 
             var xmlSerializer = new XmlSerializer(typeof(T));
             using (var writer = new StreamWriter(filename, false, Encoding.Unicode))

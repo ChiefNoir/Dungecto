@@ -1,32 +1,34 @@
-﻿using Dungecto.Common;
-using Dungecto.Model;
-using Dungecto.UI;
+﻿using System.Windows;
+using Dungecto.ViewModel;
 using MahApps.Metro.Controls;
-using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Controls;
+using Dungecto.View;
+using Dungecto.Common;
 
 namespace Dungecto
 {
-    /// <summary> Main editor window </summary>
-    public partial class MainWindow : MetroWindow
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : MetroWindow 
     {
-        /// <summary> Preset tiles </summary>
-        public ObservableCollection<Dungecto.Model.Tile> Tiles { get; private set; }
-
-        /// <summary> Create main editor window </summary>
+        /// <summary>
+        /// Initializes a new instance of the MainWindow class.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = this;
-
-            Tiles = Serializer.FromXml<ObservableCollection<Dungecto.Model.Tile>>("Config/Tiles.xml");
+            Closing += (s, e) => ViewModelLocator.Cleanup();
         }
 
-        /// <summary>Click on item in <see cref="Tiles"/> List on UI</summary>
-        /// <param name="sender">~</param>
-        /// <param name="e">~</param>
+
+
+        private void ShowHideMainMenu(object sender, RoutedEventArgs e)
+        {
+            MainMenu.IsOpen = !MainMenu.IsOpen;
+        }
+
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var contex = (sender as ContentControl).DataContext;
@@ -35,61 +37,52 @@ namespace Dungecto
             var desc = contex as Dungecto.Model.Tile;
             if (desc == null) { return; }
 
-            var dragObj = new DataObject("{MapTile}", desc);
+
+
+            var dragObj = new DataObject("{MapTile}", desc.Clone());
             DragDrop.DoDragDrop(this, dragObj, DragDropEffects.Copy);
         }
 
-        /// <summary> Show map properties </summary>
-        /// <param name="sender">~</param>
-        /// <param name="e">~</param>
-        private void ShowMapProperties(object sender, RoutedEventArgs e)
+        private void Canvas_Drop(object sender, DragEventArgs e)
         {
-            new MapPropertiesWindow().ShowDialog(MapCanvas);
+            if (e == null || e.Data == null) { return; }
+
+            var dropData = e.Data.GetData("{MapTile}");
+            if (dropData == null) { return; }
+
+            var dropTile = dropData as Dungecto.Model.Tile;
+            if (dropTile == null) { return; }
+
+
+            dropTile.X = e.GetPosition(sender as UIElement).X;
+            dropTile.Y = e.GetPosition(sender as UIElement).Y;
+
+            //HACK
+            (DataContext as MainViewModel).Map.Tiles.Add(dropTile);
         }
 
 
-        private void ShowHideMainMenu(object sender, RoutedEventArgs e)
+        protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
-            MainMenu.IsOpen = !MainMenu.IsOpen;
+            base.OnMouseWheel(e);
+
         }
 
-
-
-        private void CreateNewMap(object sender, RoutedEventArgs e)
+        MapCanvas ss;
+        private void ThumbListStack_Loaded(object sender, RoutedEventArgs e)
         {
-            MapCanvas.Clear();
-        }
-
-        private void SaveMap(object sender, RoutedEventArgs e)
-        {
-            var path = Dialogs.ShowSaveDialog(Properties.Resources.Save, ".xml");
-
-            if (path != null)
-            {
-                Serializer.ToXml<Map>(MapCanvas.GetDescription(), path);
-            }
+            ss = sender as MapCanvas;
         }
 
         private void ExportMap(object sender, RoutedEventArgs e)
         {
-            var path = Dialogs.ShowSaveDialog(Properties.Resources.Export, ".png");
+            if (ss == null) { return; }
 
-            if (path != null)
+            var file = Dialogs.ShowSaveDialog("", ".png");
+
+            if (!string.IsNullOrEmpty(file))
             {
-                MapCanvas.SelectedItem = null;
-                Exporter.ToPng(MapCanvas, path);
-            }
-        }
-
-        private void OpenMap(object sender, RoutedEventArgs e)
-        {
-            var path = Dialogs.ShowOpenDialog(Properties.Resources.Open, ".xml");
-
-            if (path != null)
-            {
-                var map = Serializer.FromXml<Map>(path);
-
-                MapCanvas.Load(map);
+                Exporter.ToPng(ss, file);
             }
         }
 

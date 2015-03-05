@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -7,7 +8,7 @@ using System.Windows.Media.Imaging;
 namespace Dungecto.Common
 {
     /// <summary> <see cref="System.Windows.Controls.Canvas"/> exporter </summary>
-    public static class Exporter
+    static class Exporter
     {
         /// <summary>DPI</summary>
         private const double Dpi = 96d;
@@ -15,9 +16,11 @@ namespace Dungecto.Common
         /// <summary>Export canvas content to png file</summary>
         /// <param name="canvas">Canvas to export</param>
         /// <param name="filepath">File path</param>
-        public static void ToPng(this Visual canvas, string filepath)
+        public static void ToPng(Visual canvas, string filename)
         //public static void ToPng(this Canvas canvas, string filepath)
         {
+            if (String.IsNullOrWhiteSpace(filename)) { return; }
+
             var bounds = VisualTreeHelper.GetDescendantBounds(canvas);
 
             var rtb = new RenderTargetBitmap((int)bounds.Width, (int)bounds.Height, Dpi, Dpi, PixelFormats.Default);
@@ -38,7 +41,7 @@ namespace Dungecto.Common
             {
                 encoder.Save(ms);
 
-                File.WriteAllBytes(filepath, ms.ToArray());
+                File.WriteAllBytes(filename, ms.ToArray());
             }
         }
     }

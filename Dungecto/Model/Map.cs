@@ -1,35 +1,108 @@
-﻿using System.Collections.Generic;
-using System.Xml.Serialization;
+﻿using System;
+using System.ComponentModel;
 
 namespace Dungecto.Model
 {
-    /// <summary> Map desciption </summary>
-    public class Map
+    using System.Collections.ObjectModel;
+    using System.Xml.Serialization;
+
+    /// <summary> Map </summary>
+    [Serializable]
+    public class Map : INotifyPropertyChanged
     {
-        /// <summary> Get/set numbers of columns </summary>
-        [XmlAttribute("Columns")]
-        public int Columns { get; set; }
+        /// <summary> <see cref="Columns"/> property </summary>
+        private int _columns;
 
-        /// <summary> Get/set numbers of rows </summary>
-        [XmlAttribute("Rows")]
-        public int Rows { get; set; }
+        /// <summary> <see cref="Rows"/> property </summary>
+        private int _rows;
 
-        /// <summary> Get/set sector height </summary>
-        [XmlAttribute("SectorHeight")]
-        public int SectorHeight { get; set; }
+        /// <summary> <see cref="SectorHeight"/> property </summary>
+        private int _sectorHeight;
 
-        /// <summary> Get/set sector width </summary>
-        [XmlAttribute("SectorWidth")]
-        public int SectorWidth { get; set; }
+        /// <summary> <see cref="SectorWidth"/> property </summary>
+        private int _sectorWidth;
 
-        /// <summary> Get/set map tiles </summary>
-        [XmlElement("Tiles")]
-        public List<Tile> Tiles { get; private set; }
-
-        /// <summary>Create map description</summary>
+        /// <summary> Create map </summary>
         public Map()
         {
-            Tiles = new List<Tile>();
+            Tiles = new ObservableCollection<Tile>();
+            SectorWidth = 50;
+            SectorHeight = 50;
+            Rows = 5;
+            Columns = 10;
+        }
+
+        /// <summary> Property changed event</summary>
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+        /// <summary> Get/set map's columns, in sectors (Width) </summary>
+        [XmlAttribute("Columns")]
+        public int Columns
+        {
+            get { return _columns; }
+            set
+            {
+                if (_columns == value) { return; }
+
+                _columns = value;
+                RaisePropertyChanged("Columns");
+            }
+        }
+
+        /// <summary> Get/set map's rows, in sectors (Height) </summary>
+        [XmlAttribute("Rows")]
+        public int Rows
+        {
+            get { return _rows; }
+            set
+            {
+                if (_rows == value) { return; }
+
+                _rows = value;
+                RaisePropertyChanged("Rows");
+            }
+        }
+
+        /// <summary> Get/set height of map's sector </summary>
+        [XmlAttribute("SectorHeight")]
+        public int SectorHeight
+        {
+            get { return _sectorHeight; }
+            set
+            {
+                if (_sectorHeight == value) { return; }
+
+                _sectorHeight = value;
+                RaisePropertyChanged("SectorHeight");
+            }
+        }
+
+        /// <summary> Get/set width of map's sector </summary>
+        [XmlAttribute("SectorWidth")]
+        public int SectorWidth
+        {
+            get { return _sectorWidth;}
+            set
+            {
+                if (_sectorWidth == value) { return; }
+
+                _sectorWidth = value;
+                RaisePropertyChanged("SectorWidth");
+            }
+        }
+        
+        /// <summary> Get/set map's tiles </summary>
+        [XmlElement("Tiles")]
+        public ObservableCollection<Tile> Tiles { get; set; }
+
+        /// <summary> On property changed </summary>
+        /// <param name="propertyName">Property name</param>
+        private void RaisePropertyChanged(string propertyName)
+        {
+            if (propertyName != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

@@ -61,43 +61,16 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close.
-        /// </summary>
-        public static string Close {
-            get {
-                return ResourceManager.GetString("Close", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Dungecto.
         /// </summary>
-        public static string Dungecto {
+        public static string AppName {
             get {
-                return ResourceManager.GetString("Dungecto", resourceCulture);
+                return ResourceManager.GetString("AppName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export to png.
-        /// </summary>
-        public static string Export {
-            get {
-                return ResourceManager.GetString("Export", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Info.
-        /// </summary>
-        public static string Info {
-            get {
-                return ResourceManager.GetString("Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Main Menu.
+        ///   Looks up a localized string similar to Menu.
         /// </summary>
         public static string MainMenu {
             get {
@@ -106,65 +79,47 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Map height, in sectors:.
+        ///   Looks up a localized string similar to Export to....
         /// </summary>
-        public static string MapHeight {
+        public static string MainMenuExport {
             get {
-                return ResourceManager.GetString("MapHeight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Map Properties.
-        /// </summary>
-        public static string MapProperties {
-            get {
-                return ResourceManager.GetString("MapProperties", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Map size.
-        /// </summary>
-        public static string MapSize {
-            get {
-                return ResourceManager.GetString("MapSize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Map width, in sectors:.
-        /// </summary>
-        public static string MapWidth {
-            get {
-                return ResourceManager.GetString("MapWidth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Menu.
-        /// </summary>
-        public static string Menu {
-            get {
-                return ResourceManager.GetString("Menu", resourceCulture);
+                return ResourceManager.GetString("MainMenuExport", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
-        public static string New {
+        public static string MainMenuNew {
             get {
-                return ResourceManager.GetString("New", resourceCulture);
+                return ResourceManager.GetString("MainMenuNew", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
-        public static string Open {
+        public static string MainMenuOpen {
             get {
-                return ResourceManager.GetString("Open", resourceCulture);
+                return ResourceManager.GetString("MainMenuOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string MainMenuSave {
+            get {
+                return ResourceManager.GetString("MainMenuSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map properties.
+        /// </summary>
+        public static string MapProperties {
+            get {
+                return ResourceManager.GetString("MapProperties", resourceCulture);
             }
         }
         
@@ -178,47 +133,11 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Resize.
+        ///   Looks up a localized string similar to Toolbox.
         /// </summary>
-        public static string Resize {
+        public static string Toolbox {
             get {
-                return ResourceManager.GetString("Resize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save.
-        /// </summary>
-        public static string Save {
-            get {
-                return ResourceManager.GetString("Save", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sector height:.
-        /// </summary>
-        public static string SectorHeight {
-            get {
-                return ResourceManager.GetString("SectorHeight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sector width:.
-        /// </summary>
-        public static string SectorWidth {
-            get {
-                return ResourceManager.GetString("SectorWidth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tiles.
-        /// </summary>
-        public static string Tiles {
-            get {
-                return ResourceManager.GetString("Tiles", resourceCulture);
+                return ResourceManager.GetString("Toolbox", resourceCulture);
             }
         }
     }

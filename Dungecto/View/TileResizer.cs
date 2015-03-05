@@ -3,12 +3,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace Dungecto.UI
+namespace Dungecto.View
 {
+    using Dungecto.Model;
+
     /// <summary> Tile mover (things in the tile's corners, allowing to resize tile with mouse) </summary>
-    /// <remarks> Using in <code>Templates\TileTemplate.xaml</code> </remarks>
     public class TileResizer : Thumb
     {
+        private int _min = 10;
+
         /// <summary> Create tile resizer </summary>
         public TileResizer()
         {
@@ -18,6 +21,7 @@ namespace Dungecto.UI
         /// <summary> Destroy tile resizer </summary>
         ~TileResizer()
         {
+            var ss = this;
             DragDelta -= MoveThumbDragDelta;
         }
 
@@ -26,24 +30,29 @@ namespace Dungecto.UI
         /// <param name="e">~</param>
         private void MoveThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            Control designerItem = this.DataContext as Control;
+            var designerItem = this.DataContext as Tile;
 
             if (designerItem == null) { return; }
+
 
             //TODO: checks on resize out of parent borders
             switch (VerticalAlignment)
             {
                 case VerticalAlignment.Bottom:
                     {
-                        var deltaVertical = Math.Min(-e.VerticalChange, designerItem.ActualHeight - designerItem.MinHeight);
-                        designerItem.Height -= deltaVertical;
+                        if (designerItem.Height + e.VerticalChange > _min)
+                        {
+                            designerItem.Height += e.VerticalChange;
+                        }
                         break;
                     }
                 case VerticalAlignment.Top:
                     {
-                        var deltaVertical = Math.Min(e.VerticalChange, designerItem.ActualHeight - designerItem.MinHeight);
-                        Canvas.SetTop(designerItem, Canvas.GetTop(designerItem) + deltaVertical);
-                        designerItem.Height -= deltaVertical;
+                        if (designerItem.Y + e.VerticalChange >= 0)
+                        {
+                            designerItem.Y += e.VerticalChange;
+                            designerItem.Height -= e.VerticalChange;
+                        }
                         break;
                     }
             }
@@ -52,20 +61,26 @@ namespace Dungecto.UI
             {
                 case HorizontalAlignment.Left:
                     {
-                        var deltaHorizontal = Math.Min(e.HorizontalChange, designerItem.ActualWidth - designerItem.MinWidth);
-                        Canvas.SetLeft(designerItem, Canvas.GetLeft(designerItem) + deltaHorizontal);
-                        designerItem.Width -= deltaHorizontal;
+                        if (designerItem.X + e.HorizontalChange > 0)
+                        {
+                            designerItem.X += e.HorizontalChange;
+                            designerItem.Width -= e.HorizontalChange;
+                        }
                         break;
                     }
                 case HorizontalAlignment.Right:
                     {
-                        var deltaHorizontal = Math.Min(-e.HorizontalChange, designerItem.ActualWidth - designerItem.MinWidth);
-                        designerItem.Width -= deltaHorizontal;
+                        if (designerItem.Width + e.HorizontalChange > _min)
+                        {
+                            designerItem.Width += e.HorizontalChange;
+                        }
                         break;
                     }
             }
 
             e.Handled = true;
         }
+
+
     }
 }
