@@ -86,9 +86,10 @@ namespace Dungecto
             }
         }
 
-        private void Grid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            
+            MapPropertiesMenu.IsOpen = !MapPropertiesMenu.IsOpen;
         }
+
     }
 }

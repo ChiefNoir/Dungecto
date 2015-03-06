@@ -115,6 +115,15 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Columns.
+        /// </summary>
+        public static string MapColumns {
+            get {
+                return ResourceManager.GetString("MapColumns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Map properties.
         /// </summary>
         public static string MapProperties {
@@ -124,11 +133,38 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rows.
+        /// </summary>
+        public static string MapRows {
+            get {
+                return ResourceManager.GetString("MapRows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sector height:.
+        /// </summary>
+        public static string SectorHeight {
+            get {
+                return ResourceManager.GetString("SectorHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sector width:.
+        /// </summary>
+        public static string SectorWidth {
+            get {
+                return ResourceManager.GetString("SectorWidth", resourceCulture);
             }
         }
         

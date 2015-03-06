@@ -36,6 +36,24 @@
             </StackPanel>
         </controls:Flyout>
 
+        <controls:Flyout x:Name="MapPropertiesMenu" Header="{x:Static res:Resources.MapProperties}" Panel.ZIndex="3"
+                         Position="Right" IsOpen="False" 
+                         Theme="Adapt">
+            <Grid>
+                <TextBlock Margin="10,10,10,0" Text="{x:Static res:Resources.SectorWidth}" VerticalAlignment="Top"/>
+                <controls:NumericUpDown Height="23" Margin="10,26,10,0" Value="{Binding Map.SectorWidth}" Minimum="10" VerticalAlignment="Top"/>
+
+                <TextBlock Margin="10,57,10,0" Text="{x:Static res:Resources.SectorHeight}" VerticalAlignment="Top"/>
+                <controls:NumericUpDown Height="23" Margin="10,73,10,0" Value="{Binding Map.SectorHeight}" Minimum="10" VerticalAlignment="Top"/>
+
+                <TextBlock Margin="12,120,10,0" Text="{x:Static res:Resources.MapColumns}" VerticalAlignment="Top"/>
+                <controls:NumericUpDown Height="23" Margin="12,136,10,0" Value="{Binding Map.Columns}" Minimum="1" VerticalAlignment="Top"/>
+
+                <TextBlock Margin="12,167,10,0" Text="{x:Static res:Resources.MapRows}" VerticalAlignment="Top"/>
+                <controls:NumericUpDown Height="23" Margin="12,183,10,0" Value="{Binding Map.Rows}" Minimum="1" VerticalAlignment="Top"/>
+            </Grid>
+        </controls:Flyout>
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -67,7 +85,7 @@
                     </ListView.Background>
                     <ListView.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="{x:Static res:Resources.MapProperties}" />
+                            <MenuItem Header="{x:Static res:Resources.MapProperties}" Click="MenuItem_Click" />
                         </ContextMenu>
                     </ListView.ContextMenu>
                     <ListView.Resources>
@@ -85,7 +103,7 @@
                                     <view:ThumbMover.Template>
                                         <ControlTemplate>
                                             <Rectangle Fill="Transparent"/>
-                                        </ControlTemplate>                                        
+                                        </ControlTemplate>
                                     </view:ThumbMover.Template>
                                 </view:ThumbMover>
 
@@ -95,7 +113,7 @@
 
                                 <Grid Visibility="{Binding 
                                     RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsMouseOver, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVis}}">
-                                                                        
+
                                     <view:TileResizer Height="3" Cursor="SizeNS" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
                                     <view:TileResizer Height="3" Cursor="SizeNS" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
 
@@ -117,7 +135,7 @@
                             <Setter Property="Canvas.Top" Value="{Binding Path=Y}" />
                             <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
                             <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                            
+
                             <Style.Triggers>
                                 <Trigger Property="IsFocused" Value="False">
                                     <Setter Property="IsSelected" Value="False"/>
@@ -136,9 +154,9 @@
                                             AllowDrop="True" Drop="Canvas_Drop" Loaded="ThumbListStack_Loaded" />
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
-                    
+
                 </ListView>
-                
+
             </ScrollViewer>
         </Grid>
     </Grid>

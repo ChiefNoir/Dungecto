@@ -135,11 +135,23 @@
   <data name="MainMenuSave" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="MapColumns" xml:space="preserve">
+    <value>Columns</value>
+  </data>
   <data name="MapProperties" xml:space="preserve">
     <value>Map properties</value>
   </data>
+  <data name="MapRows" xml:space="preserve">
+    <value>Rows</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="SectorHeight" xml:space="preserve">
+    <value>Sector height:</value>
+  </data>
+  <data name="SectorWidth" xml:space="preserve">
+    <value>Sector width:</value>
   </data>
   <data name="Toolbox" xml:space="preserve">
     <value>Toolbox</value>
