@@ -20,12 +20,12 @@
 
     <controls:MetroWindow.LeftWindowCommands>
         <controls:WindowCommands>
-            <Button Content="{x:Static res:Resources.MainMenu}" Click="ShowHideMainMenu" />
+            <Button Content="{x:Static res:Resources.MainMenu}" Click="OpenCloseMainMenu" />
         </controls:WindowCommands>
     </controls:MetroWindow.LeftWindowCommands>
 
     <Grid>
-        <controls:Flyout x:Name="MainMenu" Header="{x:Static res:Resources.MainMenu}" Panel.ZIndex="3"
+        <controls:Flyout x:Name="MainMenuFlyout" Header="{x:Static res:Resources.MainMenu}" Panel.ZIndex="3"
                          Position="Left" IsOpen="False" 
                          Theme="Inverse">
             <StackPanel>
@@ -36,7 +36,7 @@
             </StackPanel>
         </controls:Flyout>
 
-        <controls:Flyout x:Name="MapPropertiesMenu" Header="{x:Static res:Resources.MapProperties}" Panel.ZIndex="3"
+        <controls:Flyout x:Name="MapPropertiesFlyout" Header="{x:Static res:Resources.MapProperties}" Panel.ZIndex="3"
                          Position="Right" IsOpen="False" 
                          Theme="Adapt">
             <Grid>
@@ -64,7 +64,7 @@
                 <ListView ItemsSource="{Binding Toolbox}" BorderBrush="Transparent" >
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
-                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ToolboxPreviewMouseLeftButtonDown" />
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
@@ -85,7 +85,7 @@
                     </ListView.Background>
                     <ListView.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="{x:Static res:Resources.MapProperties}" Click="MenuItem_Click" />
+                            <MenuItem Header="{x:Static res:Resources.MapProperties}" Click="OpenCloseMapProperties" />
                         </ContextMenu>
                     </ListView.ContextMenu>
                     <ListView.Resources>
@@ -151,7 +151,7 @@
                                             SectorHeight="{Binding Map.SectorHeight}"
                                             SectorWidth="{Binding Map.SectorWidth}"
                                             Background="White" 
-                                            AllowDrop="True" Drop="Canvas_Drop" Loaded="ThumbListStack_Loaded" />
+                                            AllowDrop="True" Drop="CanvasDrop" Loaded="ListViewTemplateLoaded" />
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
 
