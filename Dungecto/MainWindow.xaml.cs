@@ -64,8 +64,11 @@ namespace Dungecto
             var dropTile = dropData as Model.Tile;
             if (dropTile == null) { return; }
 
-            dropTile.X = e.GetPosition(sender as UIElement).X;
-            dropTile.Y = e.GetPosition(sender as UIElement).Y;
+            var uielement = sender as UIElement;
+            if (uielement == null) { return; }
+
+            dropTile.X = e.GetPosition(uielement).X;
+            dropTile.Y = e.GetPosition(uielement).Y;
 
             //TODO: fix it!
             (DataContext as MainViewModel).Map.Tiles.Add(dropTile);

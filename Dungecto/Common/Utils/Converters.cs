@@ -6,29 +6,28 @@ using System.Windows.Shapes;
 
 namespace Dungecto.Common.Utils
 {
-    /// <summary>Parsers</summary>
-    static class Converters
-    {
-        /// <summary> Convert path markup to <see cref="Geometry"/></summary>
-        /// <param name="pathMarkup">Path markup data</param>
-        /// <returns><see cref="Geometry"/></returns>
-        public static Geometry FromPathMarkup(string pathMarkup)
-        {
-            var xaml = String.Format
-                (
-                    CultureInfo.InvariantCulture,
-                    "<Path xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'><Path.Data>{0}</Path.Data></Path>",
-                    pathMarkup
-                );
+    ///// <summary>Parsers</summary>
+    //static class Converters
+    //{
+    //    /// <summary> Convert path markup to <see cref="Geometry"/></summary>
+    //    /// <param name="pathMarkup">Path markup data</param>
+    //    /// <returns><see cref="Geometry"/></returns>
+    //    public static Geometry FromPathMarkup(string pathMarkup)
+    //    {
+    //        var xaml = String.Format
+    //            (
+    //                CultureInfo.InvariantCulture,
+    //                "<Path xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'><Path.Data>{0}</Path.Data></Path>",
+    //                pathMarkup
+    //            );
 
-            var path = XamlReader.Parse(xaml) as Path;
+    //        var path = XamlReader.Parse(xaml) as Path;
+    //        if (path == null) { return null; }
 
-            if (path == null) { return null; }
+    //        Geometry geometry = path.Data;
+    //        path.Data = null;
 
-            Geometry geometry = path.Data;
-            path.Data = null;
-
-            return geometry;
-        }
-    }
+    //        return geometry;
+    //    }
+    //}
 }

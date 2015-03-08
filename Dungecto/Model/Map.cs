@@ -1,35 +1,37 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace Dungecto.Model
 {
-    using System.Collections.ObjectModel;
-    using System.Xml.Serialization;
-
     /// <summary> Map </summary>
     [Serializable]
     public class Map : INotifyPropertyChanged
     {
-        /// <summary> <see cref="Columns"/> property </summary>
+        /// <summary> See <see cref="Columns"/> property </summary>
         private int _columns;
 
-        /// <summary> <see cref="Rows"/> property </summary>
+        /// <summary> See <see cref="Rows"/> property </summary>
         private int _rows;
 
-        /// <summary> <see cref="SectorHeight"/> property </summary>
+        /// <summary> See <see cref="SectorHeight"/> property </summary>
         private int _sectorHeight;
 
-        /// <summary> <see cref="SectorWidth"/> property </summary>
+        /// <summary> See <see cref="SectorWidth"/> property </summary>
         private int _sectorWidth;
+
+        /// <summary> See <see cref="Tiles"/> property </summary>
+        private ObservableCollection<Tile> _tiles;
 
         /// <summary> Create map </summary>
         public Map()
         {
-            Tiles = new ObservableCollection<Tile>();
-            SectorWidth = 50;
-            SectorHeight = 50;
-            Rows = 5;
-            Columns = 10;
+            _tiles = new ObservableCollection<Tile>();
+            _sectorWidth = 50;
+            _sectorHeight = 50;
+            _rows = 5;
+            _columns = 10;
         }
 
         /// <summary> Property changed event</summary>
@@ -81,7 +83,7 @@ namespace Dungecto.Model
         [XmlAttribute("SectorWidth")]
         public int SectorWidth
         {
-            get { return _sectorWidth;}
+            get { return _sectorWidth; }
             set
             {
                 if (_sectorWidth == value) { return; }
@@ -90,10 +92,18 @@ namespace Dungecto.Model
                 RaisePropertyChanged("SectorWidth");
             }
         }
-        
+
         /// <summary> Get/set map's tiles </summary>
         [XmlElement("Tiles")]
-        public ObservableCollection<Tile> Tiles { get; set; }
+        public ObservableCollection<Tile> Tiles 
+        { 
+            get { return _tiles; } 
+            private set 
+            { 
+                _tiles = value; 
+                RaisePropertyChanged("Tiles"); 
+            } 
+        }
 
         /// <summary> On property changed </summary>
         /// <param name="propertyName">Property name</param>

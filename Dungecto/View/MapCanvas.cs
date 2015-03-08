@@ -5,6 +5,7 @@ using System.Windows.Shapes;
 
 namespace Dungecto.View
 {
+    /// <summary> Map canvas </summary>
     class MapCanvas : Canvas
     {
         /// <summary> <see cref="SectorWidth"/> DependencyProperty </summary>
@@ -13,7 +14,34 @@ namespace Dungecto.View
                 "SectorWidth",
                 typeof(int),
                 typeof(MapCanvas),
-                new FrameworkPropertyMetadata(50)
+                new FrameworkPropertyMetadata(50, OnSizeChanged)
+            );
+
+        /// <summary> <see cref="SectorWidth"/> DependencyProperty </summary>
+        public static readonly DependencyProperty SectorHeightProperty = DependencyProperty.Register
+            (
+                "SectorHeight",
+                typeof(int),
+                typeof(MapCanvas),
+                new FrameworkPropertyMetadata(50, OnSizeChanged)
+            );
+
+        /// <summary> <see cref="SectorWidth"/> DependencyProperty </summary>
+        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register
+            (
+                "Columns",
+                typeof(int),
+                typeof(MapCanvas),
+                new FrameworkPropertyMetadata(10, OnSizeChanged)
+            );
+
+        /// <summary> <see cref="SectorWidth"/> DependencyProperty </summary>
+        public static readonly DependencyProperty RowsProperty = DependencyProperty.Register
+            (
+                "Rows",
+                typeof(int),
+                typeof(MapCanvas),
+                new FrameworkPropertyMetadata(10, OnSizeChanged)
             );
 
         /// <summary> Get/set map sector width </summary>
@@ -23,30 +51,12 @@ namespace Dungecto.View
             set { SetValue(SectorWidthProperty, value); }
         }
 
-        /// <summary> <see cref="SectorWidth"/> DependencyProperty </summary>
-        public static readonly DependencyProperty SectorHeightProperty = DependencyProperty.Register
-            (
-                "SectorHeight",
-                typeof(int),
-                typeof(MapCanvas),
-                new FrameworkPropertyMetadata(50)
-            );
-
         /// <summary> Get/set map sector width </summary>
         public int SectorHeight
         {
             get { return (int)GetValue(SectorHeightProperty); }
             set { SetValue(SectorHeightProperty, value); }
         }
-
-        /// <summary> <see cref="SectorWidth"/> DependencyProperty </summary>
-        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register
-            (
-                "Columns",
-                typeof(int),
-                typeof(MapCanvas),
-                new FrameworkPropertyMetadata(10)
-            );
 
         /// <summary> Get/set map sector width </summary>
         public int Columns
@@ -55,15 +65,6 @@ namespace Dungecto.View
             set { SetValue(ColumnsProperty, value); }
         }
 
-        /// <summary> <see cref="SectorWidth"/> DependencyProperty </summary>
-        public static readonly DependencyProperty RowsProperty = DependencyProperty.Register
-            (
-                "Rows",
-                typeof(int),
-                typeof(MapCanvas),
-                new FrameworkPropertyMetadata(10)
-            );
-
         /// <summary> Get/set map sector width </summary>
         public int Rows
         {
@@ -71,12 +72,24 @@ namespace Dungecto.View
             set { SetValue(RowsProperty, value); }
         }
 
+        /// <summary> Initializes a new instance of the MapCanvas class </summary>
         public MapCanvas()
         {
             Resize();
         }
 
-        /// <summary> Resize map </summary>
+        /// <summary> Resize control on sectors and columns changed </summary>
+        /// <param name="sender"> <see cref="MapCanvas"/> object </param>
+        /// <param name="e">~</param>
+        private static void OnSizeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            var control = sender as MapCanvas;
+            if (control == null) { return; }
+
+            control.Resize();
+        }
+
+        /// <summary> Recreate map's background and adjust <see cref="base.Width"/> and <see cref="base.Height"/> </summary>
         private void Resize()
         {
             Width = Columns * SectorWidth;
@@ -102,19 +115,6 @@ namespace Dungecto.View
             Background = null;
             Background = brush;
         }
-
-
-        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-        {
-            base.OnPropertyChanged(e);
-
-            if (e.Property.Name == "Rows" || e.Property.Name == "Columns" || e.Property.Name == "SectorHeight" || e.Property.Name == "SectorWidth")
-            {
-                Resize();
-            }
-        }
-
-
 
     }
 }

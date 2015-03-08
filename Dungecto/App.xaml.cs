@@ -1,11 +1,9 @@
-﻿using System.Windows;
-using GalaSoft.MvvmLight.Threading;
+﻿using GalaSoft.MvvmLight.Threading;
+using System.Windows;
 
 namespace Dungecto
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
+    /// <summary> Interaction logic for App.xaml </summary>
     public partial class App : Application
     {
         static App()

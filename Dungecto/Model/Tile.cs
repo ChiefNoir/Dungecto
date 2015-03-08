@@ -8,22 +8,22 @@ namespace Dungecto.Model
     [Serializable]
     public class Tile : INotifyPropertyChanged, ICloneable
     {
-        /// <summary> <see cref="Color"/> property </summary>
+        /// <summary> See <see cref="Color"/> property </summary>
         private string _color;
 
-        /// <summary> <see cref="Geometry"/> property </summary>
+        /// <summary> See <see cref="Geometry"/> property </summary>
         private string _geometry;
 
-        /// <summary> <see cref="Height"/> property </summary>
+        /// <summary> See <see cref="Height"/> property </summary>
         private double _height;
 
-        /// <summary> <see cref="Width"/> property </summary>
+        /// <summary> See <see cref="Width"/> property </summary>
         private double _width;
 
-        /// <summary> <see cref="X"/> property </summary>
+        /// <summary> See <see cref="X"/> property </summary>
         private double _x;
 
-        /// <summary> <see cref="Y"/> property </summary>
+        /// <summary> See <see cref="Y"/> property </summary>
         private double _y;
 
         /// <summary> Property changed event</summary>
