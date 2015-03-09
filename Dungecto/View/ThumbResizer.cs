@@ -9,6 +9,12 @@ namespace Dungecto.View
         /// <summary> <see cref="MinX"/> DependencyProperty </summary>
         public static readonly DependencyProperty MinXProperty = DependencyProperty.Register("MinX", typeof(double), typeof(ThumbResizer));
 
+        /// <summary> <see cref="MaxX"/> DependencyProperty </summary>
+        public static readonly DependencyProperty MaxXProperty = DependencyProperty.Register("MaxX", typeof(double), typeof(ThumbResizer));
+
+        /// <summary> <see cref="MaxY"/> DependencyProperty </summary>
+        public static readonly DependencyProperty MaxYProperty = DependencyProperty.Register("MaxY", typeof(double), typeof(ThumbResizer));
+
         /// <summary> <see cref="MinY"/> DependencyProperty </summary>
         public static readonly DependencyProperty MinYProperty = DependencyProperty.Register("MinY", typeof(double), typeof(ThumbResizer));
 
@@ -18,13 +24,14 @@ namespace Dungecto.View
         /// <summary> <see cref="Y"/> DependencyProperty </summary>
         public static readonly DependencyProperty YProperty = DependencyProperty.Register("Y", typeof(double), typeof(ThumbResizer));
 
-        //TODO: "ParentWidth" - name doesn't looks nice
-        /// <summary> <see cref="ParentWidth"/> DependencyProperty </summary>
-        public static readonly DependencyProperty ParentWidthProperty = DependencyProperty.Register("ParentWidth", typeof(double), typeof(ThumbResizer));
+        /// <summary> <see cref="ContentWidth"/> DependencyProperty </summary>
+        public static readonly DependencyProperty ContentWidthProperty = DependencyProperty.Register("ContentWidth", typeof(double), typeof(ThumbResizer));
 
-        //TODO: "ParentHeight" - name doesn't looks nice
-        /// <summary> <see cref="ParentHeight"/> DependencyProperty </summary>
-        public static readonly DependencyProperty ParentHeightProperty = DependencyProperty.Register("ParentHeight", typeof(double), typeof(ThumbResizer));
+        /// <summary> <see cref="ContentHeight"/> DependencyProperty </summary>
+        public static readonly DependencyProperty ContentHeightProperty = DependencyProperty.Register("ContentHeight", typeof(double), typeof(ThumbResizer));
+
+        /// <summary> <see cref="MinContent"/> DependencyProperty </summary>
+        public static readonly DependencyProperty MinContentProperty = DependencyProperty.Register("MinContent", typeof(int), typeof(ThumbResizer));
 
         /// <summary> Get/set min value for <see cref="X"/> property </summary>
         public double MinX
@@ -33,11 +40,32 @@ namespace Dungecto.View
             set { SetValue(MinXProperty, value); }
         }
 
+        /// <summary> Get/set min value for <see cref="MaxY"/> property </summary>
+        public double MaxX
+        {
+            get { return (double)GetValue(MaxXProperty); }
+            set { SetValue(MaxXProperty, value); }
+        }
+
         /// <summary> Get/set min value for <see cref="Y"/> property </summary>
         public double MinY
         {
             get { return (double)GetValue(MinYProperty); }
             set { SetValue(MinYProperty, value); }
+        }
+
+        /// <summary> Get/set min value for <see cref="Y"/> property </summary>
+        public int MinContent
+        {
+            get { return (int)GetValue(MinContentProperty); }
+            set { SetValue(MinContentProperty, value); }
+        }
+
+        /// <summary> Get/set min value for <see cref="MaxX"/> property </summary>
+        public double MaxY
+        {
+            get { return (double)GetValue(MaxYProperty); }
+            set { SetValue(MaxYProperty, value); }
         }
 
         /// <summary> Get/set X position </summary>
@@ -74,18 +102,18 @@ namespace Dungecto.View
             }
         }
 
-        /// <summary> Get/set width </summary>
-        public double ParentWidth
+        /// <summary> Get/ContentWidth width </summary>
+        public double ContentWidth
         {
-            get { return (double)GetValue(ParentWidthProperty); }
-            set { SetValue(ParentWidthProperty, value); }
+            get { return (double)GetValue(ContentWidthProperty); }
+            set { SetValue(ContentWidthProperty, value); }
         }
 
         /// <summary> Get/set height </summary>
-        public double ParentHeight
+        public double ContentHeight
         {
-            get { return (double)GetValue(ParentHeightProperty); }
-            set { SetValue(ParentHeightProperty, value); }
+            get { return (double)GetValue(ContentHeightProperty); }
+            set { SetValue(ContentHeightProperty, value); }
         }
 
         /// <summary> Initializes a new instance of the TileResizer class </summary>
@@ -105,23 +133,22 @@ namespace Dungecto.View
         /// <param name="e">~</param>
         private void MoveThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            //TODO: checks on resize out of parent borders
             switch (VerticalAlignment)
             {
                 case VerticalAlignment.Bottom:
                     {
-                        if (ParentHeight + e.VerticalChange > MinHeight)
+                        if (ContentHeight + e.VerticalChange >= MinHeight && ContentHeight + e.VerticalChange + Y <= MaxY && ContentHeight + e.VerticalChange >= MinContent)
                         {
-                            ParentHeight += e.VerticalChange;
+                            ContentHeight += e.VerticalChange;
                         }
                         break;
                     }
                 case VerticalAlignment.Top:
                     {
-                        if (Y + e.VerticalChange >= 0)
+                        if (Y + e.VerticalChange >= MinY && ContentHeight - e.VerticalChange >= MinContent)
                         {
                             Y += e.VerticalChange;
-                            ParentHeight -= e.VerticalChange;
+                            ContentHeight -= e.VerticalChange;
                         }
                         break;
                     }
@@ -131,18 +158,18 @@ namespace Dungecto.View
             {
                 case HorizontalAlignment.Left:
                     {
-                        if (X + e.HorizontalChange > 0)
+                        if (X + e.HorizontalChange >= MinX && ContentWidth - e.HorizontalChange >= MinContent)
                         {
                             X += e.HorizontalChange;
-                            ParentWidth -= e.HorizontalChange;
+                            ContentWidth -= e.HorizontalChange;
                         }
                         break;
                     }
                 case HorizontalAlignment.Right:
                     {
-                        if (ParentWidth + e.HorizontalChange > MinWidth)
+                        if (ContentWidth + e.HorizontalChange >= MinWidth && ContentWidth + e.HorizontalChange >= MinContent && ContentWidth + e.HorizontalChange + X <= MaxX)
                         {
-                            ParentWidth += e.HorizontalChange;
+                            ContentWidth += e.HorizontalChange;
                         }
                         break;
                     }
