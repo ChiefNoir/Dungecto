@@ -123,17 +123,17 @@
   <data name="MainMenu" xml:space="preserve">
     <value>Menu</value>
   </data>
-  <data name="MainMenuExport" xml:space="preserve">
-    <value>Export to...</value>
-  </data>
   <data name="MainMenuNew" xml:space="preserve">
-    <value>New</value>
+    <value>   New</value>
   </data>
   <data name="MainMenuOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>   Open</value>
   </data>
   <data name="MainMenuSave" xml:space="preserve">
-    <value>Save</value>
+    <value>   Save</value>
+  </data>
+  <data name="MainMenuSaveAsImage" xml:space="preserve">
+    <value>   Save as image</value>
   </data>
   <data name="MapColumns" xml:space="preserve">
     <value>Columns</value>

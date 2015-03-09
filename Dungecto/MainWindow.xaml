@@ -29,10 +29,10 @@
                          Position="Left" IsOpen="False" 
                          Theme="Inverse">
             <StackPanel>
-                <Button Content="{x:Static res:Resources.MainMenuNew}" Margin="-1" Style="{DynamicResource SquareButtonStyle}" Command="{Binding CreateNewMapCommand}" />
-                <Button Content="{x:Static res:Resources.MainMenuOpen}" Margin="-1" Style="{DynamicResource SquareButtonStyle}" Command="{Binding LoadMapCommand}" />
-                <Button Content="{x:Static res:Resources.MainMenuSave}" Margin="-1" Style="{DynamicResource SquareButtonStyle}" Command="{Binding SaveMapCommand}" />
-                <Button Content="{x:Static res:Resources.MainMenuExport}" Margin="-1" Style="{DynamicResource SquareButtonStyle}" Click="ExportMap" />
+                <Button Content="{x:Static res:Resources.MainMenuNew}" HorizontalContentAlignment="Left" Margin="-1" Style="{DynamicResource SquareButtonStyle}" Command="{Binding CreateNewMapCommand}" />
+                <Button Content="{x:Static res:Resources.MainMenuOpen}" HorizontalContentAlignment="Left" Margin="-1" Style="{DynamicResource SquareButtonStyle}" Command="{Binding LoadMapCommand}" />
+                <Button Content="{x:Static res:Resources.MainMenuSave}" HorizontalContentAlignment="Left" Margin="-1" Style="{DynamicResource SquareButtonStyle}" Command="{Binding SaveMapCommand}" />
+                <Button Content="{x:Static res:Resources.MainMenuSaveAsImage}" HorizontalContentAlignment="Left" Margin="-1" Style="{DynamicResource SquareButtonStyle}" Click="ExportMap" />
             </StackPanel>
         </controls:Flyout>
 

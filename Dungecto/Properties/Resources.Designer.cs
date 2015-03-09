@@ -79,16 +79,7 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export to....
-        /// </summary>
-        public static string MainMenuExport {
-            get {
-                return ResourceManager.GetString("MainMenuExport", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New.
+        ///   Looks up a localized string similar to    New.
         /// </summary>
         public static string MainMenuNew {
             get {
@@ -97,7 +88,7 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open.
+        ///   Looks up a localized string similar to    Open.
         /// </summary>
         public static string MainMenuOpen {
             get {
@@ -106,11 +97,20 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save.
+        ///   Looks up a localized string similar to    Save.
         /// </summary>
         public static string MainMenuSave {
             get {
                 return ResourceManager.GetString("MainMenuSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to    Save as image.
+        /// </summary>
+        public static string MainMenuSaveAsImage {
+            get {
+                return ResourceManager.GetString("MainMenuSaveAsImage", resourceCulture);
             }
         }
         
