@@ -48,6 +48,7 @@ namespace Dungecto.Model
 
                 _columns = value;
                 RaisePropertyChanged("Columns");
+                RaisePropertyChanged("Width");
             }
         }
 
@@ -62,6 +63,7 @@ namespace Dungecto.Model
 
                 _rows = value;
                 RaisePropertyChanged("Rows");
+                RaisePropertyChanged("Height");
             }
         }
 
@@ -76,6 +78,7 @@ namespace Dungecto.Model
 
                 _sectorHeight = value;
                 RaisePropertyChanged("SectorHeight");
+                RaisePropertyChanged("Height");
             }
         }
 
@@ -90,6 +93,25 @@ namespace Dungecto.Model
 
                 _sectorWidth = value;
                 RaisePropertyChanged("SectorWidth");
+                RaisePropertyChanged("Width");
+            }
+        }
+
+        /// <summary> Get total map width (in pixels)</summary>
+        public int Width
+        {
+            get
+            {
+                return Columns * SectorWidth;
+            }
+        }
+
+        /// <summary> Get total map height (in pixels) </summary>
+        public int Height
+        {
+            get
+            {
+                return Rows * SectorHeight;
             }
         }
 
