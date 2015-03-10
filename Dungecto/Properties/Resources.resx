@@ -135,14 +135,17 @@
   <data name="MainMenuSaveAsImage" xml:space="preserve">
     <value>   Save as image</value>
   </data>
+  <data name="MapBackground" xml:space="preserve">
+    <value>Background:</value>
+  </data>
   <data name="MapColumns" xml:space="preserve">
-    <value>Columns</value>
+    <value>Columns:</value>
   </data>
   <data name="MapProperties" xml:space="preserve">
     <value>Map properties</value>
   </data>
   <data name="MapRows" xml:space="preserve">
-    <value>Rows</value>
+    <value>Rows:</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>

@@ -44,6 +44,23 @@ namespace Dungecto.View
                 new FrameworkPropertyMetadata(10, OnSizeChanged)
             );
 
+        /// <summary> <see cref="BackgroundColor"/> DependencyProperty </summary>
+        public static readonly DependencyProperty BackgroundColorProperty = DependencyProperty.Register
+            (
+                "BackgroundColor",
+                typeof(Color),
+                typeof(MapCanvas),
+                new FrameworkPropertyMetadata(Colors.LightBlue, OnSizeChanged)
+            );
+
+        /// <summary> Get/set map background color </summary>
+        public Color BackgroundColor
+        {
+            get { return (Color)GetValue(BackgroundColorProperty); }
+            set { SetValue(BackgroundColorProperty, value); }
+        }
+
+
         /// <summary> Get/set map sector width </summary>
         public int SectorWidth
         {
@@ -107,7 +124,7 @@ namespace Dungecto.View
                     Stroke = new SolidColorBrush(Colors.Gray),
                     Height = SectorHeight,
                     Width = SectorWidth,
-                    Fill = new SolidColorBrush(Colors.LightBlue),
+                    Fill = new SolidColorBrush(BackgroundColor),
                     StrokeThickness = .5
                 }
             };

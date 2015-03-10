@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Media;
 using System.Xml.Serialization;
 
 namespace Dungecto.Model
@@ -20,6 +21,9 @@ namespace Dungecto.Model
 
         /// <summary> See <see cref="SectorWidth"/> property </summary>
         private int _sectorWidth;
+
+        /// <summary> See <see cref="Background"/> property </summary>
+        private Color _background = Colors.LightBlue;
 
         /// <summary> See <see cref="Tiles"/> property </summary>
         private ObservableCollection<Tile> _tiles;
@@ -50,6 +54,14 @@ namespace Dungecto.Model
                 RaisePropertyChanged("Columns");
                 RaisePropertyChanged("Width");
             }
+        }
+
+        /// <summary> Get/set map's background color</summary>
+        [XmlElement("Background")]
+        public Color Background
+        {
+            get { return _background; }
+            set { _background = value; RaisePropertyChanged("Background"); }
         }
 
         /// <summary> Get/set map's rows, in sectors (Height) </summary>

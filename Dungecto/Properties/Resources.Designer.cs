@@ -115,7 +115,16 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Columns.
+        ///   Looks up a localized string similar to Background:.
+        /// </summary>
+        public static string MapBackground {
+            get {
+                return ResourceManager.GetString("MapBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Columns:.
         /// </summary>
         public static string MapColumns {
             get {
@@ -133,7 +142,7 @@ namespace Dungecto.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rows.
+        ///   Looks up a localized string similar to Rows:.
         /// </summary>
         public static string MapRows {
             get {
