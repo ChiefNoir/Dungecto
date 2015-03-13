@@ -15,16 +15,19 @@ namespace Dungecto.Model
         private string _geometry;
 
         /// <summary> See <see cref="Height"/> property </summary>
-        private double _height;
+        private int _height;
 
         /// <summary> See <see cref="Width"/> property </summary>
-        private double _width;
+        private int _width;
 
         /// <summary> See <see cref="X"/> property </summary>
-        private double _x;
+        private int _x;
 
         /// <summary> See <see cref="Y"/> property </summary>
-        private double _y;
+        private int _y;
+
+        /// <summary> See <see cref="Z"/> property </summary>
+        private int _z;
 
         /// <summary> Property changed event</summary>
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -60,7 +63,7 @@ namespace Dungecto.Model
 
         /// <summary> Get/set height (OY-size) </summary>
         [XmlAttribute("Height")]
-        public double Height
+        public int Height
         {
             get { return _height; }
             set
@@ -74,7 +77,7 @@ namespace Dungecto.Model
 
         /// <summary> Get/set width (OX-size) </summary>
         [XmlAttribute("Width")]
-        public double Width
+        public int Width
         {
             get { return _width; }
             set
@@ -88,7 +91,7 @@ namespace Dungecto.Model
 
         /// <summary> Get/set X position </summary>
         [XmlAttribute("X")]
-        public double X
+        public int X
         {
             get { return _x; }
             set
@@ -102,7 +105,7 @@ namespace Dungecto.Model
 
         /// <summary> Get/set Y position </summary>
         [XmlAttribute("Y")]
-        public double Y
+        public int Y
         {
             get { return _y; }
             set
@@ -111,6 +114,18 @@ namespace Dungecto.Model
 
                 _y = value;
                 RaisePropertyChanged("Y");
+            }
+        }
+
+        /// <summary> Get/set Z position </summary>
+        [XmlAttribute("Z")]
+        public int Z
+        {
+            get { return _z; }
+            set
+            {
+                _z = value;
+                RaisePropertyChanged("Z");
             }
         }
 
