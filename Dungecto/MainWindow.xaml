@@ -8,9 +8,8 @@
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Class="Dungecto.MainWindow"
     Title="{x:Static res:Resource.AppName}"
-    BorderBrush="{DynamicResource AccentColorBrush}"
-    BorderThickness="1,1,1,2"
-    Height="500" Width="1000" >
+    EnableDWMDropShadow="True"
+    Height="450" Width="1000" MinHeight="450" MinWidth="900" >
 
     <controls:MetroWindow.Resources>
         <ResourceDictionary>
@@ -18,155 +17,170 @@
         </ResourceDictionary>
     </controls:MetroWindow.Resources>
 
+    <controls:MetroWindow.InputBindings>
+        <KeyBinding Key="Delete" Command="{Binding RemoveTileCommand}" />
+        <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveMapCommand}" />
+        <KeyBinding Modifiers="Control+Shift" Key="S" Command="{Binding ExportMap}" />
+        <KeyBinding Modifiers="Control" Key="O"  Command="{Binding LoadMapCommand}" />
+        <KeyBinding Modifiers="Control" Key="N"  Command="{Binding CreateNewMapCommand}" />        
+    </controls:MetroWindow.InputBindings>
+    
     <controls:MetroWindow.DataContext>
         <Binding Path="Main" Source="{StaticResource Locator}"/>
     </controls:MetroWindow.DataContext>
 
     <controls:MetroWindow.LeftWindowCommands>
         <controls:WindowCommands>
-            <Button Content="{x:Static res:Resource.MainMenu}" Click="OpenCloseMainMenu" />
+            <Button Content="{x:Static res:Resource.Menu}" Click="OpenCloseMainMenu" />
         </controls:WindowCommands>
     </controls:MetroWindow.LeftWindowCommands>
 
-    <Grid>
-        <controls:Flyout x:Name="MainMenuFlyout" Header="{x:Static res:Resource.MainMenu}" Panel.ZIndex="3"
-                         Position="Left" IsOpen="False" Theme="Inverse">
-            <StackPanel>
-                <Button Content="{x:Static res:Resource.MainMenuNew}" 
-                        Style="{DynamicResource SquareButtonStyle}" Command="{Binding CreateNewMapCommand}"
-                        HorizontalContentAlignment="Left" Margin="-1" />
-                <Button Content="{x:Static res:Resource.MainMenuOpen}"
-                        Style="{DynamicResource SquareButtonStyle}" Command="{Binding LoadMapCommand}"
-                        HorizontalContentAlignment="Left" Margin="-1" />
-                <Button Content="{x:Static res:Resource.MainMenuSave}" 
-                        Style="{DynamicResource SquareButtonStyle}" Command="{Binding SaveMapCommand}" 
-                        HorizontalContentAlignment="Left" Margin="-1" />
-                <Button Content="{x:Static res:Resource.MainMenuSaveAsImage}" 
-                        Style="{DynamicResource SquareButtonStyle}" Click="ExportMap" 
-                        HorizontalContentAlignment="Left" Margin="-1" />
-            </StackPanel>
-        </controls:Flyout>
-
-        <controls:Flyout x:Name="TilePropertiesFlyout" Header="{x:Static res:Resource.TileProperties}" Panel.ZIndex="3"
-                         Position="Right" IsOpen="False" Theme="Adapt">
-            <Grid>
-                <TextBlock Margin="10,10,10,0" Text="{x:Static res:Resource.TilePositionX}" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Height="23" Margin="10,26,10,0" Value="{Binding SelectedTile.X}" Minimum="10" VerticalAlignment="Top"/>
-
-                <TextBlock Margin="10,57,10,0" Text="{x:Static res:Resource.TilePositionY}" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Height="23" Margin="10,73,10,0" Value="{Binding SelectedTile.Y}" Minimum="10" VerticalAlignment="Top"/>
-
-                <TextBlock Margin="10,104,10,0" Text="{x:Static res:Resource.TilePositionZ}" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Height="23" Margin="10,120,10,0" Value="{Binding SelectedTile.Z}" Minimum="-100" VerticalAlignment="Top"/>
-
-
-                <TextBlock Margin="10,167,10,0" Text="{x:Static res:Resource.TileWidth}" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Height="23" Margin="10,183,10,0" Value="{Binding SelectedTile.Width}" Minimum="1" VerticalAlignment="Top"/>
-
-                <TextBlock Margin="10,230,10,0" Text="{x:Static res:Resource.TileHeight}" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Height="23" Margin="10,246,10,0" Value="{Binding SelectedTile.Height}" Minimum="1" VerticalAlignment="Top"/>
-
-
-                <TextBlock Margin="10,293,10,0" Text="{x:Static res:Resource.TileColor}" VerticalAlignment="Top"/>
-                <xctk:ColorPicker Margin="10,309,10,0"  VerticalAlignment="Top" ColorMode="ColorCanvas" SelectedColor="{Binding SelectedTile.Color}" 
-                                  ShowAdvancedButton="False" ShowStandardColors="False" ShowAvailableColors="False"/>
-            </Grid>
-        </controls:Flyout>
-
-        <controls:Flyout x:Name="MapPropertiesFlyout" Header="{x:Static res:Resource.MapProperties}" Panel.ZIndex="3"
-                         Position="Right" IsOpen="False" Theme="Adapt">
-            <Grid>
-                <TextBlock Margin="10,10,10,0" Text="{x:Static res:Resource.SectorWidth}" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Height="23" Margin="10,26,10,0" Value="{Binding Map.SectorWidth}" Minimum="10" VerticalAlignment="Top"/>
-
-                <TextBlock Margin="10,57,10,0" Text="{x:Static res:Resource.SectorHeight}" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Height="23" Margin="10,73,10,0" Value="{Binding Map.SectorHeight}" Minimum="10" VerticalAlignment="Top"/>
-
-                <TextBlock Margin="10,120,10,0" Text="{x:Static res:Resource.MapColumns}" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Height="23" Margin="10,136,10,0" Value="{Binding Map.Columns}" Minimum="1" VerticalAlignment="Top"/>
-
-                <TextBlock Margin="10,167,10,0" Text="{x:Static res:Resource.MapRows}" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Height="23" Margin="10,183,10,0" Value="{Binding Map.Rows}" Minimum="1" VerticalAlignment="Top"/>
-
-                <TextBlock Margin="10,230,10,0" Height="23" Text="{x:Static res:Resource.MapBackground}" VerticalAlignment="Top"/>
-                <xctk:ColorPicker Margin="10,246,10,0" VerticalAlignment="Top" ColorMode="ColorCanvas" SelectedColor="{Binding Map.Background}" 
-                                  ShowAdvancedButton="False" ShowStandardColors="False" ShowAvailableColors="False"/>
-            </Grid>
-        </controls:Flyout>
-
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <controls:Flyout x:Name="MainMenuFlyout" Header="{x:Static res:Resource.Menu}"
+                             Panel.ZIndex="13" Position="Left" Theme="Inverse" AnimateOpacity="True" >
+                <StackPanel>
+                    <Button Content="{x:Static res:Resource.MainMenuNew}" 
+                            Style="{DynamicResource SquareButtonStyle}" Command="{Binding CreateNewMapCommand}"
+                            HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
+                    <Button Content="{x:Static res:Resource.MainMenuOpen}"
+                            Style="{DynamicResource SquareButtonStyle}" Command="{Binding LoadMapCommand}"
+                            HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
+                    <Button Content="{x:Static res:Resource.MainMenuSave}" 
+                            Style="{DynamicResource SquareButtonStyle}" 
+                            HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
+                    <Button Content="{x:Static res:Resource.MainMenuSaveAs}" 
+                            Style="{DynamicResource SquareButtonStyle}" Command="{Binding SaveMapAsCommand}" 
+                            HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
+                    <Button Content="{x:Static res:Resource.MainMenuExport}"
+                            Style="{DynamicResource SquareButtonStyle}" Click="ExportMap"
+                            HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
 
-            <Expander Header="{x:Static res:Resource.Toolbox}" IsExpanded="True" >
-                <ListView ItemsSource="{Binding Toolbox}" BorderBrush="Transparent" >
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ToolboxPreviewMouseLeftButtonDown" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ContentControl Width="{Binding Width}" Height="{Binding Height}" MaxWidth="90" MaxHeight="100" >
-                                <Path Data="{Binding Geometry}" Fill="{Binding Color}" Stretch="Fill" IsHitTestVisible="False"  />
-                            </ContentControl>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Expander>
+            </StackPanel>
+            </controls:Flyout>
 
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
-                <ListView ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent">
-                    <ListView.Resources>
-                        <ContextMenu x:Key="ItemContextMenu">
-                            <MenuItem Header="{x:Static res:Resource.TileRemove}" 
-								Command="{Binding DataContext.RemoveTileCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}" />
-                            <Separator/>
-                            <MenuItem Header="{x:Static res:Resource.TileProperties}" Click="OpenCloseTileProperties" />
-                        </ContextMenu>
-                    </ListView.Resources>
-                    <ListView.Background>
-                        <ImageBrush ImageSource="Assets/Background.png" TileMode="Tile" Stretch="None"
+            <controls:Flyout x:Name="TilePropertiesFlyout" Header="{x:Static res:Resource.Tile}" Panel.ZIndex="3"
+                             MinWidth="200"                             
+                             Position="Right" IsOpen="False" Theme="Adapt">
+                <Grid>
+                    <TextBlock Margin="10,10,10,0" Text="{x:Static res:Resource.TilePositionX}" VerticalAlignment="Top"/>
+                    <controls:NumericUpDown Height="23" Margin="10,26,10,0" Value="{Binding SelectedTile.X}" Minimum="0" VerticalAlignment="Top"/>
+
+                    <TextBlock Margin="10,57,10,0" Text="{x:Static res:Resource.TilePositionY}" VerticalAlignment="Top"/>
+                    <controls:NumericUpDown Height="23" Margin="10,73,10,0" Value="{Binding SelectedTile.Y}" Minimum="0" VerticalAlignment="Top"/>
+
+                    <TextBlock Margin="10,104,10,0" Text="{x:Static res:Resource.TilePositionZ}" VerticalAlignment="Top"/>
+                    <controls:NumericUpDown Height="23" Margin="10,120,10,0" Value="{Binding SelectedTile.Z}" Minimum="-100" VerticalAlignment="Top"/>
+
+
+                    <TextBlock Margin="10,167,10,0" Text="{x:Static res:Resource.TileWidth}" VerticalAlignment="Top"/>
+                    <controls:NumericUpDown Height="23" Margin="10,183,10,0" Value="{Binding SelectedTile.Width}" Minimum="20" VerticalAlignment="Top"/>
+
+                    <TextBlock Margin="10,230,10,0" Text="{x:Static res:Resource.TileHeight}" VerticalAlignment="Top"/>
+                    <controls:NumericUpDown Height="23" Margin="10,246,10,0" Value="{Binding SelectedTile.Height}" Minimum="20" VerticalAlignment="Top"/>
+
+
+                    <TextBlock Margin="10,293,10,0" Text="{x:Static res:Resource.TileColor}" VerticalAlignment="Top"/>
+                    <xctk:ColorPicker Margin="10,309,10,0"  VerticalAlignment="Top" ColorMode="ColorCanvas" SelectedColor="{Binding SelectedTile.Color}" 
+                                      ShowAdvancedButton="False" ShowStandardColors="False" ShowAvailableColors="False"/>
+                </Grid>
+            </controls:Flyout>
+
+            <controls:Flyout x:Name="MapPropertiesFlyout" Header="{x:Static res:Resource.Map}" Panel.ZIndex="3"
+                             MinWidth="200"
+                             Position="Right" IsOpen="False" Theme="Adapt">
+                <Grid>
+                    <TextBlock Margin="10,10,10,0" Text="{x:Static res:Resource.SectorWidth}" VerticalAlignment="Top"/>
+                    <controls:NumericUpDown Height="23" Margin="10,26,10,0" Value="{Binding Map.SectorWidth}" Minimum="10" VerticalAlignment="Top"/>
+
+                    <TextBlock Margin="10,57,10,0" Text="{x:Static res:Resource.SectorHeight}" VerticalAlignment="Top"/>
+                    <controls:NumericUpDown Height="23" Margin="10,73,10,0" Value="{Binding Map.SectorHeight}" Minimum="10" VerticalAlignment="Top"/>
+
+                    <TextBlock Margin="10,120,10,0" Text="{x:Static res:Resource.MapColumns}" VerticalAlignment="Top"/>
+                    <controls:NumericUpDown Height="23" Margin="10,136,10,0" Value="{Binding Map.Columns}" Minimum="1" VerticalAlignment="Top"/>
+
+                    <TextBlock Margin="10,167,10,0" Text="{x:Static res:Resource.MapRows}" VerticalAlignment="Top"/>
+                    <controls:NumericUpDown Height="23" Margin="10,183,10,0" Value="{Binding Map.Rows}" Minimum="1" VerticalAlignment="Top"/>
+
+                    <TextBlock Margin="10,230,10,0" Height="23" Text="{x:Static res:Resource.MapBackground}" VerticalAlignment="Top"/>
+                    <xctk:ColorPicker Margin="10,246,10,0" VerticalAlignment="Top" ColorMode="ColorCanvas" SelectedColor="{Binding Map.Background}" 
+                                  ShowAdvancedButton="False" ShowStandardColors="False" ShowAvailableColors="False"/>
+                </Grid>
+            </controls:Flyout>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Expander Header="{x:Static res:Resource.Toolbox}" IsExpanded="True" >
+                    <ListView ItemsSource="{Binding Toolbox}" BorderBrush="Transparent" >
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ToolboxPreviewMouseLeftButtonDown" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentControl Width="{Binding Width}" Height="{Binding Height}" MaxWidth="90" MaxHeight="100" >
+                                    <Path Data="{Binding Geometry}" Fill="{Binding Color}" Stretch="Fill" IsHitTestVisible="False"  />
+                                </ContentControl>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Expander>
+
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
+                    <ListView ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent">
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="{x:Static res:Resource.TileRemove}"
+                                          Command="{Binding DataContext.RemoveTileCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}" 
+                                          Click="ClickOnMenuItemRemoveTile"/>
+                                <Separator/>
+                                <MenuItem Header="{x:Static res:Resource.TileProperties}" Click="OpenCloseTileProperties" />
+                            </ContextMenu>
+                        </ListView.Resources>
+                        <ListView.Background>
+                            <ImageBrush ImageSource="Assets/Background.png" TileMode="Tile" Stretch="None"
 							Viewport="0,0,16,16" ViewportUnits="Absolute"/>
-                    </ListView.Background>
-                    <ListView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="{x:Static res:Resource.MapProperties}" Click="OpenCloseMapProperties" />
-                        </ContextMenu>
-                    </ListView.ContextMenu>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <view:ThumbMover 
+                        </ListView.Background>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="{x:Static res:Resource.MapProperties}" Click="OpenCloseMapProperties" />
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <view:ThumbMover 
                                     Cursor="SizeAll" 
                                     X="{Binding X, Mode=TwoWay}" MinX="-5" ContentWidth="{Binding Width}"
 									MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 									Y="{Binding Y, Mode=TwoWay}" MinY="-2" ContentHeight="{Binding Height}"
 									MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
                                     PreviewMouseLeftButtonDown="ThumbMover_PreviewMouseLeftButtonDown">
-                                    <view:ThumbMover.Template>
-                                        <ControlTemplate>
-                                            <Rectangle Fill="Transparent"/>
-                                        </ControlTemplate>
-                                    </view:ThumbMover.Template>
-                                </view:ThumbMover>
+                                        <view:ThumbMover.Template>
+                                            <ControlTemplate>
+                                                <Rectangle Fill="Transparent"/>
+                                            </ControlTemplate>
+                                        </view:ThumbMover.Template>
+                                    </view:ThumbMover>
 
-                                <Path Data="{Binding Geometry}"
+                                    <Path Data="{Binding Geometry}"
                                       Width="{Binding Width}" Height="{Binding Height}" 
                                       Fill="{Binding Color}" Stretch="Fill" 
                                       IsHitTestVisible="False"/>
 
-                                <Grid Visibility="{Binding IsMouseOver, Converter={StaticResource BoolToVis}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}">
-                                    <view:ThumbResizer 
+                                    <Grid Visibility="{Binding IsMouseOver, Converter={StaticResource BoolToVis}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}">
+                                        <view:ThumbResizer 
                                         X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
 										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
 										MinContent="20"
 										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										Height="3" Cursor="SizeNS" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
-                                    <view:ThumbResizer 
+                                        <view:ThumbResizer 
                                         X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
 										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
 										MinContent="20"
@@ -174,14 +188,14 @@
 										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										Height="3" Cursor="SizeNS" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
 
-                                    <view:ThumbResizer 
+                                        <view:ThumbResizer 
                                         X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
 										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
 										MinContent="20"
 										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										Width="3" Cursor="SizeWE" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
-                                    <view:ThumbResizer 
+                                        <view:ThumbResizer 
                                         X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
 										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
 										MinContent="20"
@@ -189,14 +203,14 @@
 										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										Width="3" Cursor="SizeWE" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Right"/>
 
-                                    <view:ThumbResizer 
+                                        <view:ThumbResizer 
                                         X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
 										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
 										MinContent="20"
 										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										Width="8" Height="8" Cursor="SizeNWSE" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                                    <view:ThumbResizer 
+                                        <view:ThumbResizer 
                                         X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
 										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
 										MinContent="20"
@@ -204,49 +218,50 @@
 										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										Width="8" Height="8" Cursor="SizeNESW" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
 
-                                    <view:ThumbResizer 
+                                        <view:ThumbResizer 
                                         X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
 										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
 										MinContent="20"
 										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										Width="8" Height="8" Cursor="SizeNWSE" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                                    <view:ThumbResizer 
+                                        <view:ThumbResizer 
                                         X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
 										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
 										MinContent="20"
 										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
 										Width="8" Height="8" Cursor="SizeNESW" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
 
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}">
-                            <Setter Property="Canvas.Top" Value="{Binding Y}" />
-                            <Setter Property="Canvas.Left" Value="{Binding X}" />
-                            <Setter Property="Canvas.ZIndex" Value="{Binding Z}" />
-                            <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                <Setter Property="Canvas.ZIndex" Value="{Binding Z}" />
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
 
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <view:MapCanvas 
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <view:MapCanvas 
                                 Margin="-5" 
                                 Rows="{Binding Map.Rows}" Columns="{Binding Map.Columns}"
                                 BackgroundColor="{Binding Map.Background}"
                                 SectorHeight="{Binding Map.SectorHeight}" SectorWidth="{Binding Map.SectorWidth}"
                                 
                                 AllowDrop="True" Drop="CanvasDrop" Loaded="ListViewTemplateLoaded" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
 
-                </ListView>
+                    </ListView>
 
-            </ScrollViewer>
+                </ScrollViewer>
+            </Grid>
         </Grid>
-    </Grid>
+
 </controls:MetroWindow>

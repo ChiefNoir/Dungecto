@@ -120,8 +120,8 @@
   <data name="AppName" xml:space="preserve">
     <value>Dungecto</value>
   </data>
-  <data name="MainMenu" xml:space="preserve">
-    <value>main menu</value>
+  <data name="MainMenuExport" xml:space="preserve">
+    <value>Export to image</value>
   </data>
   <data name="MainMenuNew" xml:space="preserve">
     <value>New</value>
@@ -130,13 +130,16 @@
     <value>Open</value>
   </data>
   <data name="MainMenuSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="MainMenuSaveAs" xml:space="preserve">
     <value>Save as...</value>
   </data>
-  <data name="MainMenuSaveAsImage" xml:space="preserve">
-    <value>Save as image</value>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
   </data>
   <data name="MapBackground" xml:space="preserve">
-    <value>Background color:</value>
+    <value>Background:</value>
   </data>
   <data name="MapColumns" xml:space="preserve">
     <value>Columns:</value>
@@ -147,11 +150,17 @@
   <data name="MapRows" xml:space="preserve">
     <value>Rows:</value>
   </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
   <data name="SectorHeight" xml:space="preserve">
     <value>Sector height:</value>
   </data>
   <data name="SectorWidth" xml:space="preserve">
     <value>Sector width:</value>
+  </data>
+  <data name="Tile" xml:space="preserve">
+    <value>Tile</value>
   </data>
   <data name="TileColor" xml:space="preserve">
     <value>Color:</value>

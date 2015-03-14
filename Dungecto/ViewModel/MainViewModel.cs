@@ -22,11 +22,17 @@ namespace Dungecto.ViewModel
         /// <summary> See <see cref="SaveMapCommand"/> property </summary>
         private ICommand _saveMapCommand;
 
+        /// <summary> See <see cref="SaveMapCommand"/> property </summary>
+        private ICommand _saveMapAsCommand;
+
         /// <summary> See <see cref="SelectedTile"/> property </summary>
         private Tile _selectedTile;
 
         /// <summary> See <see cref="Map"/> property </summary>
         private Map _map;
+
+        /// <summary> Last file path (last opened/last saved)</summary>
+        private string _lastFilePath = null;
 
         /// <summary> See <see cref="Toolbox"/> property </summary>
         private ObservableCollection<Tile> _toolbox;
@@ -41,6 +47,24 @@ namespace Dungecto.ViewModel
         public ICommand LoadMapCommand
         {
             get { return _loadMapCommand ?? (_loadMapCommand = new RelayCommand(LoadMap)); }
+        }
+
+        /// <summary> Remove tile command. Removing <see cref="SelectedTile"/> from <see cref="Map"/></summary>
+        public ICommand RemoveTileCommand
+        {
+            get { return _removeTileCommand ?? (_removeTileCommand = new RelayCommand(RemoveTile)); }
+        }
+
+        /// <summary> Save <see cref="Map"/> to file </summary>
+        public ICommand SaveMapCommand
+        {
+            get { return _saveMapCommand ?? (_saveMapCommand = new RelayCommand(Save)); }
+        }
+
+        /// <summary> Save <see cref="Map"/> to file </summary>
+        public ICommand SaveMapAsCommand
+        {
+            get { return _saveMapAsCommand ?? (_saveMapAsCommand = new RelayCommand(SaveAs)); }
         }
 
         /// <summary> Get map </summary>
@@ -65,18 +89,6 @@ namespace Dungecto.ViewModel
             } 
         }
 
-        /// <summary> Remove tile command. Removing <see cref="SelectedTile"/> from <see cref="Map"/></summary>
-        public ICommand RemoveTileCommand
-        {
-            get { return _removeTileCommand ?? (_removeTileCommand = new RelayCommand(RemoveTile)); }
-        }
-
-        /// <summary> Save <see cref="Map"/> to file </summary>
-        public ICommand SaveMapCommand
-        {
-            get { return _saveMapCommand ?? (_saveMapCommand = new RelayCommand(SaveMap)); }
-        }
-
         /// <summary> Get/set selected tile from the <see cref="Map"/> </summary>
         public Tile SelectedTile
         {
@@ -99,6 +111,7 @@ namespace Dungecto.ViewModel
         /// <remarks> Clearing current <see cref="Map"/> and initializing it with default values </remarks>
         private void CreateMap()
         {
+            _lastFilePath = null;
             SelectedTile = null;
             Map.Tiles.Clear();
 
@@ -119,8 +132,9 @@ namespace Dungecto.ViewModel
 
             if (!string.IsNullOrEmpty(file))
             {
-                Map = Serializer.FromXml<Map>(file);
+                _map = Serializer.FromXml<Map>(file);
                 RaisePropertyChanged("Map");
+                _lastFilePath = file;
             }
         }
 
@@ -132,18 +146,31 @@ namespace Dungecto.ViewModel
             Map.Tiles.Remove(SelectedTile);
             SelectedTile = null;
         }
-        
-        /// <summary> Save <see cref="Map"/> to file </summary>
-        private void SaveMap()
-        {
-            //TODO: Not MVVM. fix it
-            var file = Dialogs.ShowSaveDialog("", ".xml");
 
-            if (!string.IsNullOrEmpty(file))
+        /// <summary> Save <see cref="Map"/> to <see cref="_lastFilePath"/> or call <see cref="SaveAs"/> </summary>
+        private void Save()
+        {
+            if(_lastFilePath !=null)
             {
-                Serializer.ToXml<Map>(Map, file);
+                Serializer.ToXml<Map>(Map, _lastFilePath);
+            }
+            else
+            {
+                SaveAs();
             }
         }
 
+        /// <summary>Call Win32 savefile dialog and save <see cref="Map"/> to file </summary>
+        private void SaveAs()
+        {
+            //TODO: Not MVVM. fix it
+            var filePath = Dialogs.ShowSaveDialog("", ".xml");
+
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                Serializer.ToXml<Map>(Map, filePath);
+                _lastFilePath = filePath;
+            }
+        }
     }
 }

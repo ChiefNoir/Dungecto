@@ -8,10 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Dungecto.Properties {
+namespace Dungecto.Properties
+{
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,229 +23,312 @@ namespace Dungecto.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resource {
-        
+    public class Resource
+    {
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource() {
+        internal Resource()
+        {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
-            get {
-                if (object.ReferenceEquals(resourceMan, null)) {
+        public static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Dungecto.Properties.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
-            get {
+        public static global::System.Globalization.CultureInfo Culture
+        {
+            get
+            {
                 return resourceCulture;
             }
-            set {
+            set
+            {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Dungecto.
         /// </summary>
-        public static string AppName {
-            get {
+        public static string AppName
+        {
+            get
+            {
                 return ResourceManager.GetString("AppName", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to main menu.
+        ///   Looks up a localized string similar to Export to image.
         /// </summary>
-        public static string MainMenu {
-            get {
-                return ResourceManager.GetString("MainMenu", resourceCulture);
+        public static string MainMenuExport
+        {
+            get
+            {
+                return ResourceManager.GetString("MainMenuExport", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
-        public static string MainMenuNew {
-            get {
+        public static string MainMenuNew
+        {
+            get
+            {
                 return ResourceManager.GetString("MainMenuNew", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
-        public static string MainMenuOpen {
-            get {
+        public static string MainMenuOpen
+        {
+            get
+            {
                 return ResourceManager.GetString("MainMenuOpen", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Save as....
+        ///   Looks up a localized string similar to Save.
         /// </summary>
-        public static string MainMenuSave {
-            get {
+        public static string MainMenuSave
+        {
+            get
+            {
                 return ResourceManager.GetString("MainMenuSave", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Save as image.
+        ///   Looks up a localized string similar to Save as....
         /// </summary>
-        public static string MainMenuSaveAsImage {
-            get {
-                return ResourceManager.GetString("MainMenuSaveAsImage", resourceCulture);
+        public static string MainMenuSaveAs
+        {
+            get
+            {
+                return ResourceManager.GetString("MainMenuSaveAs", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Background.
+        ///   Looks up a localized string similar to Map.
         /// </summary>
-        public static string MapBackground {
-            get {
+        public static string Map
+        {
+            get
+            {
+                return ResourceManager.GetString("Map", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Background:.
+        /// </summary>
+        public static string MapBackground
+        {
+            get
+            {
                 return ResourceManager.GetString("MapBackground", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Columns.
+        ///   Looks up a localized string similar to Columns:.
         /// </summary>
-        public static string MapColumns {
-            get {
+        public static string MapColumns
+        {
+            get
+            {
                 return ResourceManager.GetString("MapColumns", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Map properties.
         /// </summary>
-        public static string MapProperties {
-            get {
+        public static string MapProperties
+        {
+            get
+            {
                 return ResourceManager.GetString("MapProperties", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Rows:.
         /// </summary>
-        public static string MapRows {
-            get {
+        public static string MapRows
+        {
+            get
+            {
                 return ResourceManager.GetString("MapRows", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Sector height (in px):.
+        ///   Looks up a localized string similar to Menu.
         /// </summary>
-        public static string SectorHeight {
-            get {
+        public static string Menu
+        {
+            get
+            {
+                return ResourceManager.GetString("Menu", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Sector height:.
+        /// </summary>
+        public static string SectorHeight
+        {
+            get
+            {
                 return ResourceManager.GetString("SectorHeight", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Sector width (in px):.
+        ///   Looks up a localized string similar to Sector width:.
         /// </summary>
-        public static string SectorWidth {
-            get {
+        public static string SectorWidth
+        {
+            get
+            {
                 return ResourceManager.GetString("SectorWidth", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Color.
+        ///   Looks up a localized string similar to Tile.
         /// </summary>
-        public static string TileColor {
-            get {
+        public static string Tile
+        {
+            get
+            {
+                return ResourceManager.GetString("Tile", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Color:.
+        /// </summary>
+        public static string TileColor
+        {
+            get
+            {
                 return ResourceManager.GetString("TileColor", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Height:.
         /// </summary>
-        public static string TileHeight {
-            get {
+        public static string TileHeight
+        {
+            get
+            {
                 return ResourceManager.GetString("TileHeight", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Position X.
+        ///   Looks up a localized string similar to Position X:.
         /// </summary>
-        public static string TilePositionX {
-            get {
+        public static string TilePositionX
+        {
+            get
+            {
                 return ResourceManager.GetString("TilePositionX", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Position Y.
+        ///   Looks up a localized string similar to Position Y:.
         /// </summary>
-        public static string TilePositionY {
-            get {
+        public static string TilePositionY
+        {
+            get
+            {
                 return ResourceManager.GetString("TilePositionY", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Position Z.
+        ///   Looks up a localized string similar to Position Z:.
         /// </summary>
-        public static string TilePositionZ {
-            get {
+        public static string TilePositionZ
+        {
+            get
+            {
                 return ResourceManager.GetString("TilePositionZ", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Tile properties.
         /// </summary>
-        public static string TileProperties {
-            get {
+        public static string TileProperties
+        {
+            get
+            {
                 return ResourceManager.GetString("TileProperties", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Tile Remove.
+        ///   Looks up a localized string similar to Remove.
         /// </summary>
-        public static string TileRemove {
-            get {
+        public static string TileRemove
+        {
+            get
+            {
                 return ResourceManager.GetString("TileRemove", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Width.
+        ///   Looks up a localized string similar to Width:.
         /// </summary>
-        public static string TileWidth {
-            get {
+        public static string TileWidth
+        {
+            get
+            {
                 return ResourceManager.GetString("TileWidth", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Toolbox.
         /// </summary>
-        public static string Toolbox {
-            get {
+        public static string Toolbox
+        {
+            get
+            {
                 return ResourceManager.GetString("Toolbox", resourceCulture);
             }
         }
