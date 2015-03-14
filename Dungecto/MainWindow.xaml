@@ -36,6 +36,7 @@
     </controls:MetroWindow.LeftWindowCommands>
 
         <Grid>
+            
             <controls:Flyout x:Name="MainMenuFlyout" Header="{x:Static res:Resource.Menu}"
                              Panel.ZIndex="13" Position="Left" Theme="Inverse" AnimateOpacity="True" >
                 <StackPanel>
@@ -59,11 +60,10 @@
             </controls:Flyout>
 
             <controls:Flyout x:Name="TilePropertiesFlyout" Header="{x:Static res:Resource.Tile}" Panel.ZIndex="3"
-                             MinWidth="200"                             
-                             Position="Right" IsOpen="False" Theme="Adapt">
+                             MinWidth="200" Position="Right" IsOpen="False" Theme="Adapt">
                 <Grid>
-                    <TextBlock Margin="10,10,10,0" Text="{x:Static res:Resource.TilePositionX}" VerticalAlignment="Top"/>
-                    <controls:NumericUpDown Height="23" Margin="10,26,10,0" Value="{Binding SelectedTile.X}" Minimum="0" VerticalAlignment="Top"/>
+                    <TextBlock Text="{x:Static res:Resource.TilePositionX}" Margin="10,10,10,0" VerticalAlignment="Top"/>
+                    <controls:NumericUpDown Value="{Binding SelectedTile.X}" Height="23" Margin="10,26,10,0" Minimum="0" VerticalAlignment="Top"/>
 
                     <TextBlock Margin="10,57,10,0" Text="{x:Static res:Resource.TilePositionY}" VerticalAlignment="Top"/>
                     <controls:NumericUpDown Height="23" Margin="10,73,10,0" Value="{Binding SelectedTile.Y}" Minimum="0" VerticalAlignment="Top"/>
@@ -102,8 +102,8 @@
                     <controls:NumericUpDown Height="23" Margin="10,183,10,0" Value="{Binding Map.Rows}" Minimum="1" VerticalAlignment="Top"/>
 
                     <TextBlock Margin="10,230,10,0" Height="23" Text="{x:Static res:Resource.MapBackground}" VerticalAlignment="Top"/>
-                    <xctk:ColorPicker Margin="10,246,10,0" VerticalAlignment="Top" ColorMode="ColorCanvas" SelectedColor="{Binding Map.Background}" 
-                                  ShowAdvancedButton="False" ShowStandardColors="False" ShowAvailableColors="False"/>
+                    <xctk:ColorPicker SelectedColor="{Binding Map.Background}" Margin="10,246,10,0" VerticalAlignment="Top" ColorMode="ColorCanvas" 
+                                      ShowAdvancedButton="False" ShowStandardColors="False" ShowAvailableColors="False"/>
                 </Grid>
             </controls:Flyout>
 
@@ -143,25 +143,27 @@
                                 <MenuItem Header="{x:Static res:Resource.TileProperties}" Click="OpenCloseTileProperties" />
                             </ContextMenu>
                         </ListView.Resources>
+                        
                         <ListView.Background>
                             <ImageBrush ImageSource="Assets/Background.png" TileMode="Tile" Stretch="None"
                                         Viewport="0,0,16,16" ViewportUnits="Absolute"/>
                         </ListView.Background>
+                        
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="{x:Static res:Resource.MapProperties}" Click="OpenCloseMapProperties" />
                             </ContextMenu>
                         </ListView.ContextMenu>
+                        
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <view:ThumbMover 
-                                    Cursor="SizeAll" 
-                                    X="{Binding X, Mode=TwoWay}" MinX="-5" ContentWidth="{Binding Width}"
-									MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-									Y="{Binding Y, Mode=TwoWay}" MinY="-2" ContentHeight="{Binding Height}"
-									MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-                                    PreviewMouseLeftButtonDown="ThumbMover_PreviewMouseLeftButtonDown">
+                                        X="{Binding X, Mode=TwoWay}" MinX="-5" ContentWidth="{Binding Width}"
+                                        MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                        Y="{Binding Y, Mode=TwoWay}" MinY="-2" ContentHeight="{Binding Height}"
+                                        MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                        Cursor="SizeAll" PreviewMouseLeftButtonDown="ThumbMover_PreviewMouseLeftButtonDown">
                                         <view:ThumbMover.Template>
                                             <ControlTemplate>
                                                 <Rectangle Fill="Transparent"/>
@@ -170,70 +172,75 @@
                                     </view:ThumbMover>
 
                                     <Path Data="{Binding Geometry}"
-                                      Width="{Binding Width}" Height="{Binding Height}" 
-                                      Fill="{Binding Color}" Stretch="Fill" 
-                                      IsHitTestVisible="False"/>
-
+                                          Width="{Binding Width}" Height="{Binding Height}" 
+                                          Fill="{Binding Color}" Stretch="Fill" 
+                                          IsHitTestVisible="False"/>
+                                    
+                                    <!--Grid with resizing things-->
                                     <Grid Visibility="{Binding IsMouseOver, Converter={StaticResource BoolToVis}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}">
                                         <view:ThumbResizer 
-                                        X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
-										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
-										MinContent="20"
-										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										Height="3" Cursor="SizeNS" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
+                                            MinContent="20"
+                                            MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            Height="3" Cursor="SizeNS" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                                        
                                         <view:ThumbResizer 
-                                        X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
-										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
-										MinContent="20"
-										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										Height="3" Cursor="SizeNS" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
+                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
+                                            MinContent="20"
+                                            MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            Height="3" Cursor="SizeNS" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
 
                                         <view:ThumbResizer 
-                                        X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
-										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
-										MinContent="20"
-										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										Width="3" Cursor="SizeWE" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
+                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
+                                            MinContent="20"
+                                            MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            Width="3" Cursor="SizeWE" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
+                                        
                                         <view:ThumbResizer 
-                                        X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
-										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
-										MinContent="20"
-										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										Width="3" Cursor="SizeWE" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Right"/>
+                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
+                                            MinContent="20"
+                                            MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            Width="3" Cursor="SizeWE" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Right"/>
 
                                         <view:ThumbResizer 
-                                        X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
-										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
-										MinContent="20"
-										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										Width="8" Height="8" Cursor="SizeNWSE" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
+                                            MinContent="20"
+                                            MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            Width="8" Height="8" Cursor="SizeNWSE" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                        
                                         <view:ThumbResizer 
-                                        X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
-										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
-										MinContent="20"
-										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										Width="8" Height="8" Cursor="SizeNESW" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
+                                            MinContent="20"
+                                            MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            Width="8" Height="8" Cursor="SizeNESW" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
 
                                         <view:ThumbResizer 
-                                        X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
-										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
-										MinContent="20"
-										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										Width="8" Height="8" Cursor="SizeNWSE" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
+                                            MinContent="20"
+                                            MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            Width="8" Height="8" Cursor="SizeNWSE" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                                        
                                         <view:ThumbResizer 
-                                        X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
-										ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
-										MinContent="20"
-										MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-										Width="8" Height="8" Cursor="SizeNESW" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
+                                            MinContent="20"
+                                            MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
+                                            Width="8" Height="8" Cursor="SizeNESW" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
                                     </Grid>
                                 </Grid>
                             </DataTemplate>
@@ -251,18 +258,18 @@
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <view:MapCanvas 
-                                Margin="-5" 
-                                Rows="{Binding Map.Rows}" Columns="{Binding Map.Columns}"
-                                BackgroundColor="{Binding Map.Background}"
-                                SectorHeight="{Binding Map.SectorHeight}" SectorWidth="{Binding Map.SectorWidth}"
-                                
-                                AllowDrop="True" Drop="CanvasDrop" Loaded="ListViewTemplateLoaded" />
+                                    Margin="-5" 
+                                    Rows="{Binding Map.Rows}" Columns="{Binding Map.Columns}"
+                                    BackgroundColor="{Binding Map.Background}"
+                                    SectorHeight="{Binding Map.SectorHeight}" SectorWidth="{Binding Map.SectorWidth}"
+                                    AllowDrop="True" Drop="CanvasDrop" Loaded="ListViewTemplateLoaded" />
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
 
                     </ListView>
 
                 </ScrollViewer>
+            
             </Grid>
         </Grid>
 
