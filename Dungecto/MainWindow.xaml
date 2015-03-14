@@ -20,9 +20,9 @@
     <controls:MetroWindow.InputBindings>
         <KeyBinding Key="Delete" Command="{Binding RemoveTileCommand}" />
         <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveMapCommand}" />
-        <KeyBinding Modifiers="Control+Shift" Key="S" Command="{Binding ExportMap}" />
-        <KeyBinding Modifiers="Control" Key="O"  Command="{Binding LoadMapCommand}" />
-        <KeyBinding Modifiers="Control" Key="N"  Command="{Binding CreateNewMapCommand}" />        
+        <KeyBinding Modifiers="Control+Shift" Key="S" Command="{Binding SaveMapAsCommand}" />
+        <KeyBinding Modifiers="Control" Key="O" Command="{Binding LoadMapCommand}" />
+        <KeyBinding Modifiers="Control" Key="N" Command="{Binding CreateNewMapCommand}" />
     </controls:MetroWindow.InputBindings>
     
     <controls:MetroWindow.DataContext>
@@ -43,7 +43,7 @@
                             Style="{DynamicResource SquareButtonStyle}" Command="{Binding CreateNewMapCommand}"
                             HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
                     <Button Content="{x:Static res:Resource.MainMenuOpen}"
-                            Style="{DynamicResource SquareButtonStyle}" Command="{Binding LoadMapCommand}"
+                            Style="{DynamicResource SquareButtonStyle}" Command="{Binding LoadMapCommand}" 
                             HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
                     <Button Content="{x:Static res:Resource.MainMenuSave}" 
                             Style="{DynamicResource SquareButtonStyle}" 
@@ -118,13 +118,15 @@
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ToolboxPreviewMouseLeftButtonDown" />
-                            </Style>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <ContentControl Width="{Binding Width}" Height="{Binding Height}" MaxWidth="90" MaxHeight="100" >
-                                    <Path Data="{Binding Geometry}" Fill="{Binding Color}" Stretch="Fill" IsHitTestVisible="False"  />
-                                </ContentControl>
+                                <Path Data="{Binding Geometry}" Fill="{Binding Color}" 
+                                      Width="{Binding Width}" Height="{Binding Height}" 
+                                      MaxWidth="100" MaxHeight="100" 
+                                      Stretch="Fill" IsHitTestVisible="False"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -143,7 +145,7 @@
                         </ListView.Resources>
                         <ListView.Background>
                             <ImageBrush ImageSource="Assets/Background.png" TileMode="Tile" Stretch="None"
-							Viewport="0,0,16,16" ViewportUnits="Absolute"/>
+                                        Viewport="0,0,16,16" ViewportUnits="Absolute"/>
                         </ListView.Background>
                         <ListView.ContextMenu>
                             <ContextMenu>
