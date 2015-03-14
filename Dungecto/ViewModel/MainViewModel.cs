@@ -25,6 +25,9 @@ namespace Dungecto.ViewModel
         /// <summary> See <see cref="SaveMapCommand"/> property </summary>
         private ICommand _saveMapAsCommand;
 
+        /// <summary> See <see cref="DeselectCommand"/> property </summary>
+        private ICommand _deselectCommand;
+
         /// <summary> See <see cref="SelectedTile"/> property </summary>
         private Tile _selectedTile;
 
@@ -65,6 +68,12 @@ namespace Dungecto.ViewModel
         public ICommand SaveMapAsCommand
         {
             get { return _saveMapAsCommand ?? (_saveMapAsCommand = new RelayCommand(SaveAs)); }
+        }
+
+        /// <summary> Make <see cref="SelectedTile"/> null </summary>
+        public ICommand DeselectCommand
+        {
+            get { return _deselectCommand ?? (_deselectCommand = new RelayCommand(Deselect)); }
         }
 
         /// <summary> Get map </summary>
@@ -171,6 +180,11 @@ namespace Dungecto.ViewModel
                 Serializer.ToXml<Map>(Map, filePath);
                 _lastFilePath = filePath;
             }
+        }
+
+        private void Deselect()
+        {
+            SelectedTile = null;
         }
     }
 }

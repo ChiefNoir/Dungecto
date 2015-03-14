@@ -68,7 +68,7 @@ namespace Dungecto
             DragDrop.DoDragDrop(this, dragObj, DragDropEffects.Copy);
         }
 
-        /// <summary> Drop on  canvas </summary>
+        /// <summary> Drop on canvas </summary>
         private void CanvasDrop(object sender, DragEventArgs e)
         {
             if (e == null || e.Data == null) { return; }
@@ -113,6 +113,8 @@ namespace Dungecto
         /// <summary> Export <see cref="_canvas"/> to png</summary>
         private void ExportMap(object sender, RoutedEventArgs e)
         {
+            (DataContext as MainViewModel).SelectedTile = null;
+
             var file = Dialogs.ShowSaveDialog("", ".png");
 
             if (!string.IsNullOrEmpty(file))
