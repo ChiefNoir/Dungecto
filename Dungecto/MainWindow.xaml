@@ -255,10 +255,10 @@
                             <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
 
                             <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="true">
+                                <Trigger Property="IsSelected" Value="True">
                                     <Setter Property="BitmapEffect">
                                         <Setter.Value>
-                                            <DropShadowBitmapEffect ShadowDepth="1" Color="Navy" />
+                                            <DropShadowBitmapEffect ShadowDepth="1" Softness="0" Color="{StaticResource HighlightColor}" />
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
