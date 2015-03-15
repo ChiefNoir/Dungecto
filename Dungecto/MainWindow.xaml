@@ -197,8 +197,10 @@
                 </ListView>
             </Expander>
 
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
-                <ListView x:Name="ListMap" ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent">                    
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" 
+                          PreviewMouseWheel="MapPreviewMouseWheel">
+                <ListView x:Name="ListMap" ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent"
+                          >
                     <ListView.Resources>
                         <ContextMenu x:Key="ItemContextMenu">
                             <MenuItem Header="{x:Static res:Resource.Cut}" 

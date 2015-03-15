@@ -6,6 +6,7 @@ using MahApps.Metro.Controls;
 using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 
@@ -73,6 +74,16 @@ namespace Dungecto
             e.Handled = true;
         }
 
+        /// <summary> Scroll map with mouse wheel </summary>
+        /// <param name="sender"> It has to be <seealso cref="ScrollViewer"/></param>
+        private void MapPreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var scrollView = sender as ScrollViewer;
+            if (scrollView == null) { return; }
+
+            scrollView.ScrollToVerticalOffset(scrollView.VerticalOffset - e.Delta);
+            e.Handled = true;
+        }
 
 //TODO: dirty trick
 
@@ -158,6 +169,8 @@ namespace Dungecto
 
             (DataContext as MainViewModel).SelectedTile = mtile;
         }
+
+
 
     }
 }
