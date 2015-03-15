@@ -80,13 +80,13 @@
                     </Style>
                 </Grid.Style>
                 <TextBlock Text="{x:Static res:Resource.TilePositionX}" Margin="10,10,10,0" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Value="{Binding SelectedTile.X}" Height="23" Margin="10,26,10,0" Minimum="0" VerticalAlignment="Top"/>
+                <controls:NumericUpDown Value="{Binding SelectedTile.X}" Height="23" Margin="10,26,10,0" Minimum="-30" VerticalAlignment="Top"/>
 
                 <TextBlock Margin="10,57,10,0" Text="{x:Static res:Resource.TilePositionY}" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Height="23" Margin="10,73,10,0" Value="{Binding SelectedTile.Y}" Minimum="0" VerticalAlignment="Top"/>
+                <controls:NumericUpDown Height="23" Margin="10,73,10,0" Value="{Binding SelectedTile.Y}" Minimum="-30" VerticalAlignment="Top"/>
 
                 <TextBlock Margin="10,104,10,0" Text="{x:Static res:Resource.TilePositionZ}" VerticalAlignment="Top"/>
-                <controls:NumericUpDown Height="23" Margin="10,120,10,0" Value="{Binding SelectedTile.Z}" Minimum="-100" VerticalAlignment="Top"/>
+                <controls:NumericUpDown Height="23" Margin="10,120,10,0" Value="{Binding SelectedTile.Z}" Minimum="-50" VerticalAlignment="Top"/>
 
 
                 <TextBlock Margin="10,167,10,0" Text="{x:Static res:Resource.TileWidth}" VerticalAlignment="Top"/>
