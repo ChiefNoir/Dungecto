@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Dungecto")]
 [assembly: AssemblyProduct("Dungecto")]
 [assembly: AssemblyCompany("AliveDiv")]
-[assembly: AssemblyCopyright("Copyright © <#= DateTime.Now.Year #> AliveDiv")]
+[assembly: AssemblyCopyright("Copyright © <#= DateTime.Now.Year #> AliveDiv, All rights reserved.")]
 
 // MajorVersion = Public releases
 // MinorVersion = Functions added/removed/changed

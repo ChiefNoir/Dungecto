@@ -1,10 +1,13 @@
 ﻿using Dungecto.Common;
+using Dungecto.Properties;
 using Dungecto.View;
 using Dungecto.ViewModel;
 using MahApps.Metro.Controls;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace Dungecto
 {
@@ -15,6 +18,10 @@ namespace Dungecto
         public MainWindow()
         {
             InitializeComponent();
+
+            TextVersion.Text = String.Format("{0}: {1}", Resource.Version, AppInfo.GetProductVersion());
+            Copyright.Text = AppInfo.GetLegalCopyright();
+
             Closing += (s, e) => ViewModelLocator.Cleanup();
         }
 
@@ -51,6 +58,21 @@ namespace Dungecto
         {
             TilePropertiesFlyout.IsOpen = false;
         }
+
+        /// <summary>Show About panel, hide main menu</summary>
+        private void ShowAbout(object sender, RoutedEventArgs e)
+        {
+            AboutFlyout.IsOpen = true;
+            MainMenuFlyout.IsOpen = false;
+        }
+
+        /// <summary> Start browser and go to e.Uri.AbsoluteUri </summary>
+        private void ClickOnHyperlink(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+
 
 //TODO: dirty trick
 

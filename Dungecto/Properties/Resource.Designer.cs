@@ -70,7 +70,18 @@ namespace Dungecto.Properties
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Dungecto.
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string About
+        {
+            get
+            {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Dungecto: GM Cartography.
         /// </summary>
         public static string AppName
         {
@@ -99,6 +110,17 @@ namespace Dungecto.Properties
             get
             {
                 return ResourceManager.GetString("Cut", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to License.
+        /// </summary>
+        public static string License
+        {
+            get
+            {
+                return ResourceManager.GetString("License", resourceCulture);
             }
         }
 
@@ -257,6 +279,17 @@ namespace Dungecto.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Third party:.
+        /// </summary>
+        public static string ThirdPartyRights
+        {
+            get
+            {
+                return ResourceManager.GetString("ThirdPartyRights", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Tile.
         /// </summary>
         public static string Tile
@@ -363,6 +396,28 @@ namespace Dungecto.Properties
             get
             {
                 return ResourceManager.GetString("Toolbox", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Url.
+        /// </summary>
+        public static string Url
+        {
+            get
+            {
+                return ResourceManager.GetString("Url", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string Version
+        {
+            get
+            {
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
     }

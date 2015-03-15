@@ -117,14 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
   <data name="AppName" xml:space="preserve">
-    <value>Dungecto</value>
+    <value>Dungecto: GM Cartography</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
   <data name="Cut" xml:space="preserve">
     <value>Cut</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>License</value>
   </data>
   <data name="MainMenuExport" xml:space="preserve">
     <value>Export to image</value>
@@ -168,6 +174,9 @@
   <data name="SectorWidth" xml:space="preserve">
     <value>Sector width:</value>
   </data>
+  <data name="ThirdPartyRights" xml:space="preserve">
+    <value>Third party:</value>
+  </data>
   <data name="Tile" xml:space="preserve">
     <value>Tile</value>
   </data>
@@ -197,5 +206,11 @@
   </data>
   <data name="Toolbox" xml:space="preserve">
     <value>Toolbox</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
   </data>
 </root>

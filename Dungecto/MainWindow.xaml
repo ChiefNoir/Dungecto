@@ -44,9 +44,55 @@
     </controls:MetroWindow.LeftWindowCommands>
 
     <Grid>
+        <controls:Flyout x:Name="AboutFlyout" Header="{x:Static res:Resource.About}"
+                             Panel.ZIndex="13" Position="Left" Theme="Adapt" AnimateOpacity="True" >
+            <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                <StackPanel>                    
+                    <GroupBox Header="Dungecto: GM Cartography">
+                        <StackPanel>
+                            <TextBlock Margin="5,0,0,0">
+                                <Hyperlink FontWeight="Bold" NavigateUri="https://github.com/SharpDiv/Dungecto" RequestNavigate="ClickOnHyperlink">Dungecto: GM Cartography</Hyperlink>
+                            </TextBlock>
+                            <TextBlock Margin="5,0,0,0" x:Name="TextVersion"/>
+                            <TextBlock Margin="5,0,0,0" x:Name="Copyright" />
+                            <TextBlock Margin="5,0,0,0" >
+                                <Hyperlink NavigateUri="http://opensource.org/licenses/MIT" RequestNavigate="ClickOnHyperlink">The MIT License (MIT)</Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="{x:Static res:Resource.ThirdPartyRights}">
+                        <StackPanel>
+                            <TextBlock>
+                                <Hyperlink FontWeight="Bold" NavigateUri="http://mahapps.com/" RequestNavigate="ClickOnHyperlink">MahApps.Metro</Hyperlink>
+                                <LineBreak/>Version: 1.1.1.0<LineBreak/>
+                                <Hyperlink NavigateUri="http://opensource.org/licenses/MS-PL" RequestNavigate="ClickOnHyperlink">Microsoft Public License (MS-PL)</Hyperlink>
+                            </TextBlock>
+
+                            <Separator/>
+
+                            <TextBlock>
+                                <Hyperlink FontWeight="Bold" NavigateUri="http://www.mvvmlight.net/" RequestNavigate="ClickOnHyperlink">MVVM Light Toolkit</Hyperlink>
+                                <LineBreak/>Version: 5.0.2.32240<LineBreak/>
+                                <Hyperlink NavigateUri="http://opensource.org/licenses/MIT" RequestNavigate="ClickOnHyperlink">The MIT License (MIT)</Hyperlink>
+                            </TextBlock>
+
+                            <Separator/>
+
+                            <TextBlock>
+                                <Hyperlink FontWeight="Bold" NavigateUri="http://wpftoolkit.codeplex.com/" RequestNavigate="ClickOnHyperlink">Extended WPF Toolkit™ Community Edition</Hyperlink>
+                                <LineBreak/>Version: 2.4.0.0<LineBreak/>
+                                <Hyperlink NavigateUri="http://opensource.org/licenses/MS-PL" RequestNavigate="ClickOnHyperlink">Microsoft Public License (Ms-PL)</Hyperlink>
+                            </TextBlock>
+                            
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </ScrollViewer>
+        </controls:Flyout>
 
         <controls:Flyout x:Name="MainMenuFlyout" Header="{x:Static res:Resource.Menu}"
-                             Panel.ZIndex="13" Position="Left" Theme="Inverse" AnimateOpacity="True" >
+                             Panel.ZIndex="13" Position="Left" Theme="Inverse" AnimateOpacity="True" >            
             <StackPanel>
                 <Button Content="{x:Static res:Resource.MainMenuNew}" 
                             Style="{DynamicResource SquareButtonStyle}" Command="{Binding CreateNewMapCommand}"
@@ -63,7 +109,9 @@
                 <Button Content="{x:Static res:Resource.MainMenuExport}"
                             Style="{DynamicResource SquareButtonStyle}" Click="ExportMap"
                             HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
-
+                <Button Content="{x:Static res:Resource.About}"
+                            Style="{DynamicResource SquareButtonStyle}" Click="ShowAbout"
+                            HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
             </StackPanel>
         </controls:Flyout>
 
@@ -149,7 +197,7 @@
                 </ListView>
             </Expander>
 
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >                               
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
                 <ListView x:Name="ListMap" ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent">                    
                     <ListView.Resources>
                         <ContextMenu x:Key="ItemContextMenu">
