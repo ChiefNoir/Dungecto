@@ -28,11 +28,23 @@ namespace Dungecto.ViewModel
         /// <summary> See <see cref="DeselectCommand"/> property </summary>
         private ICommand _deselectCommand;
 
+        /// <summary> See <see cref="CopyCommand"/> property </summary>
+        private ICommand _copyCommand;
+
+        /// <summary> See <see cref="CutCommand"/> property </summary>
+        private ICommand _cutCommand;
+
+        /// <summary> See <see cref="PasteCommand"/> property </summary>
+        private ICommand _pasteCommand;
+
         /// <summary> See <see cref="SelectedTile"/> property </summary>
         private Tile _selectedTile;
 
         /// <summary> See <see cref="Map"/> property </summary>
         private Map _map;
+
+        /// <summary> Clipboard for Tile </summary>
+        private Tile _clipboardTile = null;
 
         /// <summary> Last file path (last opened/last saved)</summary>
         private string _lastFilePath = null;
@@ -74,6 +86,24 @@ namespace Dungecto.ViewModel
         public ICommand DeselectCommand
         {
             get { return _deselectCommand ?? (_deselectCommand = new RelayCommand(Deselect)); }
+        }
+
+        /// <summary> Copy tile to local "clipboard" </summary>
+        public ICommand CopyCommand
+        {
+            get { return _copyCommand ?? (_copyCommand = new RelayCommand(Copy)); }
+        }
+
+        /// <summary> Cut tile to local "clipboard" </summary>
+        public ICommand CutCommand
+        {
+            get { return _cutCommand ?? (_cutCommand = new RelayCommand(Cut)); }
+        }
+
+        /// <summary> Paste tile from local "clipboard" to map </summary>
+        public ICommand PasteCommand
+        {
+            get { return _pasteCommand ?? (_pasteCommand = new RelayCommand(Paste)); }
         }
 
         /// <summary> Get map </summary>
@@ -182,6 +212,39 @@ namespace Dungecto.ViewModel
             }
         }
 
+        /// <summary> Insert <see cref="_clipboardTile"/> to <see cref="Map"/> </summary>
+        private void Paste()
+        {
+            if (_clipboardTile != null)
+            {
+                _clipboardTile.X = 40;
+                _clipboardTile.Y = 40;
+                Map.Tiles.Add(_clipboardTile);
+                _clipboardTile = null;
+            }
+        }
+
+        /// <summary> Clone <see cref="SelectedTile"/> to local clipboard (<see cref="_clipboardTile"/>) </summary>
+        private void Copy()
+        {
+            if (SelectedTile != null)
+            {
+                _clipboardTile = SelectedTile.Clone() as Tile;
+            }
+        }
+
+        /// <summary> Cut <see cref="SelectedTile"/> to local clipboard (<see cref="_clipboardTile"/>) and remove it from <see cref="Map"/> </summary>
+        private void Cut()
+        {
+            if (SelectedTile != null)
+            {
+                _clipboardTile = SelectedTile;
+                Map.Tiles.Remove(SelectedTile);
+                SelectedTile = null;
+            }
+        }
+
+        /// <summary> Make <see cref="SelectedTile"/> null </summary>
         private void Deselect()
         {
             SelectedTile = null;

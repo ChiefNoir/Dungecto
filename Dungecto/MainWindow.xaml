@@ -21,6 +21,11 @@
         <KeyBinding Key="Delete" Command="{Binding RemoveTileCommand}" />
         <KeyBinding Key="Escape" Command="{Binding DeselectCommand}" />
         <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveMapCommand}" />
+        
+        <KeyBinding Modifiers="Control" Key="C" Command="{Binding CopyCommand}" />
+        <KeyBinding Modifiers="Control" Key="X" Command="{Binding CutCommand}" />
+        <KeyBinding Modifiers="Control" Key="V" Command="{Binding PasteCommand}" />
+
         <KeyBinding Modifiers="Control+Shift" Key="S" Command="{Binding SaveMapAsCommand}" />
         <KeyBinding Modifiers="Control" Key="O" Command="{Binding LoadMapCommand}" />
         <KeyBinding Modifiers="Control" Key="N" Command="{Binding CreateNewMapCommand}" />
@@ -133,13 +138,13 @@
                 </ListView>
             </Expander>
 
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >
-                <ListView x:Name="ListMap" ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" >                               
+                <ListView x:Name="ListMap" ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent">                    
                     <ListView.Resources>
                         <ContextMenu x:Key="ItemContextMenu">
                             <MenuItem Header="{x:Static res:Resource.TileRemove}"
-                                          Command="{Binding DataContext.RemoveTileCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}" 
-                                          Click="ClickOnMenuItemRemoveTile"/>
+                                      Command="{Binding DataContext.RemoveTileCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}" 
+                                      Click="ClickOnMenuItemRemoveTile"/>
                             <Separator/>
                             <MenuItem Header="{x:Static res:Resource.TileProperties}" Click="OpenCloseTileProperties" />
                         </ContextMenu>
