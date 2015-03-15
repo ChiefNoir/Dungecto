@@ -153,6 +153,13 @@
                 <ListView x:Name="ListMap" ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent">                    
                     <ListView.Resources>
                         <ContextMenu x:Key="ItemContextMenu">
+                            <MenuItem Header="{x:Static res:Resource.Cut}" 
+                                      Command="{Binding DataContext.CutCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}" />
+                            <MenuItem Header="{x:Static res:Resource.Copy}" 
+                                      Command="{Binding DataContext.CopyCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}" />
+                            <MenuItem Header="{x:Static res:Resource.Paste}" 
+                                      Command="{Binding DataContext.PasteCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}" />
+                            <Separator/>
                             <MenuItem Header="{x:Static res:Resource.TileRemove}"
                                       Command="{Binding DataContext.RemoveTileCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}" 
                                       Click="ClickOnMenuItemRemoveTile"/>
@@ -168,6 +175,8 @@
 
                     <ListView.ContextMenu>
                         <ContextMenu>
+                            <MenuItem Header="{x:Static res:Resource.Paste}" Command="{Binding PasteCommand}"/>
+                            <Separator/>
                             <MenuItem Header="{x:Static res:Resource.MapProperties}" Click="OpenCloseMapProperties" />
                         </ContextMenu>
                     </ListView.ContextMenu>
