@@ -65,7 +65,7 @@
                         <StackPanel>
                             <TextBlock>
                                 <Hyperlink FontWeight="Bold" NavigateUri="http://mahapps.com/" RequestNavigate="ClickOnHyperlink">MahApps.Metro</Hyperlink>
-                                <LineBreak/>Version: 1.1.1.0<LineBreak/>
+                                <LineBreak/>Version: 1.1.2.0<LineBreak/>
                                 <Hyperlink NavigateUri="http://opensource.org/licenses/MS-PL" RequestNavigate="ClickOnHyperlink">Microsoft Public License (MS-PL)</Hyperlink>
                             </TextBlock>
 
@@ -73,7 +73,7 @@
 
                             <TextBlock>
                                 <Hyperlink FontWeight="Bold" NavigateUri="http://www.mvvmlight.net/" RequestNavigate="ClickOnHyperlink">MVVM Light Toolkit</Hyperlink>
-                                <LineBreak/>Version: 5.0.2.32240<LineBreak/>
+                                <LineBreak/>Version: 5.1.1.0<LineBreak/>
                                 <Hyperlink NavigateUri="http://opensource.org/licenses/MIT" RequestNavigate="ClickOnHyperlink">The MIT License (MIT)</Hyperlink>
                             </TextBlock>
 
