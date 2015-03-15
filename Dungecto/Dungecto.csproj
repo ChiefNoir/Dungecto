@@ -92,6 +92,7 @@
     <Compile Include="..\MetaData\AssemblySharedInfo.cs">
       <Link>AssemblySharedInfo.cs</Link>
     </Compile>
+    <Compile Include="Common\Converters\InversedNullToBoolConverter.cs" />
     <Compile Include="Common\Dialogs.cs" />
     <Compile Include="Common\Exporter.cs" />
     <Compile Include="Common\Serializer.cs" />

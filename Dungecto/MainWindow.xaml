@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:res="clr-namespace:Dungecto.Properties"
     xmlns:view="clr-namespace:Dungecto.View"
+    xmlns:converters="clr-namespace:Dungecto.Common.Converters"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Class="Dungecto.MainWindow"
     Title="{x:Static res:Resource.AppName}"
@@ -14,6 +15,7 @@
     <controls:MetroWindow.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <converters:InversedNullToBoolConverter x:Key="NullToBoolConverter"/>
         </ResourceDictionary>
     </controls:MetroWindow.Resources>
 
@@ -67,7 +69,16 @@
 
         <controls:Flyout x:Name="TilePropertiesFlyout" Header="{x:Static res:Resource.Tile}" Panel.ZIndex="3"
                              MinWidth="200" Position="Right" IsOpen="False" Theme="Adapt">
-            <Grid>                
+            <Grid IsEnabled="{Binding SelectedTile, Converter={StaticResource NullToBoolConverter}}"> 
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
                 <TextBlock Text="{x:Static res:Resource.TilePositionX}" Margin="10,10,10,0" VerticalAlignment="Top"/>
                 <controls:NumericUpDown Value="{Binding SelectedTile.X}" Height="23" Margin="10,26,10,0" Minimum="0" VerticalAlignment="Top"/>
 
