@@ -125,7 +125,7 @@ namespace Dungecto.View
                     Height = SectorHeight,
                     Width = SectorWidth,
                     Fill = new SolidColorBrush(BackgroundColor),
-                    StrokeThickness = .5
+                    StrokeThickness = 1
                 }
             };
 

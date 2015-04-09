@@ -201,6 +201,9 @@
   <data name="TileRemove" xml:space="preserve">
     <value>Remove</value>
   </data>
+  <data name="Tiles" xml:space="preserve">
+    <value>Tiles</value>
+  </data>
   <data name="TileWidth" xml:space="preserve">
     <value>Width:</value>
   </data>
@@ -212,5 +215,14 @@
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
+  </data>
+  <data name="EditorModeEraser" xml:space="preserve">
+    <value>Eraser</value>
+  </data>
+  <data name="EditorModeFiller" xml:space="preserve">
+    <value>Filler</value>
+  </data>
+  <data name="EditorModeTiler" xml:space="preserve">
+    <value>Tiler</value>
   </data>
 </root>

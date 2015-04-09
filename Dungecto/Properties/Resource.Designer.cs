@@ -114,6 +114,39 @@ namespace Dungecto.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Eraser.
+        /// </summary>
+        public static string EditorModeEraser
+        {
+            get
+            {
+                return ResourceManager.GetString("EditorModeEraser", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Filler.
+        /// </summary>
+        public static string EditorModeFiller
+        {
+            get
+            {
+                return ResourceManager.GetString("EditorModeFiller", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Tiler.
+        /// </summary>
+        public static string EditorModeTiler
+        {
+            get
+            {
+                return ResourceManager.GetString("EditorModeTiler", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to License.
         /// </summary>
         public static string License
@@ -374,6 +407,17 @@ namespace Dungecto.Properties
             get
             {
                 return ResourceManager.GetString("TileRemove", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Tiles.
+        /// </summary>
+        public static string Tiles
+        {
+            get
+            {
+                return ResourceManager.GetString("Tiles", resourceCulture);
             }
         }
 

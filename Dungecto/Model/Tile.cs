@@ -8,26 +8,15 @@ namespace Dungecto.Model
     [Serializable]
     public class Tile : INotifyPropertyChanged, ICloneable
     {
-        /// <summary> See <see cref="Color"/> property </summary>
         private string _color;
-
-        /// <summary> See <see cref="Geometry"/> property </summary>
         private string _geometry;
 
-        /// <summary> See <see cref="Height"/> property </summary>
         private int _height;
-
-        /// <summary> See <see cref="Width"/> property </summary>
         private int _width;
-
-        /// <summary> See <see cref="X"/> property </summary>
         private int _x;
-
-        /// <summary> See <see cref="Y"/> property </summary>
         private int _y;
-
-        /// <summary> See <see cref="Z"/> property </summary>
         private int _z;
+
 
         /// <summary> Property changed event</summary>
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -103,6 +92,9 @@ namespace Dungecto.Model
             }
         }
 
+        public int xIndex { get; set; }
+        public int yIndex { get; set; }
+
         /// <summary> Get/set Y position </summary>
         [XmlAttribute("Y")]
         public int Y
@@ -129,6 +121,10 @@ namespace Dungecto.Model
             }
         }
 
+        /// <summary> Is tile a static square? </summary>
+        [XmlAttribute("IsFiller")]
+        public bool IsFiller { get; set; }
+
         /// <summary>Clone tile description</summary>
         /// <returns>Clone of this</returns>
         public object Clone()
@@ -140,7 +136,8 @@ namespace Dungecto.Model
                            _height = Height,
                            _width = Width,
                            _x = X,
-                           _y = Y
+                           _y = Y,
+                           IsFiller = IsFiller
                        };
         }
 

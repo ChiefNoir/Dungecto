@@ -8,8 +8,38 @@
     StartupUri="MainWindow.xaml"
     mc:Ignorable="d">
     
-    <Application.Resources>
+    <Application.Resources>        
         <ResourceDictionary>
+
+            <Style TargetType="{x:Type RadioButton}" x:Key="buttonstripe1">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type RadioButton}">
+                            <BulletDecorator Cursor="Hand">
+                                <!--Text element-->
+                                <!--<Border Margin="5" Width="Auto" Height="Auto" BorderBrush="#FFE2E2E2" BorderThickness="1">-->
+                                    <Grid Margin="5">
+                                        <ContentPresenter Margin="14,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                        <!--We don't need any bullet, cause our border is the switching element-->
+
+                                        <Border HorizontalAlignment="Left" Width="10" Background="{StaticResource DisabledWhiteBrush}" CornerRadius="1" Name="RadioMark" />
+                                        <!-- To change the apearance to button stripe 2, edit the margins! -->
+                                    </Grid>
+
+                                <!--</Border>-->
+                            </BulletDecorator>
+
+                            <!--If item is checked, trigger the visibility of the mark-->
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter TargetName="RadioMark" Property="Background" Value="{StaticResource AccentColorBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <!--Global View Model Locator-->
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             
@@ -18,9 +48,11 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />                                
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>
+        
+        
     </Application.Resources>
 </Application>

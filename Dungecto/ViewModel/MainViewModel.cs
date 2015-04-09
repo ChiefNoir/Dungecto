@@ -3,53 +3,35 @@ using Dungecto.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
+using System.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace Dungecto.ViewModel
 {
     /// <summary> This class contains properties that the main View can data bind to </summary>
     public class MainViewModel : ViewModelBase
     {
-        /// <summary> See <see cref="CreateNewMapCommand"/> property </summary>
         private ICommand _createNewMapCommand;
-
-        /// <summary> See <see cref="LoadMapCommand"/> property </summary>
         private ICommand _loadMapCommand;
-
-        /// <summary> See <see cref="RemoveTileCommand"/> property </summary>
         private ICommand _removeTileCommand;
-
-        /// <summary> See <see cref="SaveMapCommand"/> property </summary>
         private ICommand _saveMapCommand;
-
-        /// <summary> See <see cref="SaveMapCommand"/> property </summary>
         private ICommand _saveMapAsCommand;
-
-        /// <summary> See <see cref="DeselectCommand"/> property </summary>
         private ICommand _deselectCommand;
-
-        /// <summary> See <see cref="CopyCommand"/> property </summary>
         private ICommand _copyCommand;
-
-        /// <summary> See <see cref="CutCommand"/> property </summary>
         private ICommand _cutCommand;
-
-        /// <summary> See <see cref="PasteCommand"/> property </summary>
         private ICommand _pasteCommand;
 
-        /// <summary> See <see cref="SelectedTile"/> property </summary>
         private Tile _selectedTile;
-
-        /// <summary> See <see cref="Map"/> property </summary>
-        private Map _map;
-
-        /// <summary> Clipboard for Tile </summary>
         private Tile _clipboardTile = null;
 
-        /// <summary> Last file path (last opened/last saved)</summary>
+        private EditorMode _editorMode = EditorMode.Tiler;
+        private Map _map;
+
         private string _lastFilePath = null;
 
-        /// <summary> See <see cref="Toolbox"/> property </summary>
         private ObservableCollection<Tile> _toolbox;
 
         /// <summary> Create new map command </summary>        
@@ -118,7 +100,7 @@ namespace Dungecto.ViewModel
         }
 
         /// <summary> Get toolbox, contains map tiles </summary>
-        public ObservableCollection<Tile> Toolbox 
+        public ObservableCollection<Tile> Toolbox
         { 
             get { return _toolbox; } 
             private set 
@@ -145,6 +127,20 @@ namespace Dungecto.ViewModel
             _map = new Map();
 
             _toolbox = Serializer.FromXml<ObservableCollection<Tile>>(@"Data\Toolbox.xml");
+        }
+
+        public void AddFiller(Point point)
+        {
+            if(EditorMode == EditorMode.Eraser)
+            {
+                Map.RemoveFiller(point);
+                return;
+            }
+
+            if (EditorMode == EditorMode.Filler)
+            {
+                Map.AddFiller(point, FillerColor);
+            }
         }
 
         /// <remarks> Clearing current <see cref="Map"/> and initializing it with default values </remarks>
@@ -219,8 +215,8 @@ namespace Dungecto.ViewModel
             {
                 _clipboardTile.X = 40;
                 _clipboardTile.Y = 40;
-                Map.Tiles.Add(_clipboardTile);
-                _clipboardTile = null;
+
+                Map.Tiles.Add(_clipboardTile.Clone() as Tile);
             }
         }
 
@@ -249,5 +245,37 @@ namespace Dungecto.ViewModel
         {
             SelectedTile = null;
         }
+
+        
+        /// <summary>Get/Set curret mode</summary>
+        public EditorMode EditorMode
+        {
+            get { return _editorMode; }
+            set
+            {
+                if(_editorMode != value)
+                {
+                    _editorMode = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string _fillerColor = "#FF55663B";
+
+        /// <summary> Get/set filler color </summary>
+        public string FillerColor
+        {
+            get { return _fillerColor; }
+            set
+            {
+                if(_fillerColor != value)
+                {
+                    _fillerColor = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
     }
 }

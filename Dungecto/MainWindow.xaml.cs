@@ -170,7 +170,11 @@ namespace Dungecto
             (DataContext as MainViewModel).SelectedTile = mtile;
         }
 
-
+//TODO: dirty trick
+        private void MapCanvas_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            (DataContext as MainViewModel).AddFiller(e.GetPosition(_canvas));
+        }
 
     }
 }

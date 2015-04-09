@@ -96,10 +96,16 @@
       <Link>AssemblySharedInfo.cs</Link>
     </Compile>
     <Compile Include="Common\AppInfo.cs" />
+    <Compile Include="Common\Converters\EnumsToBoolConverter.cs" />
+    <Compile Include="Common\Converters\EnumsToVisibilityConverter.cs" />
+    <Compile Include="Common\Converters\EnumToBoolConverter.cs" />
+    <Compile Include="Common\Converters\InversedBoolToBoolConverter.cs" />
+    <Compile Include="Common\Converters\InversedBoolToVisibilityConverter.cs" />
     <Compile Include="Common\Converters\InversedNullToBoolConverter.cs" />
     <Compile Include="Common\Dialogs.cs" />
     <Compile Include="Common\Exporter.cs" />
     <Compile Include="Common\Serializer.cs" />
+    <Compile Include="Common\Utils\AdoptExtensionMethods.cs" />
     <Compile Include="Common\Utils\Converters.cs" />
     <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Tile.cs" />
@@ -108,6 +114,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\EditorMode.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\MapCanvas.cs" />

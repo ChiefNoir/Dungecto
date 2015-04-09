@@ -6,6 +6,7 @@
     xmlns:res="clr-namespace:Dungecto.Properties"
     xmlns:view="clr-namespace:Dungecto.View"
     xmlns:converters="clr-namespace:Dungecto.Common.Converters"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Class="Dungecto.MainWindow"
     Title="{x:Static res:Resource.AppName}"
@@ -16,6 +17,13 @@
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BoolToVis"/>
             <converters:InversedNullToBoolConverter x:Key="NullToBoolConverter"/>
+            <converters:InversedBoolToVisibilityConverter x:Key="BoolToVisInversed"/>
+            <converters:InversedBoolToBoolConverter x:Key="BoolInverserConverter"/>
+            <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
+            <converters:EnumsToBoolConverter x:Key="EnumsToBoolConverter"/>
+            <converters:EnumsToVisibilityConverter x:Key="EnumsToVisibilityConverter" />
+
+            <!--<sys:String x:Key="mystring">Filler|Eraser</sys:String>-->
         </ResourceDictionary>
     </controls:MetroWindow.Resources>
 
@@ -23,7 +31,7 @@
         <KeyBinding Key="Delete" Command="{Binding RemoveTileCommand}" />
         <KeyBinding Key="Escape" Command="{Binding DeselectCommand}" />
         <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveMapCommand}" />
-        
+
         <KeyBinding Modifiers="Control" Key="C" Command="{Binding CopyCommand}" />
         <KeyBinding Modifiers="Control" Key="X" Command="{Binding CutCommand}" />
         <KeyBinding Modifiers="Control" Key="V" Command="{Binding PasteCommand}" />
@@ -44,10 +52,11 @@
     </controls:MetroWindow.LeftWindowCommands>
 
     <Grid>
+       
         <controls:Flyout x:Name="AboutFlyout" Header="{x:Static res:Resource.About}"
                              Panel.ZIndex="13" Position="Left" Theme="Adapt" AnimateOpacity="True" >
             <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                <StackPanel>                    
+                <StackPanel>
                     <GroupBox Header="Dungecto: GM Cartography">
                         <StackPanel>
                             <TextBlock Margin="5,0,0,0">
@@ -84,7 +93,7 @@
                                 <LineBreak/>Version: 2.4.0.0<LineBreak/>
                                 <Hyperlink NavigateUri="http://opensource.org/licenses/MS-PL" RequestNavigate="ClickOnHyperlink">Microsoft Public License (Ms-PL)</Hyperlink>
                             </TextBlock>
-                            
+
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
@@ -92,7 +101,7 @@
         </controls:Flyout>
 
         <controls:Flyout x:Name="MainMenuFlyout" Header="{x:Static res:Resource.Menu}"
-                             Panel.ZIndex="13" Position="Left" Theme="Inverse" AnimateOpacity="True" >            
+                             Panel.ZIndex="13" Position="Left" Theme="Inverse" AnimateOpacity="True" >
             <StackPanel>
                 <Button Content="{x:Static res:Resource.MainMenuNew}" 
                             Style="{DynamicResource SquareButtonStyle}" Command="{Binding CreateNewMapCommand}"
@@ -117,7 +126,7 @@
 
         <controls:Flyout x:Name="TilePropertiesFlyout" Header="{x:Static res:Resource.Tile}" Panel.ZIndex="3"
                              MinWidth="200" Position="Right" IsOpen="False" Theme="Adapt">
-            <Grid IsEnabled="{Binding SelectedTile, Converter={StaticResource NullToBoolConverter}}"> 
+            <Grid IsEnabled="{Binding SelectedTile, Converter={StaticResource NullToBoolConverter}}">
                 <Grid.Style>
                     <Style TargetType="Grid">
                         <Style.Triggers>
@@ -178,29 +187,71 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Expander Header="{x:Static res:Resource.Toolbox}" IsExpanded="True" >
-                <ListView ItemsSource="{Binding Toolbox}" BorderBrush="Transparent" >
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ToolboxPreviewMouseLeftButtonDown" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Path Data="{Binding Geometry}" Fill="{Binding Color}" 
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <GroupBox Grid.Row="1" Header="Filler color" 
+                          Visibility="{Binding EditorMode, 
+                                        Converter={StaticResource EnumsToVisibilityConverter}, 
+                                        ConverterParameter='Filler|Eraser'}">
+                    
+                    
+                    <xctk:ColorPicker Width="100" SelectedColor="{Binding FillerColor}" VerticalAlignment="Top" ColorMode="ColorCanvas" 
+                                          ShowAdvancedButton="False" ShowStandardColors="False" ShowAvailableColors="False"  IsEnabled="True"/>
+                </GroupBox>
+
+
+                <ScrollViewer Grid.Row="0" >
+                    <StackPanel>
+                        <Expander Header="{x:Static res:Resource.Toolbox}" IsExpanded="False" >
+                            <StackPanel>
+                                <RadioButton Content="{x:Static res:Resource.EditorModeTiler}"
+                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Tiler}"
+                                         FontSize="14"
+                                         Style="{StaticResource buttonstripe1}"/>
+                                <RadioButton Content="{x:Static res:Resource.EditorModeFiller}"
+                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Filler}"
+                                         FontSize="14"
+                                         Style="{StaticResource buttonstripe1}"/>
+                                <RadioButton Content="{x:Static res:Resource.EditorModeEraser}"
+                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Eraser}"
+                                         FontSize="14"
+                                         Style="{StaticResource buttonstripe1}"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <Expander Header="{x:Static res:Resource.Tiles}" IsExpanded="False" 
+                              IsEnabled="{Binding Path=EditorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Tiler, Mode=OneWay}">
+                            <ListView ItemsSource="{Binding Toolbox}" BorderBrush="Transparent" >
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ToolboxPreviewMouseLeftButtonDown" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Path Data="{Binding Geometry}" Fill="{Binding Color}" 
                                       Width="{Binding Width}" Height="{Binding Height}" 
                                       MaxWidth="100" MaxHeight="100" 
                                       Stretch="Fill" IsHitTestVisible="False"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Expander>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Expander>
+
+
+                    </StackPanel>
+                </ScrollViewer>
+                   
+            </Grid>
 
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" 
                           PreviewMouseWheel="MapPreviewMouseWheel">
-                <ListView x:Name="ListMap" ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent"
-                          >
+                <ListView x:Name="ListMap" ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent">
                     <ListView.Resources>
                         <ContextMenu x:Key="ItemContextMenu">
                             <MenuItem Header="{x:Static res:Resource.Cut}" 
@@ -215,6 +266,7 @@
                                       Click="ClickOnMenuItemRemoveTile"/>
                             <Separator/>
                             <MenuItem Header="{x:Static res:Resource.TileProperties}" Click="OpenCloseTileProperties" />
+                            <Separator/>
                         </ContextMenu>
                     </ListView.Resources>
 
@@ -225,19 +277,19 @@
 
                     <ListView.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="{x:Static res:Resource.Paste}" Command="{Binding PasteCommand}"/>
-                            <Separator/>
-                            <MenuItem Header="{x:Static res:Resource.MapProperties}" Click="OpenCloseMapProperties" />
+                            <MenuItem Header="{x:Static res:Resource.Paste}" Command="{Binding PasteCommand}" />
+                            <Separator />
+                            <MenuItem Header="{x:Static res:Resource.MapProperties}" Click="OpenCloseMapProperties"/>
                         </ContextMenu>
                     </ListView.ContextMenu>
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
-                                <view:ThumbMover 
-                                        X="{Binding X, Mode=TwoWay}" MinX="-5" ContentWidth="{Binding Width}"
+                            <Grid IsEnabled="{Binding Main.EditorMode, ConverterParameter=Tiler, Converter={StaticResource EnumsToBoolConverter}, Source={StaticResource Locator}}">
+                                <view:ThumbMover
+                                        X="{Binding X, Mode=TwoWay}" MinX="0" ContentWidth="{Binding Width}"
                                         MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
-                                        Y="{Binding Y, Mode=TwoWay}" MinY="-2" ContentHeight="{Binding Height}"
+                                        Y="{Binding Y, Mode=TwoWay}" MinY="0" ContentHeight="{Binding Height}"
                                         MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
                                         Cursor="SizeAll" PreviewMouseLeftButtonDown="ThumbMover_PreviewMouseLeftButtonDown">
                                     <view:ThumbMover.Template>
@@ -253,9 +305,11 @@
                                           IsHitTestVisible="False"/>
 
                                 <!--Grid with resizing things-->
-                                <Grid Visibility="{Binding IsMouseOver, Converter={StaticResource BoolToVis}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}">
+                                <Grid Visibility="{Binding IsMouseOver, Converter={StaticResource BoolToVis}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}">
+                                    <Grid Visibility="{Binding Main.EditorMode, ConverterParameter=Tiler, Converter={StaticResource EnumsToVisibilityConverter}, Source={StaticResource Locator}}">
                                     <view:ThumbResizer 
-                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                        Visibility="{Binding Main.EditorMode, ConverterParameter=Tiler, Converter={StaticResource EnumsToVisibilityConverter}, Source={StaticResource Locator}}"
+                                            X="{Binding X, Mode=TwoWay}" MinX="0" Y="{Binding Y, Mode=TwoWay}" MinY="0"
                                             ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
                                             MinContent="20"
                                             MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
@@ -263,7 +317,7 @@
                                             Height="3" Cursor="SizeNS" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
 
                                     <view:ThumbResizer 
-                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            X="{Binding X, Mode=TwoWay}" MinX="0" Y="{Binding Y, Mode=TwoWay}" MinY="0"
                                             ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
                                             MinContent="20"
                                             MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
@@ -271,7 +325,7 @@
                                             Height="3" Cursor="SizeNS" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
 
                                     <view:ThumbResizer 
-                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            X="{Binding X, Mode=TwoWay}" MinX="0" Y="{Binding Y, Mode=TwoWay}" MinY="0"
                                             ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
                                             MinContent="20"
                                             MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
@@ -279,7 +333,7 @@
                                             Width="3" Cursor="SizeWE" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
 
                                     <view:ThumbResizer 
-                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            X="{Binding X, Mode=TwoWay}" MinX="0" Y="{Binding Y, Mode=TwoWay}" MinY="0"
                                             ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
                                             MinContent="20"
                                             MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
@@ -287,7 +341,7 @@
                                             Width="3" Cursor="SizeWE" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Right"/>
 
                                     <view:ThumbResizer 
-                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            X="{Binding X, Mode=TwoWay}" MinX="0" Y="{Binding Y, Mode=TwoWay}" MinY="0"
                                             ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
                                             MinContent="20"
                                             MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
@@ -295,7 +349,7 @@
                                             Width="8" Height="8" Cursor="SizeNWSE" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
                                     <view:ThumbResizer 
-                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            X="{Binding X, Mode=TwoWay}" MinX="0" Y="{Binding Y, Mode=TwoWay}" MinY="0"
                                             ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
                                             MinContent="20"
                                             MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
@@ -303,7 +357,7 @@
                                             Width="8" Height="8" Cursor="SizeNESW" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
 
                                     <view:ThumbResizer 
-                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            X="{Binding X, Mode=TwoWay}" MinX="0" Y="{Binding Y, Mode=TwoWay}" MinY="0"
                                             ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
                                             MinContent="20"
                                             MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
@@ -311,12 +365,13 @@
                                             Width="8" Height="8" Cursor="SizeNWSE" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
 
                                     <view:ThumbResizer 
-                                            X="{Binding X, Mode=TwoWay}" MinX="-5" Y="{Binding Y, Mode=TwoWay}" MinY="-2"
+                                            X="{Binding X, Mode=TwoWay}" MinX="0" Y="{Binding Y, Mode=TwoWay}" MinY="0"
                                             ContentWidth="{Binding Width, Mode=TwoWay}" ContentHeight="{Binding Height, Mode=TwoWay}"
                                             MinContent="20"
                                             MaxX="{Binding DataContext.Map.Width, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
                                             MaxY="{Binding DataContext.Map.Height, RelativeSource={RelativeSource AncestorType={x:Type ListView}, Mode=FindAncestor}}"
                                             Width="8" Height="8" Cursor="SizeNESW" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </DataTemplate>
@@ -327,8 +382,10 @@
                             <Setter Property="Canvas.Top" Value="{Binding Y}" />
                             <Setter Property="Canvas.Left" Value="{Binding X}" />
                             <Setter Property="Canvas.ZIndex" Value="{Binding Z}" />
+                            <Setter Property="Padding" Value="0,0,0,0" />
+                            <Setter Property="BorderThickness" Value="0" />
                             <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-
+                            <Setter Property="IsEnabled" Value="{Binding IsFiller, Converter={StaticResource BoolInverserConverter}}"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter Property="BitmapEffect">
@@ -345,11 +402,12 @@
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <view:MapCanvas 
-                                    Margin="-5" 
-                                    Rows="{Binding Map.Rows}" Columns="{Binding Map.Columns}"
-                                    BackgroundColor="{Binding Map.Background}"
-                                    SectorHeight="{Binding Map.SectorHeight}" SectorWidth="{Binding Map.SectorWidth}"
-                                    AllowDrop="True" Drop="CanvasDrop" Loaded="ListViewTemplateLoaded" />
+                                Margin="-5" 
+                                Rows="{Binding Map.Rows}" Columns="{Binding Map.Columns}"
+                                BackgroundColor="{Binding Map.Background}"
+                                SectorHeight="{Binding Map.SectorHeight}" SectorWidth="{Binding Map.SectorWidth}"
+                                AllowDrop="True" Drop="CanvasDrop" Loaded="ListViewTemplateLoaded"
+                                PreviewMouseLeftButtonDown="MapCanvas_PreviewMouseRightButtonDown"/>
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
 
@@ -358,6 +416,8 @@
             </ScrollViewer>
 
         </Grid>
+
+
     </Grid>
 
 </controls:MetroWindow>

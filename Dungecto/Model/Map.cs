@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
+using System.Linq;
+using Dungecto.Common.Utils;
 
 namespace Dungecto.Model
 {
@@ -53,6 +57,8 @@ namespace Dungecto.Model
                 _columns = value;
                 RaisePropertyChanged("Columns");
                 RaisePropertyChanged("Width");
+
+                ResizeFillers();
             }
         }
 
@@ -76,6 +82,8 @@ namespace Dungecto.Model
                 _rows = value;
                 RaisePropertyChanged("Rows");
                 RaisePropertyChanged("Height");
+
+                ResizeFillers();
             }
         }
 
@@ -88,9 +96,21 @@ namespace Dungecto.Model
             {
                 if (_sectorHeight == value) { return; }
 
+                var oldV = _sectorHeight;
                 _sectorHeight = value;
                 RaisePropertyChanged("SectorHeight");
                 RaisePropertyChanged("Height");
+
+                InitHas();
+                foreach (var item in Tiles.Where(x => x.IsFiller))
+                {
+                    item.Height = value;
+
+                    var ss = _points.FirstOrDefault(x => x.Value[1] == item.yIndex);
+                    item.Y = (int)ss.Key.Y;
+                }
+
+                ResizeFillers();
             }
         }
 
@@ -103,9 +123,22 @@ namespace Dungecto.Model
             {
                 if (_sectorWidth == value) { return; }
 
+                var oldV = _sectorWidth;
+
                 _sectorWidth = value;
                 RaisePropertyChanged("SectorWidth");
                 RaisePropertyChanged("Width");
+
+                InitHas();
+                foreach (var item in Tiles.Where(x=>x.IsFiller))
+                {
+                    item.Width = value;
+
+                    var ss = _points.FirstOrDefault(x => x.Value[0] == item.xIndex);
+                    item.X = (int)ss.Key.X;
+                }
+
+                ResizeFillers();
             }
         }
 
@@ -129,7 +162,7 @@ namespace Dungecto.Model
 
         /// <summary> Get/set map's tiles </summary>
         [XmlElement("Tiles")]
-        public ObservableCollection<Tile> Tiles 
+        public ObservableCollection<Tile> Tiles
         { 
             get { return _tiles; } 
             private set 
@@ -147,6 +180,69 @@ namespace Dungecto.Model
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public void ResizeFillers()
+        {
+            var ft = Tiles.Where(ti => (ti.X>= Width) || (ti.Y>= Height));
+
+            Tiles.Remove(ti => (ti.X >= Width) || (ti.Y >= Height));
+
+        }
+
+        public void AddFiller(Point point, string color)
+        {
+            InitHas();
+            var poi = FindFillerPlace(point);
+
+            var filler = Tiles.FirstOrDefault(x => x.IsFiller && x.X == poi.X && x.Y == poi.Y);
+            if (filler != null)
+            {
+                filler.Color = color;
+            }
+            else
+            {
+                Tiles.Add
+                    (new Tile 
+                    { 
+                        Color = color, 
+                        IsFiller = true, 
+                        Height = SectorHeight, 
+                        Width = SectorWidth, 
+                        xIndex = _points[poi][0],
+                        yIndex = _points[poi][1],
+                        Geometry = "M0,0 H5 V5 H0 Z", 
+                        X = Convert.ToInt32(poi.X), Y = Convert.ToInt32(poi.Y), Z = -100 }
+                    );
+            }
+
+        }
+
+        public void InitHas()
+        {
+            _points.Clear();
+            for (int i = 0; i < Columns; i++)
+            {
+                for (int j = 0; j < Rows; j++)
+                {
+                    _points.Add(new Point(i * (SectorWidth), j * (SectorHeight)), new[]{i, j});
+                }
+            }
+        }
+
+        Dictionary<Point, int[]> _points = new Dictionary<Point, int[]>();
+
+        private Point FindFillerPlace(Point point)
+        {            
+            return _points.Keys.Where(poi => poi.X <= point.X && poi.Y <= point.Y).Last();
+        }
+
+        public void RemoveFiller(Point point)
+        {
+            if (!Tiles.Any(x => x.IsFiller)) { return; }
+            
+            var poi = FindFillerPlace(point);
+            Tiles.Remove(Tiles.FirstOrDefault(x => x.IsFiller && x.X == poi.X && x.Y == poi.Y));
         }
     }
 }
