@@ -24,5 +24,5 @@ using System.Runtime.InteropServices;
 int MajorVersion = 0;
 int MinorVersion = 0;
 int BuildNumber = 0;
-int RevisionNumber = (int)(DateTime.UtcNow - new DateTime(2014, 1, 20)).TotalDays;
+int RevisionNumber = (int)(DateTime.UtcNow - new DateTime(2015, 1, 30)).TotalDays;
 #>
