@@ -114,6 +114,17 @@ namespace Dungecto.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Color Picker.
+        /// </summary>
+        public static string EditorModeColorPicker
+        {
+            get
+            {
+                return ResourceManager.GetString("EditorModeColorPicker", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Eraser.
         /// </summary>
         public static string EditorModeEraser

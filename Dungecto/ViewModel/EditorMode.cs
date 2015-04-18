@@ -10,6 +10,9 @@
         Filler,
 
         /// <summary> User can erase grid squares filled with color </summary>
-        Eraser
+        Eraser,
+
+        /// <summary> User can pick color from filled section </summary>
+        ColorPicker
     }
 }

@@ -171,9 +171,11 @@ namespace Dungecto
         }
 
 //TODO: dirty trick
-        private void MapCanvas_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void MapCanvas_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            (DataContext as MainViewModel).AddFiller(e.GetPosition(_canvas));
+            var context = DataContext as MainViewModel;
+
+            context.AddFiller(e.GetPosition(_canvas));
         }
 
     }

@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 // RevisionNumber = total days of development
 [assembly: AssemblyVersion("<#= this.MajorVersion #>.<#= this.MinorVersion #>.<#= this.BuildNumber #>.<#= this.RevisionNumber #>")]
 [assembly: AssemblyFileVersion("<#= this.MajorVersion #>.<#= this.MinorVersion #>.<#= this.BuildNumber #>.<#= this.RevisionNumber #>")]
-
+ 
 <#+
 int MajorVersion = 0;
 int MinorVersion = 0;

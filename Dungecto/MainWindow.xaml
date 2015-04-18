@@ -196,7 +196,7 @@
                 <GroupBox Grid.Row="1" Header="Filler color" 
                           Visibility="{Binding EditorMode, 
                                         Converter={StaticResource EnumsToVisibilityConverter}, 
-                                        ConverterParameter='Filler|Eraser'}">
+                                        ConverterParameter='Filler|ColorPicker'}">
                     
                     
                     <xctk:ColorPicker Width="100" SelectedColor="{Binding FillerColor}" VerticalAlignment="Top" ColorMode="ColorCanvas" 
@@ -218,6 +218,10 @@
                                          Style="{StaticResource buttonstripe1}"/>
                                 <RadioButton Content="{x:Static res:Resource.EditorModeEraser}"
                                          IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Eraser}"
+                                         FontSize="14"
+                                         Style="{StaticResource buttonstripe1}"/>
+                                <RadioButton Content="{x:Static res:Resource.EditorModeColorPicker}"
+                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=ColorPicker}"
                                          FontSize="14"
                                          Style="{StaticResource buttonstripe1}"/>
                             </StackPanel>
@@ -407,7 +411,7 @@
                                 BackgroundColor="{Binding Map.Background}"
                                 SectorHeight="{Binding Map.SectorHeight}" SectorWidth="{Binding Map.SectorWidth}"
                                 AllowDrop="True" Drop="CanvasDrop" Loaded="ListViewTemplateLoaded"
-                                PreviewMouseLeftButtonDown="MapCanvas_PreviewMouseRightButtonDown"/>
+                                PreviewMouseLeftButtonDown="MapCanvas_PreviewMouseLeftButtonDown"/>
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
 
