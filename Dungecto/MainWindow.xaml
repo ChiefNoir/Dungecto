@@ -5,7 +5,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:res="clr-namespace:Dungecto.Properties"
     xmlns:view="clr-namespace:Dungecto.View"
-    xmlns:converters="clr-namespace:Dungecto.Common.Converters"
+    xmlns:convertersCommon="clr-namespace:Dungecto.Common.Converters"
+    xmlns:convertersCustom="clr-namespace:Dungecto.Converters"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Class="Dungecto.MainWindow"
@@ -16,12 +17,13 @@
     <controls:MetroWindow.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-            <converters:InversedNullToBoolConverter x:Key="NullToBoolConverter"/>
-            <converters:InversedBoolToVisibilityConverter x:Key="BoolToVisInversed"/>
-            <converters:InversedBoolToBoolConverter x:Key="BoolInverserConverter"/>
-            <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
-            <converters:EnumsToBoolConverter x:Key="EnumsToBoolConverter"/>
-            <converters:EnumsToVisibilityConverter x:Key="EnumsToVisibilityConverter" />
+            <convertersCommon:InversedNullToBoolConverter x:Key="NullToBoolConverter"/>
+            <convertersCommon:InversedBoolToVisibilityConverter x:Key="BoolToVisInversed"/>
+            <convertersCommon:InversedBoolToBoolConverter x:Key="BoolInverserConverter"/>
+            <convertersCommon:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
+            <convertersCommon:EnumsToBoolConverter x:Key="EnumsToBoolConverter"/>
+            <convertersCommon:EnumsToVisibilityConverter x:Key="EnumsToVisibilityConverter" />
+            <convertersCustom:EditorModeToCursorConverter x:Key="EditorModeToCursorConverter" />
 
             <!--<sys:String x:Key="mystring">Filler|Eraser</sys:String>-->
         </ResourceDictionary>
@@ -255,7 +257,9 @@
 
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" 
                           PreviewMouseWheel="MapPreviewMouseWheel">
-                <ListView x:Name="ListMap" ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent">
+                <ListView x:Name="ListMap" ItemsSource="{Binding Map.Tiles}" SelectedItem="{Binding SelectedTile}" BorderBrush="Transparent"
+                          Cursor="{Binding EditorMode, Converter={StaticResource EditorModeToCursorConverter}}"
+                          >
                     <ListView.Resources>
                         <ContextMenu x:Key="ItemContextMenu">
                             <MenuItem Header="{x:Static res:Resource.Cut}" 
@@ -411,7 +415,8 @@
                                 BackgroundColor="{Binding Map.Background}"
                                 SectorHeight="{Binding Map.SectorHeight}" SectorWidth="{Binding Map.SectorWidth}"
                                 AllowDrop="True" Drop="CanvasDrop" Loaded="ListViewTemplateLoaded"
-                                PreviewMouseLeftButtonDown="MapCanvas_PreviewMouseLeftButtonDown"/>
+                                PreviewMouseLeftButtonDown="MapCanvas_PreviewMouseLeftButtonDown"
+                                />
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
 

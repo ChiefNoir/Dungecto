@@ -107,6 +107,7 @@
     <Compile Include="Common\Serializer.cs" />
     <Compile Include="Common\Utils\AdoptExtensionMethods.cs" />
     <Compile Include="Common\Utils\Converters.cs" />
+    <Compile Include="Converters\EditorModeToCursorConverter.cs" />
     <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Tile.cs" />
     <Compile Include="Properties\Resource.Designer.cs">
