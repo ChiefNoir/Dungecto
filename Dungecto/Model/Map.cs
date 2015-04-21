@@ -190,6 +190,19 @@ namespace Dungecto.Model
 
         }
 
+        public string GetFillerColor(Point point)
+        {
+            var poi = FindFillerPlace(point);
+
+            var filler = Tiles.FirstOrDefault(x => x.IsFiller && x.X == poi.X && x.Y == poi.Y);
+            if (filler != null)
+            {
+                return filler.Color;
+            }
+
+            return null;
+        }
+
         public void AddFiller(Point point, string color)
         {
             InitHas();
@@ -234,7 +247,12 @@ namespace Dungecto.Model
 
         private Point FindFillerPlace(Point point)
         {            
-            return _points.Keys.Where(poi => poi.X <= point.X && poi.Y <= point.Y).Last();
+            var ss = _points.Keys.Where(poi => poi.X <= point.X && poi.Y <= point.Y);
+            if (ss.Any())
+            {
+                return ss.Last();
+            }
+            return new Point(-100, -100);//TODO: -100;-100?! Make it "null" or smthg like this.
         }
 
         public void RemoveFiller(Point point)

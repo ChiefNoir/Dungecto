@@ -277,5 +277,14 @@ namespace Dungecto.ViewModel
             }
         }
 
+
+        internal void GetFillerColor(Point point)
+        {
+            var ss = Map.GetFillerColor(point);
+            if(ss != null)
+            {
+                FillerColor = ss;
+            }
+        }
     }
 }

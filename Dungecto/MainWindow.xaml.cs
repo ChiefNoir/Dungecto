@@ -175,7 +175,16 @@ namespace Dungecto
         {
             var context = DataContext as MainViewModel;
 
-            context.AddFiller(e.GetPosition(_canvas));
+            switch (context.EditorMode)
+            {
+                case EditorMode.Filler: { context.AddFiller(e.GetPosition(_canvas)); break; }
+
+                //TODO: Change to context.DelFiller
+                case EditorMode.Eraser: { context.AddFiller(e.GetPosition(_canvas)); break; }
+
+                case EditorMode.ColorPicker: { context.GetFillerColor(e.GetPosition(_canvas)); break; }
+            }
+
         }
 
     }
