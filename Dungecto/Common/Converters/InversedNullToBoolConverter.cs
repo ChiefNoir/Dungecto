@@ -15,7 +15,7 @@ namespace Dungecto.Common.Converters
             return value != null;
         }
 
-        /// <summary> [Not implemented] </summary>
+        /// <summary> Not implemented </summary>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

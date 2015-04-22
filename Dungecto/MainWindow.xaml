@@ -20,12 +20,9 @@
             <convertersCommon:InversedNullToBoolConverter x:Key="NullToBoolConverter"/>
             <convertersCommon:InversedBoolToVisibilityConverter x:Key="BoolToVisInversed"/>
             <convertersCommon:InversedBoolToBoolConverter x:Key="BoolInverserConverter"/>
-            <convertersCommon:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
             <convertersCommon:EnumsToBoolConverter x:Key="EnumsToBoolConverter"/>
             <convertersCommon:EnumsToVisibilityConverter x:Key="EnumsToVisibilityConverter" />
             <convertersCustom:EditorModeToCursorConverter x:Key="EditorModeToCursorConverter" />
-
-            <!--<sys:String x:Key="mystring">Filler|Eraser</sys:String>-->
         </ResourceDictionary>
     </controls:MetroWindow.Resources>
 
@@ -211,26 +208,26 @@
                         <Expander Header="{x:Static res:Resource.Toolbox}" IsExpanded="False" >
                             <StackPanel>
                                 <RadioButton Content="{x:Static res:Resource.EditorModeTiler}"
-                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Tiler}"
+                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumsToBoolConverter}, ConverterParameter=Tiler}"
                                          FontSize="14"
                                          Style="{StaticResource buttonstripe1}"/>
                                 <RadioButton Content="{x:Static res:Resource.EditorModeFiller}"
-                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Filler}"
+                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumsToBoolConverter}, ConverterParameter=Filler}"
                                          FontSize="14"
                                          Style="{StaticResource buttonstripe1}"/>
                                 <RadioButton Content="{x:Static res:Resource.EditorModeEraser}"
-                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Eraser}"
+                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumsToBoolConverter}, ConverterParameter=Eraser}"
                                          FontSize="14"
                                          Style="{StaticResource buttonstripe1}"/>
                                 <RadioButton Content="{x:Static res:Resource.EditorModeColorPicker}"
-                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=ColorPicker}"
+                                         IsChecked="{Binding Path=EditorMode, Converter={StaticResource EnumsToBoolConverter}, ConverterParameter=ColorPicker}"
                                          FontSize="14"
                                          Style="{StaticResource buttonstripe1}"/>
                             </StackPanel>
                         </Expander>
 
                         <Expander Header="{x:Static res:Resource.Tiles}" IsExpanded="False" 
-                              IsEnabled="{Binding Path=EditorMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Tiler, Mode=OneWay}">
+                              IsEnabled="{Binding Path=EditorMode, Converter={StaticResource EnumsToBoolConverter}, ConverterParameter=Tiler, Mode=OneWay}">
                             <ListView ItemsSource="{Binding Toolbox}" BorderBrush="Transparent" >
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListViewItem}">

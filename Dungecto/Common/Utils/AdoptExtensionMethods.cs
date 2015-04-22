@@ -4,18 +4,24 @@ using System.Linq;
 
 namespace Dungecto.Common.Utils
 {
+    /// <summary>Parentless extensions with no place to go</summary>
     public static class AdoptExtensionMethods
     {
-        public static int Remove<T>(this ObservableCollection<T> coll, Func<T, bool> condition)
+        /// <summary>Removes all items matching condition</summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="collection">Collection</param>
+        /// <param name="condition">Condition</param>
+        /// <returns>Amount of removed items</returns>
+        public static int Remove<T>(this Collection<T> collection, Func<T, bool> condition)
         {
-            var itemsToRemove = coll.Where(condition).ToList();
+            var toRemove = collection.Where(condition).ToList();
 
-            foreach (var itemToRemove in itemsToRemove)
+            foreach (var itemToRemove in toRemove)
             {
-                coll.Remove(itemToRemove);
+                collection.Remove(itemToRemove);
             }
 
-            return itemsToRemove.Count;
+            return toRemove.Count;
         }
     }
 }

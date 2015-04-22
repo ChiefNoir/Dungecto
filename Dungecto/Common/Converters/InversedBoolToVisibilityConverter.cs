@@ -19,7 +19,7 @@ namespace Dungecto.Common.Converters
             return (bool)value ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        /// <summary>NotImplementedException</summary>
+        /// <summary> Not implemented</summary>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
