@@ -12,6 +12,8 @@ using System.Windows.Navigation;
 
 namespace Dungecto
 {
+    using System.Globalization;
+
     /// <summary> Interaction logic for MainWindow.xaml </summary>
     public partial class MainWindow : MetroWindow 
     {
@@ -19,8 +21,8 @@ namespace Dungecto
         public MainWindow()
         {
             InitializeComponent();
-
-            TextVersion.Text = String.Format("{0}: {1}", Resource.Version, AppInfo.GetProductVersion());
+            
+            TextVersion.Text = String.Format(CultureInfo.InvariantCulture, "{0} {1}", Resource.Version, AppInfo.GetProductVersion());
             Copyright.Text = AppInfo.GetLegalCopyright();
 
             Closing += (s, e) => ViewModelLocator.Cleanup();
@@ -137,7 +139,7 @@ namespace Dungecto
 
             if(_canvas == null)
             {
-                throw new InvalidCastException("MapCanvas is not initialized");
+                throw new InvalidCastException("Map canvas is not initialized");
             }
         }
 
@@ -182,7 +184,7 @@ namespace Dungecto
                 //TODO: Change to context.DelFiller
                 case EditorMode.Eraser: { context.AddFiller(e.GetPosition(_canvas)); break; }
 
-                case EditorMode.ColorPicker: { context.GetFillerColor(e.GetPosition(_canvas)); break; }
+                case EditorMode.ColorPicker: { context.GetFillerColorAt(e.GetPosition(_canvas)); break; }
             }
 
         }

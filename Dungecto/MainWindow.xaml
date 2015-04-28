@@ -391,15 +391,6 @@
                             <Setter Property="BorderThickness" Value="0" />
                             <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                             <Setter Property="IsEnabled" Value="{Binding IsFiller, Converter={StaticResource BoolInverserConverter}}"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="BitmapEffect">
-                                        <Setter.Value>
-                                            <DropShadowBitmapEffect ShadowDepth="1" Softness="0" Color="{StaticResource HighlightColor}" />
-                                        </Setter.Value>
-                                    </Setter>
-                                </Trigger>
-                            </Style.Triggers>
                         </Style>
 
                     </ListView.ItemContainerStyle>

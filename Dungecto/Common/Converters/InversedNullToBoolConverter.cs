@@ -5,7 +5,7 @@ using System.Windows.Data;
 namespace Dungecto.Common.Converters
 {
     /// <summary> Convert object null state to bool, inversed </summary>
-    class InversedNullToBoolConverter : IValueConverter 
+    public class InversedNullToBoolConverter : IValueConverter 
     {
         /// <summary> Convert object null state to bool, inversed</summary>
         /// <param name="value">Anything</param>

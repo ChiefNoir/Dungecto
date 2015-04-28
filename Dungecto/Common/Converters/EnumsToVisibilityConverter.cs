@@ -15,15 +15,14 @@ namespace Dungecto.Common.Converters
         /// <returns> <c>Visibility.Visible</c> if <see cref="value"/> is enum and in <see cref="parameter"/></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) { return DependencyProperty.UnsetValue; }
+
             var param = parameter as string;
             if (param == null) { return DependencyProperty.UnsetValue; }
 
             if (Enum.IsDefined(value.GetType(), value) == false) { return DependencyProperty.UnsetValue; }
 
-            if(param.Split('|').Any(x=> Enum.Parse(value.GetType(), x).Equals(value)))
-            {
-                return Visibility.Visible; 
-            }
+            if(param.Split('|').Any(x=> Enum.Parse(value.GetType(), x).Equals(value))) { return Visibility.Visible; }
 
             return Visibility.Collapsed;
         }

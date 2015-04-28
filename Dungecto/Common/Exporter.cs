@@ -15,7 +15,7 @@ namespace Dungecto.Common
 
         /// <summary>Export canvas content to png file</summary>
         /// <param name="canvas">Canvas to export</param>
-        /// <param name="filepath">File path</param>
+        /// <param name="filename">File path</param>
         public static void ToPng(Canvas canvas, string filename)
         {
             if (String.IsNullOrWhiteSpace(filename)) { return; }

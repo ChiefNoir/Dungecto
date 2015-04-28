@@ -92,8 +92,11 @@ namespace Dungecto.Model
             }
         }
 
-        public int xIndex { get; set; }
-        public int yIndex { get; set; }
+        
+        public int XIndex { get; set; }
+
+
+        public int YIndex { get; set; }
 
         /// <summary> Get/set Y position </summary>
         [XmlAttribute("Y")]

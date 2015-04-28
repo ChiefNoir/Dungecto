@@ -5,9 +5,6 @@ using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using System.Linq;
-using System;
-using System.Collections.Generic;
 
 namespace Dungecto.ViewModel
 {
@@ -28,11 +25,8 @@ namespace Dungecto.ViewModel
         private Tile _clipboardTile = null;
 
         private EditorMode _editorMode = EditorMode.Tiler;
-        private Map _map;
 
         private string _lastFilePath = null;
-
-        private ObservableCollection<Tile> _toolbox;
 
         /// <summary> Create new map command </summary>        
         public ICommand CreateNewMapCommand
@@ -89,26 +83,10 @@ namespace Dungecto.ViewModel
         }
 
         /// <summary> Get map </summary>
-        public Map Map
-        {
-            get { return _map; }
-            private set
-            {
-                _map = value;
-                RaisePropertyChanged("Map");
-            }
-        }
+        public Map Map { get; private set; }
 
         /// <summary> Get toolbox, contains map tiles </summary>
-        public ObservableCollection<Tile> Toolbox
-        { 
-            get { return _toolbox; } 
-            private set 
-            { 
-                _toolbox = value; 
-                RaisePropertyChanged("Toolbox"); 
-            } 
-        }
+        public ObservableCollection<Tile> Toolbox { get; private set; }
 
         /// <summary> Get/set selected tile from the <see cref="Map"/> </summary>
         public Tile SelectedTile
@@ -124,9 +102,9 @@ namespace Dungecto.ViewModel
         /// <summary> Initializes a new instance of the MainViewModel class </summary>
         public MainViewModel()
         {
-            _map = new Map();
+            Map = new Map();
 
-            _toolbox = Serializer.FromXml<ObservableCollection<Tile>>(@"Data\Toolbox.xml");
+            Toolbox = Serializer.FromXml<ObservableCollection<Tile>>(@"Data\Toolbox.xml");
         }
 
         public void AddFiller(Point point)
@@ -167,7 +145,7 @@ namespace Dungecto.ViewModel
 
             if (!string.IsNullOrEmpty(file))
             {
-                _map = Serializer.FromXml<Map>(file);
+                Map = Serializer.FromXml<Map>(file);
                 RaisePropertyChanged("Map");
                 _lastFilePath = file;
             }
@@ -278,7 +256,7 @@ namespace Dungecto.ViewModel
         }
 
 
-        internal void GetFillerColor(Point point)
+        public void GetFillerColorAt(Point point)
         {
             var ss = Map.GetFillerColor(point);
             if(ss != null)

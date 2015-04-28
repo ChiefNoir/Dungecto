@@ -27,10 +27,14 @@ namespace Dungecto.Model
         private int _sectorWidth;
 
         /// <summary> See <see cref="Background"/> property </summary>
+        [NonSerialized]
         private Color _background = Colors.LightBlue;
 
         /// <summary> See <see cref="Tiles"/> property </summary>
         private ObservableCollection<Tile> _tiles;
+
+        /// <summary>Coordinates of the left-top corner of the each grid square in format: position, [column number, row number] </summary>
+        readonly Dictionary<Point, int[]> _gridCoordinates = new Dictionary<Point, int[]>();
 
         /// <summary> Create map </summary>
         public Map()
@@ -58,7 +62,7 @@ namespace Dungecto.Model
                 RaisePropertyChanged("Columns");
                 RaisePropertyChanged("Width");
 
-                ResizeFillers();
+                RemoveOutOfRangeFillers();
             }
         }
 
@@ -83,7 +87,7 @@ namespace Dungecto.Model
                 RaisePropertyChanged("Rows");
                 RaisePropertyChanged("Height");
 
-                ResizeFillers();
+                RemoveOutOfRangeFillers();
             }
         }
 
@@ -96,21 +100,20 @@ namespace Dungecto.Model
             {
                 if (_sectorHeight == value) { return; }
 
-                var oldV = _sectorHeight;
                 _sectorHeight = value;
                 RaisePropertyChanged("SectorHeight");
                 RaisePropertyChanged("Height");
 
-                InitHas();
+                InitGridCoordinates();
                 foreach (var item in Tiles.Where(x => x.IsFiller))
                 {
                     item.Height = value;
 
-                    var ss = _points.FirstOrDefault(x => x.Value[1] == item.yIndex);
+                    var ss = _gridCoordinates.FirstOrDefault(x => x.Value[1] == item.YIndex);
                     item.Y = (int)ss.Key.Y;
                 }
 
-                ResizeFillers();
+                RemoveOutOfRangeFillers();
             }
         }
 
@@ -123,22 +126,20 @@ namespace Dungecto.Model
             {
                 if (_sectorWidth == value) { return; }
 
-                var oldV = _sectorWidth;
-
                 _sectorWidth = value;
                 RaisePropertyChanged("SectorWidth");
                 RaisePropertyChanged("Width");
 
-                InitHas();
+                InitGridCoordinates();
                 foreach (var item in Tiles.Where(x=>x.IsFiller))
                 {
                     item.Width = value;
 
-                    var ss = _points.FirstOrDefault(x => x.Value[0] == item.xIndex);
+                    var ss = _gridCoordinates.FirstOrDefault(x => x.Value[0] == item.XIndex);
                     item.X = (int)ss.Key.X;
                 }
 
-                ResizeFillers();
+                RemoveOutOfRangeFillers();
             }
         }
 
@@ -182,33 +183,39 @@ namespace Dungecto.Model
             }
         }
 
-        public void ResizeFillers()
+        /// <summary>Remove fillers placed out of the map borders</summary>
+        private void RemoveOutOfRangeFillers()
         {
-            var ft = Tiles.Where(ti => (ti.X>= Width) || (ti.Y>= Height));
-
             Tiles.Remove(ti => (ti.X >= Width) || (ti.Y >= Height));
-
         }
 
+        /// <summary>Get filler color</summary>
+        /// <param name="point">Approximate filler position</param>
+        /// <returns>Filler color or null if there is no filler at the position</returns>
         public string GetFillerColor(Point point)
         {
             var poi = FindFillerPlace(point);
+            if (poi == null) { return null;}
 
-            var filler = Tiles.FirstOrDefault(x => x.IsFiller && x.X == poi.X && x.Y == poi.Y);
-            if (filler != null)
-            {
-                return filler.Color;
-            }
+            var filler = Tiles.FirstOrDefault(x => x.IsFiller && x.X == poi.Value.X && x.Y == poi.Value.Y);
+
+            if (filler != null) { return filler.Color; }
 
             return null;
         }
 
+        /// <summary>Add filler to the map</summary>
+        /// <param name="point">Approximate filler position (binded to the grid)</param>
+        /// <param name="color">Filler color</param>
         public void AddFiller(Point point, string color)
         {
-            InitHas();
-            var poi = FindFillerPlace(point);
+            InitGridCoordinates();
 
-            var filler = Tiles.FirstOrDefault(x => x.IsFiller && x.X == poi.X && x.Y == poi.Y);
+            var poi = FindFillerPlace(point);
+            if (poi == null) { return; }
+
+
+            var filler = Tiles.FirstOrDefault(x => x.IsFiller && x.X == poi.Value.X && x.Y == poi.Value.Y);
             if (filler != null)
             {
                 filler.Color = color;
@@ -222,45 +229,57 @@ namespace Dungecto.Model
                         IsFiller = true, 
                         Height = SectorHeight, 
                         Width = SectorWidth, 
-                        xIndex = _points[poi][0],
-                        yIndex = _points[poi][1],
-                        Geometry = "M0,0 H5 V5 H0 Z", 
-                        X = Convert.ToInt32(poi.X), Y = Convert.ToInt32(poi.Y), Z = -100 }
+                        XIndex = _gridCoordinates[poi.Value][0],
+                        YIndex = _gridCoordinates[poi.Value][1],
+                        Geometry = "M0,0 H5 V5 H0 Z",
+                        X = Convert.ToInt32(poi.Value.X),
+                        Y = Convert.ToInt32(poi.Value.Y),
+                        Z = -100
+                    }
                     );
             }
 
         }
 
-        public void InitHas()
+        /// <summary>Init grid points</summary>
+        /// <remarks>Coordinates of the left-top corner of the each grid square</remarks>
+        private void InitGridCoordinates()
         {
-            _points.Clear();
-            for (int i = 0; i < Columns; i++)
+            _gridCoordinates.Clear();
+            for (var i = 0; i < Columns; i++)
             {
-                for (int j = 0; j < Rows; j++)
+                for (var j = 0; j < Rows; j++)
                 {
-                    _points.Add(new Point(i * (SectorWidth), j * (SectorHeight)), new[]{i, j});
+                    _gridCoordinates.Add(new Point(i * (SectorWidth), j * (SectorHeight)), new[]{i, j});
                 }
             }
         }
 
-        Dictionary<Point, int[]> _points = new Dictionary<Point, int[]>();
-
-        private Point FindFillerPlace(Point point)
+        /// <summary>Find precise (bind to the grid) position for filler</summary>
+        /// <param name="point">Approximate filler position</param>
+        /// <returns>Filler position (bind to the grid)</returns>
+        private Point? FindFillerPlace(Point point)
         {            
-            var ss = _points.Keys.Where(poi => poi.X <= point.X && poi.Y <= point.Y);
-            if (ss.Any())
+            var positions = _gridCoordinates.Keys.Where(poi => poi.X <= point.X && poi.Y <= point.Y);
+
+            if (positions.Any())
             {
-                return ss.Last();
+                return positions.Last();
             }
-            return new Point(-100, -100);//TODO: -100;-100?! Make it "null" or smthg like this.
+
+            return null;
         }
 
+        /// <summary>Remove filler from the map</summary>
+        /// <param name="point">Approximate filler position</param>
         public void RemoveFiller(Point point)
         {
             if (!Tiles.Any(x => x.IsFiller)) { return; }
             
             var poi = FindFillerPlace(point);
-            Tiles.Remove(Tiles.FirstOrDefault(x => x.IsFiller && x.X == poi.X && x.Y == poi.Y));
+            if (poi == null) { return;}
+
+            Tiles.Remove(Tiles.FirstOrDefault(x => x.IsFiller && x.X == poi.Value.X && x.Y == poi.Value.Y));
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Dungecto.Common.Converters
         /// <returns> <c>true</c> if <see cref="value"/> is enum and in <see cref="parameter"/></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) { return DependencyProperty.UnsetValue; }
+
             var param = parameter as string;
             if (param == null) { return DependencyProperty.UnsetValue; }
 

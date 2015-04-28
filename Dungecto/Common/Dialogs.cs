@@ -37,10 +37,7 @@ namespace Dungecto.Common
             dialog.Filter = String.Format(CultureInfo.InvariantCulture, "*{0} files (*{0})|*{0}", extension);
             dialog.AddExtension = true;
 
-            if (dialog.ShowDialog() == true)
-            {
-                return dialog.FileName;
-            }
+            if (dialog.ShowDialog() == true) { return dialog.FileName; }
 
             return null;
         }

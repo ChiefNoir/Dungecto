@@ -30,7 +30,10 @@ namespace Dungecto.Common
         /// <returns>Deserialized object</returns>
         public static T FromXml<T>(string filename)
         {
-            if (!File.Exists(filename)) { return default(T); }
+            if (!File.Exists(filename))
+            {
+                throw new FileNotFoundException("Can't find map file", filename);
+            }
 
             var xmlSerializer = new XmlSerializer(typeof(T));
             using (var reader = new StreamReader(filename, Encoding.Unicode))

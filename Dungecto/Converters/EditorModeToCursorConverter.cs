@@ -7,13 +7,15 @@ using System.Windows.Input;
 namespace Dungecto.Converters
 {
     /// <summary> Convert <see cref="Dungecto.ViewModel.EditorMode"/> to <see cref="System.Windows.Input.Cursor"/> </summary>
-    class EditorModeToCursorConverter : IValueConverter
+    public class EditorModeToCursorConverter : IValueConverter
     {
         /// <summary></summary>
         /// <param name="value"></param>
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) { return Cursors.Arrow;}
+
             switch ((EditorMode)value)
             {
                 case EditorMode.Tiler: return Cursors.Arrow;

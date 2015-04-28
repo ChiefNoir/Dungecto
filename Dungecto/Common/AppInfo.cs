@@ -10,8 +10,8 @@ namespace Dungecto.Common
         /// <returns>Product version</returns>
         public static string GetProductVersion()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var assembly = Assembly.GetExecutingAssembly();
+            var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
 
             return fileVersionInfo.ProductVersion;
         }
@@ -20,8 +20,8 @@ namespace Dungecto.Common
         /// <returns>Legal copyright </returns>
         public static string GetLegalCopyright()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var assembly = Assembly.GetExecutingAssembly();
+            var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
 
             return fileVersionInfo.LegalCopyright;
         }
