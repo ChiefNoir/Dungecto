@@ -110,7 +110,7 @@
                             HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
                 <Button Content="{x:Static res:Resource.MainMenuSave}" 
                             Style="{DynamicResource SquareButtonStyle}" 
-                            HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
+                            HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" Command="{Binding SaveMapCommand}" />
                 <Button Content="{x:Static res:Resource.MainMenuSaveAs}" 
                             Style="{DynamicResource SquareButtonStyle}" Command="{Binding SaveMapAsCommand}" 
                             HorizontalContentAlignment="Left" FontSize="16" FontWeight="Normal" BorderBrush="#00000000" />
