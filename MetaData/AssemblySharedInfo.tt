@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("<#= this.MajorVersion #>.<#= this.MinorVersion #>.<#= this.BuildNumber #>.<#= this.RevisionNumber #>")]
  
 <#+
-int MajorVersion = 0;
+int MajorVersion = 1;
 int MinorVersion = 0;
 int BuildNumber = 0;
 int RevisionNumber = (int)(DateTime.UtcNow - new DateTime(2015, 1, 30)).TotalDays;
