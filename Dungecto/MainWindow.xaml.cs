@@ -189,5 +189,13 @@ namespace Dungecto
 
         }
 
+//TODO: dirty trick
+        private void ToolboxPreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer scv = (ScrollViewer)sender;
+            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
+            e.Handled = true;
+        }
+
     }
 }

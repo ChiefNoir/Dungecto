@@ -228,4 +228,7 @@
   <data name="EditorModeColorPicker" xml:space="preserve">
     <value>Color Picker</value>
   </data>
+  <data name="FillerColor" xml:space="preserve">
+    <value>Filler color</value>
+  </data>
 </root>

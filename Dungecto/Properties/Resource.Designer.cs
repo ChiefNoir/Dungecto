@@ -158,6 +158,17 @@ namespace Dungecto.Properties
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Filler color.
+        /// </summary>
+        public static string FillerColor
+        {
+            get
+            {
+                return ResourceManager.GetString("FillerColor", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to License.
         /// </summary>
         public static string License

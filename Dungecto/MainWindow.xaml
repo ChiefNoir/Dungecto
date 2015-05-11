@@ -191,8 +191,8 @@
                     <RowDefinition />
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                
-                <GroupBox Grid.Row="1" Header="Filler color" 
+
+                <GroupBox Grid.Row="1" Header="{x:Static res:Resource.FillerColor}" 
                           Visibility="{Binding EditorMode, 
                                         Converter={StaticResource EnumsToVisibilityConverter}, 
                                         ConverterParameter='Filler|ColorPicker'}">
@@ -203,7 +203,7 @@
                 </GroupBox>
 
 
-                <ScrollViewer Grid.Row="0" >
+                <ScrollViewer Grid.Row="0" PreviewMouseWheel="ToolboxPreviewMouseWheel" >
                     <StackPanel>
                         <Expander Header="{x:Static res:Resource.Toolbox}" IsExpanded="False" >
                             <StackPanel>
@@ -228,25 +228,24 @@
 
                         <Expander Header="{x:Static res:Resource.Tiles}" IsExpanded="False" 
                               IsEnabled="{Binding Path=EditorMode, Converter={StaticResource EnumsToBoolConverter}, ConverterParameter=Tiler, Mode=OneWay}">
-                            <ListView ItemsSource="{Binding Toolbox}" BorderBrush="Transparent" >
+                            <ListView ItemsSource="{Binding Toolbox}" BorderBrush="Transparent">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListViewItem}">
                                         <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="ToolboxPreviewMouseLeftButtonDown" />
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                    </Style>
+                                    </Style>                                                                      
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Path Data="{Binding Geometry}" Fill="{Binding Color}" 
-                                      Width="{Binding Width}" Height="{Binding Height}" 
-                                      MaxWidth="100" MaxHeight="100" 
-                                      Stretch="Fill" IsHitTestVisible="False"/>
+                                              Width="{Binding Width}" Height="{Binding Height}" 
+                                              MaxWidth="100" MaxHeight="100" 
+                                              Stretch="Fill" IsHitTestVisible="False"/>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
                         </Expander>
-
-
+                        
                     </StackPanel>
                 </ScrollViewer>
                    
