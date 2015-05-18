@@ -17,6 +17,6 @@ using System.Runtime.InteropServices;
 // MinorVersion = Functions added/removed/changed
 // BuildNumber = Bug fixes & other things
 // RevisionNumber = total days of development
-[assembly: AssemblyVersion("1.0.1.101")]
-[assembly: AssemblyFileVersion("1.0.1.101")]
+[assembly: AssemblyVersion("1.0.1.108")]
+[assembly: AssemblyFileVersion("1.0.1.108")]
  
