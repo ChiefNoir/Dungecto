@@ -23,6 +23,6 @@ using System.Runtime.InteropServices;
 <#+
 int MajorVersion = 1;
 int MinorVersion = 0;
-int BuildNumber = 0;
+int BuildNumber = 1;
 int RevisionNumber = (int)(DateTime.UtcNow - new DateTime(2015, 1, 30)).TotalDays;
 #>

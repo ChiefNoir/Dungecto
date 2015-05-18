@@ -153,8 +153,7 @@
 
 
                 <TextBlock Margin="10,293,10,0" Text="{x:Static res:Resource.TileColor}" VerticalAlignment="Top"/>
-                <xctk:ColorPicker Margin="10,309,10,0"  VerticalAlignment="Top" ColorMode="ColorCanvas" SelectedColor="{Binding SelectedTile.Color}" 
-                                      ShowAdvancedButton="False" ShowStandardColors="False" ShowAvailableColors="False"/>
+                <xctk:ColorPicker Margin="10,309,10,0"  VerticalAlignment="Top" ColorMode="ColorCanvas" SelectedColor="{Binding SelectedTile.Color}" />
             </Grid>
         </controls:Flyout>
 
@@ -175,8 +174,7 @@
                 <controls:NumericUpDown Height="23" Margin="10,183,10,0" Value="{Binding Map.Rows}" Minimum="1" VerticalAlignment="Top"/>
 
                 <TextBlock Margin="10,230,10,0" Height="23" Text="{x:Static res:Resource.MapBackground}" VerticalAlignment="Top"/>
-                <xctk:ColorPicker SelectedColor="{Binding Map.Background}" Margin="10,246,10,0" VerticalAlignment="Top" ColorMode="ColorCanvas" 
-                                      ShowAdvancedButton="False" ShowStandardColors="False" ShowAvailableColors="False"/>
+                <xctk:ColorPicker SelectedColor="{Binding Map.Background}" Margin="10,246,10,0" VerticalAlignment="Top" ColorMode="ColorCanvas" />
             </Grid>
         </controls:Flyout>
 
@@ -193,13 +191,10 @@
                 </Grid.RowDefinitions>
 
                 <GroupBox Grid.Row="1" Header="{x:Static res:Resource.FillerColor}" 
-                          Visibility="{Binding EditorMode, 
-                                        Converter={StaticResource EnumsToVisibilityConverter}, 
+                          Visibility="{Binding EditorMode,  Converter={StaticResource EnumsToVisibilityConverter}, 
                                         ConverterParameter='Filler|ColorPicker'}">
                     
-                    
-                    <xctk:ColorPicker Width="100" SelectedColor="{Binding FillerColor}" VerticalAlignment="Top" ColorMode="ColorCanvas" 
-                                          ShowAdvancedButton="False" ShowStandardColors="False" ShowAvailableColors="False"  IsEnabled="True"/>
+                    <xctk:ColorPicker Width="100" SelectedColor="{Binding FillerColor}" VerticalAlignment="Top" ColorMode="ColorCanvas" IsEnabled="True"/>
                 </GroupBox>
 
 
