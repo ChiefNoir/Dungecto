@@ -1,2 +1,2 @@
-﻿# Dungecto
+﻿# Dungecto: GM Cartography
 Very simple tool for schematic dungeon map drawing.
